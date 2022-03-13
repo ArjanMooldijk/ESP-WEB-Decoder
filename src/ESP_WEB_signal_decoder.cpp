@@ -6,6 +6,7 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
+#include <GetFromFlash.h>
 #include <Signale.h>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CONSTANTS TO BE ADAPTED  ///////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +47,7 @@ IPAddress staticIP(192, 168, 178, 13); //fixed IP of booster monitor
 IPAddress gateway(192, 168, 178, 1);
 IPAddress subnet(255, 255, 255, 0);
 IPAddress DNS(8, 8, 8, 8);
-const char *deviceName = "Signaldecoder";
+const char* deviceName = "Signaldecoder";
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -143,6 +144,8 @@ void setup()
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
+
+  GetDecoderValues ();
 
   for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
