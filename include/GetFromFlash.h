@@ -116,20 +116,6 @@ void GetDecoderValues()
 
 void PutDecoderValues()
 {
-    /*     parameters
-        {
-            char *Dec_name;            // Max 12 bytes
-            unsigned int Dec_Addr[16]; // 32 bytes
-            byte Dec_Sig_Type[16];     // 16 bytes
-            bool Dec_fade_flag[16];    // 16 bytes
-            bool Dec_Between_flag[16]; // 16 bytes
-            long Dec_Delay;            // 2 bytes
-            int Dec_Bright[16];        // 32 bytes
-            int Dec_Int;               // 2 bytes
-            int Dec_Fade_Dur;          // 2 bytes
-                                       // Total 130 bytes
-        } */
-
     SigDec_pref.begin("parameters", false);
 
     SigDec_pref.putString("Dec_name", decoderName);
