@@ -41,7 +41,7 @@ void PutDecoderValues()
     SigDec_pref.end();
 /* 
     this_dec[0].name = "Seindecoder";
-    this_dec[0].signbr = 1;
+    this_dec[0].nbrofsig = 1;
 
     signale[0].name = "Stadel";
     signale[0].stype[0] = VorAdr1;

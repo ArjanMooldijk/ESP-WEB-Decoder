@@ -51,11 +51,14 @@ NmraDcc Dcc;
 // Die folgende Funktion wird von Dcc.process() aufgerufen, wenn ein Weichentelegramm empfangen wurde
 void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State)
 {
-  for (byte index = 0; index < anZahl; index++)
+  for (uint8_t signr = 0; signr < this_dec[0].nbrofsig; signr++)
   {
-    if (Addr == signalAdr[index])
-    { // ist eigene Adresse
-      HandleCommand(index, OutputAddr);
+    for (uint8_t index = 0; index < 3; index++)
+    {
+      if (Addr == signale[signr].Adress[index])
+      {
+        HandleCommand(signr, index, OutputAddr);
+      }
     }
   }
 }
@@ -70,7 +73,7 @@ String processor(const String &var)
 ///////////////////////////////////////////////////////////////
 void setup()
 {
-    Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
+  Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
   Dcc.pin(0, 2, 1); // Dcc-Signal an Pin2 ( = Int0 );
 
   Serial.begin(115200);
@@ -90,10 +93,12 @@ void setup()
     Serial.println("FS connect big success");
   }
 
+  GetDecoderValues();
+
   // Connect to Wi-Fi with fixed IP
   WiFi.disconnect();
   WiFi.config(staticIP, gateway, subnet);
-  WiFi.hostname("Seindecoder");
+  WiFi.hostname(this_dec[0].name);
   WiFi.begin(ssid, password);
   Serial.println("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED)
@@ -116,8 +121,6 @@ void setup()
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
-
-  GetDecoderValues();
 
   for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
@@ -150,18 +153,18 @@ void setup()
 }
 ////////////////////////////////////////////////////////////////
 void loop()
-{/* 
-  if (runMode)
-  {
-    Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
-    delay(1);
-    handle_blink();
+{ /*
+   if (runMode)
+   {
+     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
+     delay(1);
+     handle_blink();
 
-    dunkelVorsignal(0);
-    setFb1Vorsignal(0);
-    delay(5000);
-    dunkelVorsignal(0);
-    setFb0Vorsignal(0);
-    delay(5000);
-  } */
+     dunkelVorsignal(0);
+     setFb1Vorsignal(0);
+     delay(5000);
+     dunkelVorsignal(0);
+     setFb0Vorsignal(0);
+     delay(5000);
+   } */
 }

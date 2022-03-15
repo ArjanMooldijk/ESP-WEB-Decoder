@@ -9,7 +9,7 @@ void setDimSteps()
   uint8_t chCount = 0;
   uint8_t maxStep;
 
-  for (uint8_t scount = 0; scount < this_dec[0].signbr; scount++)     // voor ieder signaal
+  for (uint8_t scount = 0; scount < this_dec[0].nbrofsig; scount++)     // voor ieder signaal
   {
     for (int x = signale[scount].firstCH; x < (signale[scount].firstCH + signale[scount].pins); x++) //voor ieder kanaal
     {

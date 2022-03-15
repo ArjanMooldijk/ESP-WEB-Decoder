@@ -22,8 +22,8 @@ struct Sein
 
 struct Decoder
 {
-    char* name;
-    uint8_t signbr;
+    char* name;                         //Name of the decoder
+    uint8_t nbrofsig;                     //Number of signals served
 };
 
 Decoder this_dec[1];
