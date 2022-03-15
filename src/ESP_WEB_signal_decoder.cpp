@@ -33,7 +33,7 @@ const int ledPin[16] = {23, 22, 21, 19, 18, 17, 16, 15, 32, 33, 25, 26, 27, 14, 
 const int freq = 5000;
 const int resolution = 8;
 int fix = fadeDuration / 10;
-const int fadeConst = fix;
+const int fadeConst = fadeDuration / 10;
 const bool runMode = true;
 
 #include <ControlLeds.h>
@@ -70,9 +70,7 @@ String processor(const String &var)
 ///////////////////////////////////////////////////////////////
 void setup()
 {
-  // GetDecoderValues();
-
-  Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
+    Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
   Dcc.pin(0, 2, 1); // Dcc-Signal an Pin2 ( = Int0 );
 
   Serial.begin(115200);
@@ -91,11 +89,6 @@ void setup()
   {
     Serial.println("FS connect big success");
   }
-   /*  FILE *fp = NULL;
-  fp = fopen("test.CSV", "w"); // Will put the file at '/'
-  fwrite("stuff", 5, 1, fp);
-  fclose(fp); */
-
 
   // Connect to Wi-Fi with fixed IP
   WiFi.disconnect();
@@ -124,7 +117,9 @@ void setup()
   AsyncElegantOTA.begin(&server);
   server.begin();
 
-  /* for (int ledChannel = 0; ledChannel < 16; ledChannel++)
+  GetDecoderValues();
+
+  for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
     // configure and attach LED PWM functionalitites
     ledcSetup(ledChannel, freq, resolution);
@@ -151,7 +146,7 @@ void setup()
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
   setDimSteps();
-  Initialiseer_decoder(); */
+  Initialiseer_decoder();
 }
 ////////////////////////////////////////////////////////////////
 void loop()

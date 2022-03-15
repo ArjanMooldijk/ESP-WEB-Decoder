@@ -6,14 +6,25 @@ void setDimSteps()
 {
   double dimFactor;
   float dimExp = 1.0 / float(fadeConst - 1);
+  uint8_t chCount = 0;
+  uint8_t maxStep;
 
-  for (int x = 0; x < 16; x++)
+  for (uint8_t scount = 0; scount < this_dec[0].signbr; scount++)     // voor ieder signaal
   {
-    dimStep[x][0] = 0;
-    dimFactor = pow(maxLight[x], dimExp);
-    for (int y = fadeConst - 1; y > 0; y--)
+    for (int x = signale[scount].firstCH; x < (signale[scount].firstCH + signale[scount].pins); x++) //voor ieder kanaal
     {
-      dimStep[x][y] = pow(dimFactor, y);
+      dimStep[x][0] = 0;                                         // [0] is altijd 0
+      dimFactor = pow(signale[scount].ChBright[x-signale[scount].firstCH], dimExp);           // grondgetal voor exponent
+      if (signale[scount].fadetime>200){
+        maxStep = 20;                                                 // nooit meer dan 20 stappen dimmen
+      }
+      else{
+        maxStep = signale[scount].fadetime / 10;
+      }
+      for (int y = maxStep-1; y > 0; y--)                             // 
+      {
+        dimStep[x][y] = pow(dimFactor, y);
+      }
     }
   }
 }

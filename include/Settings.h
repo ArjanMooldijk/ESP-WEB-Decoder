@@ -10,7 +10,7 @@ const bool uit = false;
 const bool aan = true;
 struct Sein
 {
-    char name[12];
+    char* name;
     uint8_t stype[3];
     int adress[3];
     int fadetime;
@@ -22,7 +22,7 @@ struct Sein
 
 struct Decoder
 {
-    char name[12];
+    char* name;
     uint8_t signbr;
 };
 
