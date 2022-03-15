@@ -7,20 +7,20 @@
 //    Haltbeibedarf : 1 pin
 //    Fahrtstellungsmelder : 1 pin
 ///////////////////////////////////////
-void setHilfsignal(byte pntr, byte Fb)
+void setHilfsignal(uint8_t signr, uint8_t Fb)
 {
    switch (Fb)
    {
-   case 0: // zet ch1 uit
-      Blink[signalChannel[pntr]] = 0;
-      xQueueSend(queueCh[signalChannel[pntr] + 0], &uit, portMAX_DELAY);
+   case 0: // zet channel uit
+      Blink[signr] = 0;
+      xQueueSend(queueCh[signale[signr].firstCH], &uit, portMAX_DELAY);
       break;
-   case 1: // zet ch1 blink aan
-      Blink[signalChannel[pntr]] = 1;
-      xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
+   case 1: // zet channel blink aan
+      Blink[signr] = 1;
+      xQueueSend(queueCh[signale[signr].firstCH], &aan, portMAX_DELAY);
       break;
-   case 2: // zet ch1 aan
-      xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
+   case 2: // zet channel aan
+      xQueueSend(queueCh[signale[signr].firstCH], &aan, portMAX_DELAY);
       break;
    default:
       break;

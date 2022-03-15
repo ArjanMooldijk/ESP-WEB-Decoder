@@ -5,51 +5,51 @@
 // lamp 1 = grun (hoch)
 // lamp 2 = rot
 //////////////
-void dunkelHauptsignal(byte pntr)
+void dunkelHauptsignal(uint8_t signr)
 {
-  for (byte x = 0; x < signalLeds[pntr]; x++)
+  for (uint8_t x = 0; x < signale[signr].pins; x++)
   {
     // Set wait time for darkDelay
-    if (signalFade[signalChannel[pntr] + x])
+    if (signale[signr].fadetime > 0)
     {
-      busyWait[signalChannel[pntr] + x] = millis() + fadeDuration;
+      busyWait[signale[signr].firstCH + x] = millis() + signale[signr].fadetime;
     }
     else
     {
-      busyWait[signalChannel[pntr] + x] = millis();
+      busyWait[signale[signr].firstCH + x] = millis();
     }
-    xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+    xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
   }
 }
 /////////////////
-void setFb0Hauptsignal(byte pntr)
+void setFb0Hauptsignal(uint8_t signr)
 { // led 2 (x=1) aan, de rest uit
-  for (byte x = 0; x < signalLeds[pntr]; x++)
+  for (byte x = 0; x < signale[signr].pins; x++)
   {
     if (x == 1)
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
 /////////////
-void setFb1Hauptsignal(byte pntr)
+void setFb1Hauptsignal(uint8_t signr)
 { // led 1 (x=0) aan, de rest uit
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
-    xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+    xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
   }
 }
-/////////////
+/////////////%%%%%%%% TOT HIER
 // lamp 3 = oranje
 // lamp 4 = groen (of mist)
 /////////////
-void setFb2Hauptsignalog(byte pntr)
+void setFb2Hauptsignalog(uint8_t signr)
 { // led 1&3 (x=0&2) aan, de rest uit
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -64,7 +64,7 @@ void setFb2Hauptsignalog(byte pntr)
     }
   }
 }
-void setFb3Hauptsignalog(byte pntr)
+void setFb3Hauptsignalog(uint8_t signr)
 { // led 1&4 (x=0&3) aan, de rest uit
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -83,7 +83,7 @@ void setFb3Hauptsignalog(byte pntr)
 // lamp 3 = groen
 // lamp 4 = oranje (of mist)
 /////////////
-void setFb2Hauptsignalgo(byte pntr)
+void setFb2Hauptsignalgo(uint8_t signr)
 { // led 1&4 (x=0&3) aan
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -98,7 +98,7 @@ void setFb2Hauptsignalgo(byte pntr)
     }
   }
 }
-void setFb3Hauptsignalgo(byte pntr)
+void setFb3Hauptsignalgo(uint8_t signr)
 { // led 1&3 (x=0&2) aan
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -117,7 +117,7 @@ void setFb3Hauptsignalgo(byte pntr)
 /////////////
 // lamp 5 = groen
 /////////////
-void setFb5Hauptsignal5(byte pntr)
+void setFb5Hauptsignal5(uint8_t signr)
 { // led 1&3&5 (x=0&2&4) aan, de rest uit
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -136,7 +136,7 @@ void setFb5Hauptsignal5(byte pntr)
 /////////////
 // lamp 5 = oranje
 /////////////
-void setFb6Hauptsignal5(byte pntr)
+void setFb6Hauptsignal5(uint8_t signr)
 { // led 3&5 (x=2&4) aan, de rest uit
   for (byte x = 0; x < signalLeds[pntr]; x++)
   {
@@ -154,7 +154,7 @@ void setFb6Hauptsignal5(byte pntr)
 // lamp 5 = oranje
 // lamp 6 = groen
 /////////////
-void setFb5Hauptsignal7(byte pntr)
+void setFb5Hauptsignal7(uint8_t signr)
 { // led 1&4&6 (x=0&3&5) aan, de rest uit
   xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
   for (byte x = 1; x < signalLeds[pntr]; x++)
@@ -170,7 +170,7 @@ void setFb5Hauptsignal7(byte pntr)
   }
 }
 /////////////
-void setFb6Hauptsignal7(byte pntr)
+void setFb6Hauptsignal7(uint8_t signr)
 { // led 3&5 (x=2&4) aan, de rest uit
   for (byte x = 0; x < signalLeds[pntr]; x++)
   {
