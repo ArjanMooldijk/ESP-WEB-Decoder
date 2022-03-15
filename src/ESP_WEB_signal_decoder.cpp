@@ -2,10 +2,12 @@
 // Version 1 (27-02-22)  Arjan Mooldijk
 
 #include <Arduino.h>
-#include <LittleFS.h>
+#include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
+
+#include <Settings.h>
 #include <GetFromFlash.h>
 #include <Signale.h>
 // Network credentials
@@ -15,6 +17,7 @@ IPAddress staticIP(192, 168, 0, 40); //fixed IP of booster monitor
 IPAddress gateway(192, 168, 0, 1); */
 const char *ssid = "CazMool";
 const char *password = "steak74;Mlles";
+const char *deviceName = "Seindecoder";
 IPAddress staticIP(192, 168, 178, 13); // fixed IP of booster monitor
 IPAddress gateway(192, 168, 178, 1);
 IPAddress subnet(255, 255, 255, 0);
@@ -29,10 +32,10 @@ const int anZahl = 16;
 const int ledPin[16] = {23, 22, 21, 19, 18, 17, 16, 15, 32, 33, 25, 26, 27, 14, 12, 13}; // corresponds to GPIO's for LED's
 const int freq = 5000;
 const int resolution = 8;
-const int fadeConst = fadeDuration / 10;
+int fix = fadeDuration / 10;
+const int fadeConst = fix;
 const bool runMode = true;
 
-#include <Settings.h>
 #include <ControlLeds.h>
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>
@@ -67,7 +70,7 @@ String processor(const String &var)
 ///////////////////////////////////////////////////////////////
 void setup()
 {
-  GetDecoderValues();
+  // GetDecoderValues();
 
   Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
   Dcc.pin(0, 2, 1); // Dcc-Signal an Pin2 ( = Int0 );
@@ -79,7 +82,7 @@ void setup()
 
   Serial.println("Initialising");
   // Initialize MYFS
-  if (!LITTLEFS.begin())
+  if (!SPIFFS.begin())
   {
     Serial.println("An Error has occurred while mounting FS");
     return;
@@ -88,11 +91,16 @@ void setup()
   {
     Serial.println("FS connect big success");
   }
+   /*  FILE *fp = NULL;
+  fp = fopen("test.CSV", "w"); // Will put the file at '/'
+  fwrite("stuff", 5, 1, fp);
+  fclose(fp); */
+
 
   // Connect to Wi-Fi with fixed IP
   WiFi.disconnect();
-  // WiFi.config(staticIP, gateway, subnet);
-  WiFi.hostname(decoderName);
+  WiFi.config(staticIP, gateway, subnet);
+  WiFi.hostname("Seindecoder");
   WiFi.begin(ssid, password);
   Serial.println("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED)
@@ -107,16 +115,16 @@ void setup()
 
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(LITTLEFS, "/index.html", String(), false, processor); });
+            { request->send(SPIFFS, "/index.html", String(), false, processor); });
   // Route to load style.css file
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(LITTLEFS, "/style.css", "text/css"); });
+            { request->send(SPIFFS, "/style.css", "text/css"); });
 
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
 
-  for (int ledChannel = 0; ledChannel < 16; ledChannel++)
+  /* for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
     // configure and attach LED PWM functionalitites
     ledcSetup(ledChannel, freq, resolution);
@@ -143,11 +151,11 @@ void setup()
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
   setDimSteps();
-  Initialiseer_decoder();
+  Initialiseer_decoder(); */
 }
 ////////////////////////////////////////////////////////////////
 void loop()
-{
+{/* 
   if (runMode)
   {
     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
@@ -160,5 +168,5 @@ void loop()
     dunkelVorsignal(0);
     setFb0Vorsignal(0);
     delay(5000);
-  }
+  } */
 }
