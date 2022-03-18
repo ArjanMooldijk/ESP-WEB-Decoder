@@ -9,13 +9,13 @@ void LED_on_fade(int channelNr)
   if (ledcRead(channelNr) == 0)
   {
     // increase the LED brightness
-    for (int dutyCycle = 1; dutyCycle < fadeconst[channelNr]-1; dutyCycle++)
+    for (int dutyCycle = 1; dutyCycle < fadeConst[channelNr]-1; dutyCycle++)
     {
       // changing the LED brightness with PWM
       ledcWrite(channelNr, dimStep[channelNr][dutyCycle]);
       delay(10);
     }
-    ledcWrite(channelNr, dimStep[channelNr][fadeconst[channelNr]-1]);
+    ledcWrite(channelNr, dimStep[channelNr][fadeConst[channelNr]-1]);
   }
 }
 void LED_on_nofade(int channelNr)
@@ -33,7 +33,7 @@ void LED_off_fade(int channelNr)
   if (ledcRead(channelNr) > 0)
   {
     // decrease the LED brightness
-    for (int dutyCycle = fadeconst[channelNr]-1; dutyCycle > 0; dutyCycle--)
+    for (int dutyCycle = fadeConst[channelNr]-1; dutyCycle > 0; dutyCycle--)
     {
       // changing the LED brightness with PWM
       ledcWrite(channelNr, dimStep[channelNr][dutyCycle]);

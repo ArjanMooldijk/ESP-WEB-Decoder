@@ -13,7 +13,7 @@ void setDimSteps()
     for (int x = 0; x < signale[scount].pins; x++) // voor ieder kanaal
     {
       float dimExp = 1.0 / (fadeConst[signale[scount].firstCH] - 1);
-      dimStep[signale[scount].firstCH + x][0] = 0;                                    // [0] is altijd 0
+      dimStep[signale[scount].firstCH + x][0] = 0;          // [0] is altijd 0
       dimFactor = pow(signale[scount].ChBright[x], dimExp); // grondgetal voor exponent
       if (signale[scount].fadetime > 200)
       {
@@ -37,9 +37,9 @@ void Initialiseer_decoder()
   for (uint8_t signr = 0; signr < this_dec[0].nbrofsig; signr++)
 
   { // set nbr of fade steps and darkdelay for each channel
-    for (uint8_t chNr = 0; chnr < signale[signr].pins; chNr++)
+    for (uint8_t chNr = 0; chNr < signale[signr].pins; chNr++)
     {
-      fadeconst[signale[signr].firstCH + chNr] = signale[signr].fadetime / 10;
+      fadeConst[signale[signr].firstCH + chNr] = signale[signr].fadetime / 10;
       darkDelay[signale[signr].firstCH + chNr] = signale[signr].darktime;
       maxLight[signale[signr].firstCH + chNr] = signale[signr].ChBright[chNr];
       if (signale[signr].fadetime > 0)
@@ -52,7 +52,7 @@ void Initialiseer_decoder()
     {
     case VorAdr1:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.print(" Vorsignal ");
@@ -63,7 +63,7 @@ void Initialiseer_decoder()
 
     case Vor1Adr:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.print(" Vorsignal ");
@@ -74,7 +74,7 @@ void Initialiseer_decoder()
 
     case ZwergAdr1:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.print(" Zwergsignal ");
@@ -85,7 +85,7 @@ void Initialiseer_decoder()
 
     case SIMHaupt:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.println(" SIM Hauptsignal");
@@ -94,7 +94,7 @@ void Initialiseer_decoder()
 
     case SIMVor:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.println(" SIM Vorsignal");
@@ -103,7 +103,7 @@ void Initialiseer_decoder()
 
     case HbB:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.println(" Halt bei Bedarf Signal");
@@ -112,22 +112,22 @@ void Initialiseer_decoder()
 
     case FSM:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
-      Serial.print(signale[signr].adress[0])
-          Serial.println(" Halt bei Bedarf Signal");
+      Serial.print(signale[signr].adress[0]);
+      Serial.println(" Halt bei Bedarf Signal");
       setHilfsignal(signr, 0); // Hetzelfde als SIM Vorsignal; gebruik dezelfde routines voor aansturing
       break;
 
     case HptAdr1:
       Serial.print("Channel: ");
-      Serial.print(signale[signr.firstCH]);
+      Serial.print(signale[signr].firstCH);
       Serial.print(" Adres: ");
       Serial.print(signale[signr].adress[0]);
       Serial.print(" Hauptsignal ");
       Serial.print(signale[signr].pins);
       Serial.println(" Leds");
-      setFb0Hauptsignal(x);
+      setFb0Hauptsignal(signr);
       break;
 
     default:

@@ -5,7 +5,7 @@
 void dunkelZwergsignal(uint8_t signr)
 {
   // Set wait time for darkDelay
-  if (signale[signr].fadetime >0])
+  if (signale[signr].fadetime >0)
   {
     busyWait[signale[signr].firstCH + 0] = millis() + signale[signr].fadetime; // Set wait time for darkDelay
     busyWait[signale[signr].firstCH + 1] = millis() + signale[signr].fadetime; // Set wait time for darkDelay

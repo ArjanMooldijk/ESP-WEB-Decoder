@@ -36,7 +36,7 @@ void HandleQueMsg(int pin)
 
   if (darkDelay[pin] > (millis() - busyWait[pin]))
   {
-    delay(darkDelay -((millis() - busyWait[pin])));
+    delay(darkDelay[pin] -(millis() - busyWait[pin]));
   }
 }
 ////////////////////////////////////////////////////////

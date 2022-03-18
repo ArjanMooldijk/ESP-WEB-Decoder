@@ -1,7 +1,7 @@
 #ifndef HandleAddress_h
 #define HandleAddress_h
 
-void HandleCommand(uint8_t signr; uint8_t index, uint8_t OutputAddr)
+void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 {
 
     switch (signale[signr].stype[index])

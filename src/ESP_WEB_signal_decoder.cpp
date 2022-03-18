@@ -53,7 +53,7 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
   {
     for (uint8_t index = 0; index < 3; index++)
     {
-      if (Addr == signale[signr].Adress[index])
+      if (Addr == signale[signr].adress[index])
       {
         HandleCommand(signr, index, OutputAddr);
       }
