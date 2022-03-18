@@ -32,8 +32,6 @@ const int anZahl = 16;
 const int ledPin[16] = {23, 22, 21, 19, 18, 17, 16, 15, 32, 33, 25, 26, 27, 14, 12, 13}; // corresponds to GPIO's for LED's
 const int freq = 5000;
 const int resolution = 8;
-int fix = fadeDuration / 10;
-const int fadeConst = fadeDuration / 10;
 const bool runMode = true;
 
 #include <ControlLeds.h>

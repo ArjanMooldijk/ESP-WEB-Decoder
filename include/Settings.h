@@ -10,7 +10,7 @@ const bool uit = false;
 const bool aan = true;
 struct Sein
 {
-    char* name;
+    char *name;
     uint8_t stype[3];
     int adress[3];
     int fadetime;
@@ -22,19 +22,21 @@ struct Sein
 
 struct Decoder
 {
-    char* name;                         //Name of the decoder
-    uint8_t nbrofsig;                     //Number of signals served
+    char *name;       // Name of the decoder
+    uint8_t nbrofsig; // Number of signals served
 };
 
 Decoder this_dec[1];
-Sein signale [5];
-byte signalLeds[16];                    // # leds per signal
-byte signalChannel[16];                 // Eerste pin per het sein
-byte Blink[16] = {0};                   // Flag to blink pin (for SIM)
-byte blinkState[16] = {0};              // Blink on/off
+Sein signale[5];
+bool signalFade[16] = {false};
+int fadeConst[8];
+int maxLight[16] = {0};
+uint8_t Blink[16] = {0};                // Flag to blink pin (for SIM)
+uint8_t blinkState[16] = {0};           // Blink on/off
 unsigned long previousMillis[16] = {0}; // will store last time LED was updated
-byte pinCounter = 0;                    // Variable to address the right pin
-unsigned long busyWait[8pntr] = {0};
+unsigned long busyWait[8] = {0};
 int dimStep[16][20] = {0};
+int darkDelay[16];
+int interval;
 
 #endif

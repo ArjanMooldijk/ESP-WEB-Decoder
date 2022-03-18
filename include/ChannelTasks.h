@@ -34,7 +34,7 @@ void HandleQueMsg(int pin)
   }
   //Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
 
-  if (darkDelay > (millis() - busyWait[pin]))
+  if (darkDelay[pin] > (millis() - busyWait[pin]))
   {
     delay(darkDelay -((millis() - busyWait[pin])));
   }

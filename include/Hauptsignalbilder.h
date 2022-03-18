@@ -51,31 +51,31 @@ void setFb1Hauptsignal(uint8_t signr)
 /////////////
 void setFb2Hauptsignalog(uint8_t signr)
 { // led 1&3 (x=0&2) aan, de rest uit
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if (x == 2)
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
 void setFb3Hauptsignalog(uint8_t signr)
 { // led 1&4 (x=0&3) aan, de rest uit
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if (x == 3)
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
@@ -85,31 +85,31 @@ void setFb3Hauptsignalog(uint8_t signr)
 /////////////
 void setFb2Hauptsignalgo(uint8_t signr)
 { // led 1&4 (x=0&3) aan
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if (x == 3)
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
 void setFb3Hauptsignalgo(uint8_t signr)
 { // led 1&3 (x=0&2) aan
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if (x == 2)
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
@@ -119,16 +119,16 @@ void setFb3Hauptsignalgo(uint8_t signr)
 /////////////
 void setFb5Hauptsignal5(uint8_t signr)
 { // led 1&3&5 (x=0&2&4) aan, de rest uit
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if ((x == 2) | (x == 4))
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
@@ -138,15 +138,15 @@ void setFb5Hauptsignal5(uint8_t signr)
 /////////////
 void setFb6Hauptsignal5(uint8_t signr)
 { // led 3&5 (x=2&4) aan, de rest uit
-  for (byte x = 0; x < signalLeds[pntr]; x++)
+  for (byte x = 0; x < signale[signr].pins; x++)
   {
     if ((x == 2) | (x == 4))
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
@@ -156,31 +156,31 @@ void setFb6Hauptsignal5(uint8_t signr)
 /////////////
 void setFb5Hauptsignal7(uint8_t signr)
 { // led 1&4&6 (x=0&3&5) aan, de rest uit
-  xQueueSend(queueCh[signalChannel[pntr] + 0], &aan, portMAX_DELAY);
-  for (byte x = 1; x < signalLeds[pntr]; x++)
+  xQueueSend(queueCh[signale[signr].firstCH + 0], &aan, portMAX_DELAY);
+  for (byte x = 1; x < signale[signr].pins; x++)
   {
     if ((x == 3) | (x == 5))
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }
 /////////////
 void setFb6Hauptsignal7(uint8_t signr)
 { // led 3&5 (x=2&4) aan, de rest uit
-  for (byte x = 0; x < signalLeds[pntr]; x++)
+  for (byte x = 0; x < signale[signr].pins; x++)
   {
     if ((x == 2) | (x == 4))
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &aan, portMAX_DELAY);
     }
     else
     {
-      xQueueSend(queueCh[signalChannel[pntr] + x], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
     }
   }
 }

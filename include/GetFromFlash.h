@@ -5,14 +5,6 @@
 #include <Preferences.h>
 
 Preferences SigDec_pref;
-unsigned int signalAdr[16];
-byte signalType[16];
-bool signalFade[16];
-bool darkBetween[16];
-int darkDelay;
-int maxLight[16];
-int interval;
-int fadeDuration;
 
 void GetDecoderValues()
 {
