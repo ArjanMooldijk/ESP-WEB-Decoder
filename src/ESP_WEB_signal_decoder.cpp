@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <SPIFFS.h>
+#include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
@@ -10,18 +11,6 @@
 #include <Settings.h>
 #include <GetFromFlash.h>
 #include <Signale.h>
-// Network credentials
-/* const char *ssid = "Wifinetwerk van Jos";
-const char *password = "suedRampe2020!";
-IPAddress staticIP(192, 168, 0, 40); //fixed IP of booster monitor
-IPAddress gateway(192, 168, 0, 1); */
-const char *ssid = "CazMool";
-const char *password = "steak74;Mlles";
-const char *deviceName = "Seindecoder";
-IPAddress staticIP(192, 168, 178, 13); // fixed IP of booster monitor
-IPAddress gateway(192, 168, 178, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress DNS(8, 8, 8, 8);
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +23,7 @@ const int freq = 5000;
 const int resolution = 8;
 const bool runMode = true;
 
+#include <ConnectWiFi.h>
 #include <ControlLeds.h>
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>
@@ -93,21 +83,7 @@ void setup()
 
   GetDecoderValues();
 
-  // Connect to Wi-Fi with fixed IP
-  WiFi.disconnect();
-  WiFi.config(staticIP, gateway, subnet);
-  WiFi.hostname(this_dec[0].name);
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
-
-  // Print ESP Local IP Address
-  Serial.println(WiFi.localIP());
+  //connect to WiFi
 
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)

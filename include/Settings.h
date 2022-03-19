@@ -38,5 +38,7 @@ unsigned long busyWait[8] = {0};
 int dimStep[16][20] = {0};
 int darkDelay[16];
 int interval;
+String ssid;
+String password;
 
 #endif
