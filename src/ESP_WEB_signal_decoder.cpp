@@ -7,7 +7,6 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
-
 #include <Settings.h>
 #include <GetFromFlash.h>
 #include <Signale.h>
@@ -24,6 +23,7 @@ const int resolution = 8;
 const bool runMode = true;
 
 #include <ConnectWiFi.h>
+#include <InitServerRequests.h>
 #include <ControlLeds.h>
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>
@@ -51,14 +51,6 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
   }
 }
 ///////////////////////////////////////////////////////////////
-
-// Replaces placeholder with DHT values
-String processor(const String &var)
-{
-  // Serial.println(var);
-  return String();
-}
-///////////////////////////////////////////////////////////////
 void setup()
 {
   Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
@@ -83,15 +75,9 @@ void setup()
 
   GetDecoderValues();
 
-  //connect to WiFi
+  // connect to WiFi
 
-  // Route for root / web page
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(SPIFFS, "/index.html", String(), false, processor); });
-  // Route to load style.css file
-  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(SPIFFS, "/style.css", "text/css"); });
-
+  init_Servers();
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
