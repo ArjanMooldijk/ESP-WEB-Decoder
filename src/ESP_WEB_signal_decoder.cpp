@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
+#include <ArduinoJson.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
 
