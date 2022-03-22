@@ -45,7 +45,6 @@ void setFb1Hauptsignal(uint8_t signr)
     xQueueSend(queueCh[signale[signr].firstCH + x], &uit, portMAX_DELAY);
   }
 }
-/////////////%%%%%%%% TOT HIER
 // lamp 3 = oranje
 // lamp 4 = groen (of mist)
 /////////////

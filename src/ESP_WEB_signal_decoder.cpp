@@ -3,26 +3,14 @@
 
 #include <Arduino.h>
 #include <SPIFFS.h>
+#include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
-
 #include <Settings.h>
 #include <GetFromFlash.h>
 #include <Signale.h>
-// Network credentials
-/* const char *ssid = "Wifinetwerk van Jos";
-const char *password = "suedRampe2020!";
-IPAddress staticIP(192, 168, 0, 40); //fixed IP of booster monitor
-IPAddress gateway(192, 168, 0, 1); */
-const char *ssid = "CazMool";
-const char *password = "steak74;Mlles";
-const char *deviceName = "Seindecoder";
-IPAddress staticIP(192, 168, 178, 13); // fixed IP of booster monitor
-IPAddress gateway(192, 168, 178, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress DNS(8, 8, 8, 8);
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -35,6 +23,8 @@ const int freq = 5000;
 const int resolution = 8;
 const bool runMode = true;
 
+#include <ConnectWiFi.h>
+#include <InitServerRequests.h>
 #include <ControlLeds.h>
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>
@@ -62,14 +52,6 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
   }
 }
 ///////////////////////////////////////////////////////////////
-
-// Replaces placeholder with DHT values
-String processor(const String &var)
-{
-  // Serial.println(var);
-  return String();
-}
-///////////////////////////////////////////////////////////////
 void setup()
 {
   Dcc.init(MAN_ID_DIY, 15, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
@@ -94,29 +76,9 @@ void setup()
 
   GetDecoderValues();
 
-  // Connect to Wi-Fi with fixed IP
-  WiFi.disconnect();
-  WiFi.config(staticIP, gateway, subnet);
-  WiFi.hostname(this_dec[0].name);
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
+  // connect to WiFi
 
-  // Print ESP Local IP Address
-  Serial.println(WiFi.localIP());
-
-  // Route for root / web page
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(SPIFFS, "/index.html", String(), false, processor); });
-  // Route to load style.css file
-  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(SPIFFS, "/style.css", "text/css"); });
-
+  init_Servers();
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
