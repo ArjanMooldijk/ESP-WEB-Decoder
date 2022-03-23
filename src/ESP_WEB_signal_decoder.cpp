@@ -2,6 +2,7 @@
 // Version 1 (27-02-22)  Arjan Mooldijk
 
 #include <Arduino.h>
+#include <FS.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
