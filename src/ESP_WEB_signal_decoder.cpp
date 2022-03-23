@@ -6,6 +6,7 @@
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
+#include <ArduinoJson.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
 #include <Settings.h>
