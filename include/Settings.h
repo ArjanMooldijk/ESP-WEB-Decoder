@@ -38,7 +38,9 @@ unsigned long busyWait[8] = {0};
 int dimStep[16][20] = {0};
 int darkDelay[16];
 int interval;
-String ssid;
-String password;
+#define JSON_CONFIG_FILE "/hostname.json"
+StaticJsonDocument<512> jsonHostNameFile;
+char hostName [20];
+bool shouldSaveConfig = false;
 
 #endif

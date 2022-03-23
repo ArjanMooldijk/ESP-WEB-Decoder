@@ -6,6 +6,67 @@
 
 Preferences SigDec_pref;
 
+void saveHostNameFile()
+// Save Config in JSON format
+{
+    Serial.println(F("Saving configuration..."));
+
+    jsonHostNameFile["hostName"] = hostName;
+
+    // Open config file
+    File configFile = SPIFFS.open(JSON_CONFIG_FILE, "w");
+    if (!configFile)
+    {
+        // Error, file did not open
+        Serial.println("failed to open config file for writing");
+    }
+
+    // Serialize JSON data to write to file
+    serializeJsonPretty(jsonHostNameFile, Serial);
+    if (serializeJson(jsonHostNameFile, configFile) == 0)
+    {
+        // Error writing file
+        Serial.println(F("Failed to write to file"));
+    }
+    // Close file
+    configFile.close();
+}
+
+bool loadHostNameFile()
+// Load existing configuration file
+{
+    // Uncomment if we need to format filesystem (debug)
+    // SPIFFS.format();
+
+    // Read configuration from FS json
+    if (SPIFFS.exists(JSON_CONFIG_FILE))
+    {
+        // The file exists, reading and loading
+        Serial.println("reading config file");
+        File configFile = SPIFFS.open(JSON_CONFIG_FILE, "r");
+        if (configFile)
+        {
+            Serial.println("Opened configuration file");
+            DeserializationError error = deserializeJson(jsonHostNameFile, configFile);
+            // serializeJsonPretty(jsonHostNameFile, Serial);
+            if (!error)
+            {
+                Serial.println("Parsing JSON");
+
+                strcpy(hostName, jsonHostNameFile["hostName"]);
+
+                return true;
+            }
+            else
+            {
+                // Error loading JSON data
+                Serial.println("Failed to load json config");
+            }
+        }
+    }
+    return false;
+}
+
 void GetDecoderValues()
 {
     SigDec_pref.begin("parameters", true);
@@ -19,30 +80,6 @@ void GetDecoderValues()
     char s_buffer[sigLen]; // prepare a buffer for the data
     SigDec_pref.getBytes("Signale", s_buffer, sigLen);
     memcpy(signale, s_buffer, sigLen);
-
-    SigDec_pref.end();
-}
-
-void GetWiFiCredentials()
-{
-    SigDec_pref.begin("credentials", false);
-
-    ssid = SigDec_pref.getString("ssid", "");
-    password = SigDec_pref.getString("password", "");
-
-    SigDec_pref.end();
-}
-
-void PutWiFiCredentials()
-{
-    // convert credentials to char*
-    // char *txtSSID = const_cast<char *>(ssid.c_str());
-    // char *txtPassword = const_cast<char *>(password.c_str());
-
-    SigDec_pref.begin("credentials", false);
-
-    SigDec_pref.putString("ssid", ssid);
-    SigDec_pref.putString("password", password);
 
     SigDec_pref.end();
 }

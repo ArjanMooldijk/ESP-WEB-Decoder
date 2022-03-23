@@ -5,6 +5,7 @@
 #include <FS.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
+#include <WiFiManager.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 #include <AsyncElegantOTA.h>
@@ -78,6 +79,7 @@ void setup()
   GetDecoderValues();
 
   // connect to WiFi
+  MakeWiFiConnection();
 
   init_Servers();
   // Start servers

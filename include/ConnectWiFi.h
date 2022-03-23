@@ -4,57 +4,93 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
-// Network credentials
-/* const char *ssid = "Wifinetwerk van Jos";
-const char *password = "suedRampe2020!";
-IPAddress staticIP(192, 168, 0, 40); //fixed IP of booster monitor
-IPAddress gateway(192, 168, 0, 1); */
-/*
-const char *ssid = "CazMool";
-const char *password = "steak74;Mlles";
-const char *deviceName = "Seindecoder"; */
-IPAddress staticIP(192, 168, 178, 13); // fixed IP of booster monitor
-IPAddress gateway(192, 168, 178, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress DNS(8, 8, 8, 8);
-
-void MakeOwnNetwork()
+void saveConfigCallback()
+// Callback notifying us of the need to save configuration
 {
-    const char *ssid = "Signal_Decoder";
-    const char *password = "super_strong_password";
-    WiFi.mode(WIFI_AP);
-    WiFi.softAP(ssid, password);
-    Serial.print("[+] AP Created with IP Gateway ");
-    Serial.println(WiFi.softAPIP());
+  Serial.println("Should save config");
+  shouldSaveConfig = true;
+}
+ 
+void configModeCallback(WiFiManager *myWiFiManager)
+// Called when config mode launched
+{
+  Serial.println("Entered Configuration Mode");
+ 
+  Serial.print("Config SSID: ");
+  Serial.println(myWiFiManager->getConfigPortalSSID());
+ 
+  Serial.print("Config IP Address: ");
+  Serial.println(WiFi.softAPIP());
 }
 
-void MakeWiFiConnection(String ssid, String password)
+void MakeWiFiConnection()
 {
-    // Connect to Wi-Fi with fixed IP
-    WiFi.disconnect();
-    WiFi.config(staticIP, gateway, subnet);
-    // WiFi.hostname(this_dec[0].name);
-    WiFi.begin(ssid.c_str(), password.c_str());
-    Serial.println("Connecting to WiFi");
-    while (WiFi.status() != WL_CONNECTED)
+    WiFiManager wm;
+    bool forceConfig = false;
+    bool hostNameFileExist = loadHostNameFile();
+    if (!hostNameFileExist)
     {
-        delay(500);
-        Serial.print(".");
+        Serial.println(F("Forcing config mode as there is no saved config"));
+        forceConfig = true;
     }
-    Serial.println();
 
-    // Print ESP Local IP Address
-    Serial.println(WiFi.localIP());
-}
+    WiFi.mode(WIFI_STA);
+    delay(200); // do not remove, give time for STA_START
 
-void ArrangeConnection()
-{
-    GetWiFiCredentials();
-    if (ssid == "")
+    // reset settings - wipe stored credentials for testing
+    // these are stored by the esp library
+    // wm.resetSettings();
+
+    WiFi.setHostname(hostName);
+#ifdef ESP32MDNS_H
+    if (MDNS.begin(_hostname))
     {
-        MakeOwnNetwork();
-        // RegisterWifiCredentials(ssid, password);
+        MDNS.addService("http", "tcp", 80);
     }
-    MakeWiFiConnection(ssid, password);
+#endif
+
+    // Set config save notify callback
+     wm.setSaveConfigCallback(saveConfigCallback);
+
+     // Set callback that gets called when connecting to previous WiFi fails, and enters Access Point mode
+     wm.setAPCallback(configModeCallback);
+    
+    // Text box (String) - 20 characters maximum
+    WiFiManagerParameter custom_text_box("hostName", "Network name", hostName, 20);
+    wm.addParameter(&custom_text_box);
+
+    if (forceConfig)
+    // Run in case of missing hostname file (first time)
+    {
+        if (!wm.startConfigPortal("NeueDekoder", "Ausserberg"))
+        {
+            Serial.println("failed to connect and hit timeout");
+            delay(3000);
+            // reset and try again, or maybe put it to deep sleep
+            ESP.restart();
+            delay(5000);
+        }
+    }
+    else
+    {
+        if (!wm.autoConnect("NeueDekoder", "Ausserberg"))
+        {
+            Serial.println("failed to connect and hit timeout");
+            delay(3000);
+            // if we still have not connected restart and try all over again
+            ESP.restart();
+            delay(5000);
+        }
+    }
+    // Copy the string value
+    strncpy(hostName, custom_text_box.getValue(), sizeof(hostName));
+    Serial.print("hostName: ");
+    Serial.println(hostName);
+
+    // Save the custom parameters to FS
+    if (shouldSaveConfig)
+    {
+        saveHostNameFile();
+    }
 }
 #endif
