@@ -18,6 +18,13 @@
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const char *ssid = "CazMool";
+const char *password = "steak74;Mlles";
+IPAddress staticIP(192, 168, 178, 30); // fixed IP of booster monitor
+IPAddress gateway(192, 168, 178, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress DNS(8, 8, 8, 8);
+const char *deviceName = "Stadel";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 
@@ -81,8 +88,24 @@ void setup()
   // GetDecoderValues();
 
   // connect to WiFi
-  MakeWiFiConnection();
+  // MakeWiFiConnection();
+  ///////////////////////////////////////////////////////////////
+  // Connect to Wi-Fi with fixed IP
+  WiFi.disconnect();
+  WiFi.config(staticIP, gateway, subnet);
+  WiFi.hostname("booster-monitor");
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
 
+  // Print ESP Local IP Address
+  Serial.println(WiFi.localIP());
+  /////////////////////////////////////////////////
   init_Servers();
   // Start servers
   AsyncElegantOTA.begin(&server);
@@ -114,11 +137,11 @@ void setup()
   xTaskCreatePinnedToCore(ch14Loop, "CH14Task", 1000, NULL, 1, &Task_Ch[14], 1);
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
-    Serial.println("Taken gestart");
+  Serial.println("Taken gestart");
   setDimSteps();
-    Serial.println("Dim curves ingesteld");
+  Serial.println("Dim curves ingesteld");
   Initialiseer_decoder();
-    Serial.println("Decoder geinitialiseerd");
+  Serial.println("Decoder geinitialiseerd");
 }
 ////////////////////////////////////////////////////////////////
 void loop()
