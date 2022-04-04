@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 
 void saveConfigCallback()
 // Callback notifying us of the need to save configuration
@@ -39,7 +41,7 @@ void MakeWiFiConnection()
 
     // reset settings - wipe stored credentials for testing
     // these are stored by the esp library
-    wm.resetSettings();
+    // wm.resetSettings();
 
     WiFi.setHostname(hostName);
 #ifdef ESP32MDNS_H

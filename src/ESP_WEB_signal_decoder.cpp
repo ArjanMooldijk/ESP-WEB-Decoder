@@ -7,9 +7,9 @@
 #include <WiFi.h>
 #include <WiFiManager.h>
 
+#include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
-#include <AsyncTCP.h>
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
 #include <Settings.h>
@@ -78,7 +78,7 @@ void setup()
     Serial.println("FS connect big success");
   }
 
-  GetDecoderValues();
+  // GetDecoderValues();
 
   // connect to WiFi
   MakeWiFiConnection();
@@ -114,8 +114,11 @@ void setup()
   xTaskCreatePinnedToCore(ch14Loop, "CH14Task", 1000, NULL, 1, &Task_Ch[14], 1);
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
+    Serial.println("Taken gestart");
   setDimSteps();
+    Serial.println("Dim curves ingesteld");
   Initialiseer_decoder();
+    Serial.println("Decoder geinitialiseerd");
 }
 ////////////////////////////////////////////////////////////////
 void loop()
