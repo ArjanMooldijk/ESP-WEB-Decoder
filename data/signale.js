@@ -15,7 +15,7 @@ const typeSignalen = `
                "Dunkel"
           ],
           "sigDraden": 2,
-          "sigImage": "images/Vor2.gif"
+          "sigImage": "/Vor2.gif"
      },
      {
           "sigType": "Vor4",
@@ -35,7 +35,7 @@ const typeSignalen = `
                "Dunkel"
           ],
           "sigDraden": 4,
-          "sigImage": "images/Vor4.gif"
+          "sigImage": "/Vor4.gif"
      },
      {
           "sigType": "Vors5",
@@ -56,7 +56,7 @@ const typeSignalen = `
                "Dunkel"
           ],
           "sigDraden": 5,
-          "sigImage": "images/Vr5.gif"
+          "sigImage": "/Vr5.gif"
      },
      {
           "sigType": "H2gr",
@@ -71,7 +71,7 @@ const typeSignalen = `
                "Fb1"
           ],
           "sigDraden": 2,
-          "sigImage": "images/H2gr"
+          "sigImage": "/H2gr"
      },
      {
           "sigType": "H3gro",
@@ -88,7 +88,7 @@ const typeSignalen = `
                "Fb2"
           ],
           "sigDraden": 3,
-          "sigImage": "images/H3gro.gif"
+          "sigImage": "/H3gro.gif"
      },
      {
           "sigType": "H3grg",
@@ -105,7 +105,7 @@ const typeSignalen = `
                "Fb3"
           ],
           "sigDraden": 3,
-          "sigImage": "images/H3grg.gif"
+          "sigImage": "/H3grg.gif"
      },
      {
           "sigType": "H4grog",
@@ -123,7 +123,7 @@ const typeSignalen = `
                "Fb3"
           ],
           "sigDraden": 4,
-          "sigImage": "images/H4grog.gif"
+          "sigImage": "/H4grog.gif"
      },
      {
           "sigType": "H4goro",
@@ -141,7 +141,7 @@ const typeSignalen = `
                "Fb6"
           ],
           "sigDraden": 4,
-          "sigImage": "images/H4goro.gif"
+          "sigImage": "/H4goro.gif"
      },
      {
           "sigType": "H5grgog",
@@ -161,7 +161,7 @@ const typeSignalen = `
                "Fb5"
           ],
           "sigDraden": 5,
-          "sigImage": "images/H5grgog.gif"
+          "sigImage": "/H5grgog.gif"
      },
      {
           "sigType": "H5grogo",
@@ -181,7 +181,7 @@ const typeSignalen = `
                "Fb6"
           ],
           "sigDraden": 5,
-          "sigImage": "images/H5grogo.gif"
+          "sigImage": "/H5grogo.gif"
      },
      {
           "sigType": "H7gogor",
@@ -201,7 +201,7 @@ const typeSignalen = `
                "Fb6"
           ],
           "sigDraden": 5,
-          "sigImage": "images/H7gogor.gif"
+          "sigImage": "/H7gogor.gif"
      },
      {
           "sigType": "H7ggogr",
@@ -221,7 +221,7 @@ const typeSignalen = `
                "Fb5"
           ],
           "sigDraden": 5,
-          "sigImage": "images/H7ggogr.gif"
+          "sigImage": "/H7ggogr.gif"
      },
      {
           "sigType": "H7gogogr",
@@ -242,7 +242,7 @@ const typeSignalen = `
                "Fb6"
           ],
           "sigDraden": 6,
-          "sigImage": "images/H7gogogr.gif"
+          "sigImage": "/H7gogogr.gif"
      },
      {
           "sigType": "Zwerg",
@@ -259,7 +259,7 @@ const typeSignalen = `
                "Warnung"
           ],
           "sigDraden": 3,
-          "sigImage": "images/Zwerg.gif"
+          "sigImage": "/Zwerg.gif"
      },
      {
           "sigType": "SIMV",
@@ -274,7 +274,7 @@ const typeSignalen = `
                "Fahrt"
           ],
           "sigDraden": 1,
-          "sigImage": "images/SIM Vor.gif"
+          "sigImage": "/SIM Vor.gif"
      },
      {
           "sigType": "SIMH",
@@ -289,7 +289,7 @@ const typeSignalen = `
                "Fahrt"
           ],
           "sigDraden": 1,
-          "sigImage": "images/sim.png"
+          "sigImage": "/sim.png"
      },
      {
           "sigType": "HbB",
@@ -304,7 +304,7 @@ const typeSignalen = `
                "Fahrt"
           ],
           "sigDraden": 1,
-          "sigImage": "images/Bedarf-Halt.gif"
+          "sigImage": "/Bedarf-Halt.gif"
      },
      {
           "sigType": "FSM",
@@ -319,6 +319,6 @@ const typeSignalen = `
                "Fahrt"
           ],
           "sigDraden": 1,
-          "sigImage": "images/fsm.jpg"
+          "sigImage": "/fsm.jpg"
      }
 ]`;

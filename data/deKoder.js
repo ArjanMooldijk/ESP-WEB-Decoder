@@ -4,7 +4,7 @@ const deKoder = `
     "sigConnected": [
         {
             "sigId":0,
-            "sigType": "Vor4",
+            "sigType": "Vor4.gif",
             "sigDraden": 4,
             "sigChannel": 0,
             "sigAdressen": [
@@ -12,7 +12,7 @@ const deKoder = `
                 512,
                 513
             ],
-            "sigImage": "images/Vor4.gif",
+            "sigImage": "Vor4.gif",
             "sigFade": 150,
             "sigDark": 300,
             "sigLamp": [200,200,110,110]
@@ -26,7 +26,7 @@ const deKoder = `
                 514,
                 515
             ],
-            "sigImage": "images/H3gro.gif",
+            "sigImage": "H3gro.gif",
             "sigFade": 150,
             "sigDark": 300,
             "sigLamp": [110,200,150]

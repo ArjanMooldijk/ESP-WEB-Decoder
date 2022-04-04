@@ -39,7 +39,7 @@ void MakeWiFiConnection()
 
     // reset settings - wipe stored credentials for testing
     // these are stored by the esp library
-    // wm.resetSettings();
+    wm.resetSettings();
 
     WiFi.setHostname(hostName);
 #ifdef ESP32MDNS_H
