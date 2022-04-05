@@ -1,0 +1,11 @@
+{
+    "sigType": "Vor2",
+    "sigHoofdtype": "voorsein",
+    "sigComment": "Voorsein 2 draden",
+    "sigNbrAdr": 2,
+    "sigAdrType": [
+        "VorAdr1",
+        "VorAdr2Dkl"
+    ],
+    "sigDraden": 2
+}

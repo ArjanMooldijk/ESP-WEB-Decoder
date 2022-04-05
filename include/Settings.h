@@ -10,8 +10,8 @@ const bool uit = false;
 const bool aan = true;
 struct Sein
 {
-    char *name;
-    uint8_t stype[3];
+    uint8_t sigId;
+    char* stype;
     int adress[3];
     int fadetime;
     int darktime;
@@ -27,7 +27,7 @@ struct Decoder
 };
 
 Decoder this_dec[1];
-Sein signale[5];
+Sein signale[8];
 bool signalFade[16] = {false};
 int fadeConst[8];
 int maxLight[16] = {0};
@@ -40,7 +40,7 @@ int darkDelay[16];
 int interval;
 #define JSON_CONFIG_FILE "/hostname.json"
 StaticJsonDocument<512> jsonHostNameFile;
-char hostName [20];
+char hostName[20];
 bool shouldSaveConfig = false;
 
 #endif

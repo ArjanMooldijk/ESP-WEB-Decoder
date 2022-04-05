@@ -80,17 +80,17 @@ void init_Servers()
     server.on("/H7gogogr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7gogogr.gif", "image/gif"); });
               
-    server.on("/SIM Vor", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/SIM Vor.gif", "image/gif"); });
+    server.on("/SIMV", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/SIMV.gif", "image/gif"); });
               
-    server.on("/sim", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/sim.png", "image/png"); });
+    server.on("/SIMH", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/SIMH.png", "image/png"); });
               
-    server.on("/fsm", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/fsm.jpg", "image/jpg"); });
+    server.on("/Fsm", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/Fsm.jpg", "image/jpg"); });
               
-    server.on("/Bedraf-Halt", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/Bedraf-Halt.gif", "image/gif"); });
+    server.on("/HbB", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/HbB.gif", "image/gif"); });
               
     server.on("/Zwerg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Zwerg.gif", "image/gif"); });

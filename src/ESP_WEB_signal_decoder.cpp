@@ -85,10 +85,11 @@ void setup()
     Serial.println("FS connect big success");
   }
 
-  // GetDecoderValues();
+  GetDecoderValues();
+  GetSignalValues();
 
   // connect to WiFi
-  MakeWiFiConnection();
+  // MakeWiFiConnection();
   ///////////////////////////////////////////////////////////////
   // Connect to Wi-Fi with fixed IP
   // WiFi.disconnect();
@@ -106,10 +107,10 @@ void setup()
   // // Print ESP Local IP Address
   // Serial.println(WiFi.localIP());
   /////////////////////////////////////////////////
-  init_Servers();
-  // Start servers
-  AsyncElegantOTA.begin(&server);
-  server.begin();
+  // init_Servers();
+  // // Start servers
+  // AsyncElegantOTA.begin(&server);
+  // server.begin();
 
   for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {

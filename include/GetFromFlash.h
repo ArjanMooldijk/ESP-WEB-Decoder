@@ -76,6 +76,12 @@ void GetDecoderValues()
     SigDec_pref.getBytes("Decoder", d_buffer, decLen);
     memcpy(this_dec, d_buffer, decLen);
 
+    SigDec_pref.end();
+}
+void GetSignalValues()
+{
+    SigDec_pref.begin("parameters", true);
+
     size_t sigLen = SigDec_pref.getBytesLength("Signale");
     char s_buffer[sigLen]; // prepare a buffer for the data
     SigDec_pref.getBytes("Signale", s_buffer, sigLen);
@@ -87,35 +93,139 @@ void GetDecoderValues()
 void PutDecoderValues()
 {
     SigDec_pref.begin("parameters", false);
-
     SigDec_pref.putBytes("Decoder", this_dec, sizeof(this_dec));
-    SigDec_pref.putBytes("Signale", signale, sizeof(signale));
-
     SigDec_pref.end();
-    /*
-        this_dec[0].name = "Seindecoder";
-        this_dec[0].nbrofsig = 1;
+}
 
-        signale[0].name = "Stadel";
-        signale[0].stype[0] = VorAdr1;
-        signale[0].stype[1] = VorAdr2;
-        signale[0].stype[2] = VorAdr3Dkl;
+void PutSignalValues()
+{
+    SigDec_pref.begin("parameters", false);
+    SigDec_pref.putBytes("Signale", signale, sizeof(signale));
+    SigDec_pref.end();
+}
 
-        signale[0].adress[0] = 401;
-        signale[0].adress[1] = 402;
-        signale[0].adress[2] = NULL;
+void createSignale()
+{
 
-        signale[0].fadetime = 150;
-        signale[0].darktime = 300;
-        signale[0].firstCH = 0;
-        signale[0].pins = 4;
+    signale[0].sigId = 0;
+    signale[0].stype = "Vor4";
 
-        signale[0].ChBright[0] = 200;
-        signale[0].ChBright[1] = 200;
-        signale[0].ChBright[2] = 200;
-        signale[0].ChBright[3] = 200;
-        signale[0].ChBright[4] = NULL;
-        signale[0].ChBright[5] = NULL; */
+    signale[0].adress[0] = 401;
+    signale[0].adress[1] = 402;
+    signale[0].adress[2] = NULL;
+
+    signale[0].fadetime = 150;
+    signale[0].darktime = 300;
+    signale[0].firstCH = 0;
+    signale[0].pins = 4;
+
+    signale[0].ChBright[0] = 200;
+    signale[0].ChBright[1] = 200;
+    signale[0].ChBright[2] = 200;
+    signale[0].ChBright[3] = 200;
+    signale[0].ChBright[4] = NULL;
+    signale[0].ChBright[5] = NULL;
+
+    signale[1].sigId = 1;
+    signale[1].stype = "H3gro";
+
+    signale[1].adress[0] = 403;
+    signale[1].adress[1] = 404;
+    signale[1].adress[2] = NULL;
+
+    signale[1].fadetime = 150;
+    signale[1].darktime = 300;
+    signale[1].firstCH = 0;
+    signale[1].pins = 4;
+
+    signale[1].ChBright[0] = 200;
+    signale[1].ChBright[1] = 200;
+    signale[1].ChBright[2] = 200;
+    signale[1].ChBright[3] = NULL;
+    signale[1].ChBright[4] = NULL;
+    signale[1].ChBright[5] = NULL;
+}
+
+void cleanSignale()
+{
+    signale[0].sigId = NULL;
+    signale[0].stype = "";
+
+    signale[0].adress[0] = NULL;
+    signale[0].adress[1] = NULL;
+    signale[0].adress[2] = NULL;
+
+    signale[0].fadetime = NULL;
+    signale[0].darktime = NULL;
+    signale[0].firstCH = NULL;
+    signale[0].pins = NULL;
+
+    signale[0].ChBright[0] = NULL;
+    signale[0].ChBright[1] = NULL;
+    signale[0].ChBright[2] = NULL;
+    signale[0].ChBright[3] = NULL;
+    signale[0].ChBright[4] = NULL;
+    signale[0].ChBright[5] = NULL;
+
+    signale[1].sigId = NULL;
+    signale[1].stype = "";
+
+    signale[1].adress[0] = NULL;
+    signale[1].adress[1] = NULL;
+    signale[1].adress[2] = NULL;
+
+    signale[1].fadetime = NULL;
+    signale[1].darktime = NULL;
+    signale[1].firstCH = NULL;
+    signale[1].pins = NULL;
+
+    signale[1].ChBright[0] = NULL;
+    signale[1].ChBright[1] = NULL;
+    signale[1].ChBright[2] = NULL;
+    signale[1].ChBright[3] = NULL;
+    signale[1].ChBright[4] = NULL;
+    signale[1].ChBright[5] = NULL;
+}
+
+void printSignale()
+{
+    Serial.println(signale[0].sigId);
+    Serial.println(signale[0].stype);
+
+    Serial.println(signale[0].adress[0]);
+    Serial.println(signale[0].adress[1]);
+    Serial.println(signale[0].adress[2]);
+
+    Serial.println(signale[0].fadetime);
+    Serial.println(signale[0].darktime);
+    Serial.println(signale[0].firstCH);
+    Serial.println(signale[0].pins);
+
+    Serial.println(signale[0].ChBright[0]);
+    Serial.println(signale[0].ChBright[1]);
+    Serial.println(signale[0].ChBright[2]);
+    Serial.println(signale[0].ChBright[3]);
+    Serial.println(signale[0].ChBright[4]);
+    Serial.println(signale[0].ChBright[5]);
+
+    Serial.println(signale[1].sigId);
+    Serial.println(signale[1].stype);
+
+    Serial.println(signale[1].adress[0]);
+    Serial.println(signale[1].adress[1]);
+    Serial.println(signale[1].adress[2]);
+
+    Serial.println(signale[1].fadetime);
+    Serial.println(signale[1].darktime);
+    Serial.println(signale[1].firstCH);
+    Serial.println(signale[1].pins);
+
+    Serial.println(signale[1].ChBright[0]);
+    Serial.println(signale[1].ChBright[1]);
+    Serial.println(signale[1].ChBright[2]);
+    Serial.println(signale[1].ChBright[3]);
+    Serial.println(signale[1].ChBright[4]);
+    Serial.println(signale[1].ChBright[5]);
 }
 
 #endif

@@ -290,7 +290,7 @@ const typeSignalen = `
           "sigDraden": 1
      },
      {
-          "sigType": "FSM",
+          "sigType": "Fsm",
           "sigHoofdtype": "overig",
           "sigComment": "Fahrtstellungsmelder",
           "sigNbrAdr": 1,
