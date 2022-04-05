@@ -14,7 +14,8 @@ const typeSignalen = `
                "Fb1",
                "Dunkel"
           ],
-          "sigDraden": 2
+          "sigDraden": 2,
+          "sigImage": "/Vor2"
      },
      {
           "sigType": "Vor4",
@@ -33,7 +34,8 @@ const typeSignalen = `
                "Fb3",
                "Dunkel"
           ],
-          "sigDraden": 4
+          "sigDraden": 4,
+          "sigImage": "/Vor4"
      },
      {
           "sigType": "Vors5",
@@ -53,7 +55,8 @@ const typeSignalen = `
                "Fb5",
                "Dunkel"
           ],
-          "sigDraden": 5
+          "sigDraden": 5,
+          "sigImage": "/Vor5"
      },
      {
           "sigType": "H2gr",
@@ -67,7 +70,8 @@ const typeSignalen = `
                "Halt",
                "Fb1"
           ],
-          "sigDraden": 2
+          "sigDraden": 2,
+          "sigImage": "/H2gr"
      },
      {
           "sigType": "H3gro",
@@ -83,7 +87,8 @@ const typeSignalen = `
                "Fb1",
                "Fb2"
           ],
-          "sigDraden": 3
+          "sigDraden": 3,
+          "sigImage": "/H3gro"
      },
      {
           "sigType": "H3grg",
@@ -99,7 +104,8 @@ const typeSignalen = `
                "Fb1",
                "Fb3"
           ],
-          "sigDraden": 3
+          "sigDraden": 3,
+          "sigImage": "/H3grg"
      },
      {
           "sigType": "H4grog",
@@ -116,7 +122,8 @@ const typeSignalen = `
                "Fb2",
                "Fb3"
           ],
-          "sigDraden": 4
+          "sigDraden": 4,
+          "sigImage": "/H4grog"
      },
      {
           "sigType": "H4goro",
@@ -133,7 +140,8 @@ const typeSignalen = `
                "Fb2",
                "Fb6"
           ],
-          "sigDraden": 4
+          "sigDraden": 4,
+          "sigImage": "/H4goro"
      },
      {
           "sigType": "H5grgog",
@@ -152,7 +160,8 @@ const typeSignalen = `
                "Fb3",
                "Fb5"
           ],
-          "sigDraden": 5
+          "sigDraden": 5,
+          "sigImage": "/H5grgog"
      },
      {
           "sigType": "H5grogo",
@@ -171,7 +180,8 @@ const typeSignalen = `
                "Fb3",
                "Fb6"
           ],
-          "sigDraden": 5
+          "sigDraden": 5,
+          "sigImage": "/H5grogo"
      },
      {
           "sigType": "H7gogor",
@@ -190,7 +200,8 @@ const typeSignalen = `
                "Fb3",
                "Fb6"
           ],
-          "sigDraden": 5
+          "sigDraden": 5,
+          "sigImage": "/H7gogor"
      },
      {
           "sigType": "H7ggogr",
@@ -209,7 +220,8 @@ const typeSignalen = `
                "Fb3",
                "Fb5"
           ],
-          "sigDraden": 5
+          "sigDraden": 5,
+          "sigImage": "/H7ggogr"
      },
      {
           "sigType": "H7gogogr",
@@ -229,7 +241,8 @@ const typeSignalen = `
                "Fb5",
                "Fb6"
           ],
-          "sigDraden": 6
+          "sigDraden": 6,
+          "sigImage": "/H7gogogr"
      },
      {
           "sigType": "Zwerg",
@@ -245,7 +258,8 @@ const typeSignalen = `
                "Fahrt",
                "Warnung"
           ],
-          "sigDraden": 3
+          "sigDraden": 3,
+          "sigImage": "/Zwerg"
      },
      {
           "sigType": "SIMV",
@@ -259,7 +273,8 @@ const typeSignalen = `
                "Halt",
                "Fahrt"
           ],
-          "sigDraden": 1
+          "sigDraden": 1,
+          "sigImage": "/SIM Vor"
      },
      {
           "sigType": "SIMH",
@@ -273,7 +288,8 @@ const typeSignalen = `
                "Halt",
                "Fahrt"
           ],
-          "sigDraden": 1
+          "sigDraden": 1,
+          "sigImage": "/sim"
      },
      {
           "sigType": "HbB",
@@ -287,7 +303,8 @@ const typeSignalen = `
                "Halt",
                "Fahrt"
           ],
-          "sigDraden": 1
+          "sigDraden": 1,
+          "sigImage": "/Bedarf-Halt"
      },
      {
           "sigType": "FSM",
@@ -301,6 +318,7 @@ const typeSignalen = `
                "Halt",
                "Fahrt"
           ],
-          "sigDraden": 1
+          "sigDraden": 1,
+          "sigImage": "/fsm"
      }
 ]`;

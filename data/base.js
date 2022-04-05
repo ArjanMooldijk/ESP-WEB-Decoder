@@ -394,7 +394,7 @@ var Nsein = (function() {
             "sigDraden": selSignalType[0].sigDraden,
             "sigChannel": nextChannel,
             "sigAdressen": [parseInt($("#adres1").val())],
-            "sigImage": selSignalType[0].sigImage,
+            // "sigImage": selSignalType[0].sigImage,
             "sigFade": $("#fade").val() * 10,
             "sigDark": $("#dark").val() * 10,
             "sigLamp": [200]

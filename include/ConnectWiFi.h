@@ -64,7 +64,8 @@ void MakeWiFiConnection()
     if (forceConfig)
     // Run in case of missing hostname file (first time)
     {
-        if (!wm.startConfigPortal("NeueDekoder", "Ausserberg"))
+            Serial.println("eerste");
+        if (!wm.startConfigPortal("NeueDekoder"))
         {
             Serial.println("failed to connect and hit timeout");
             delay(3000);
@@ -75,7 +76,8 @@ void MakeWiFiConnection()
     }
     else
     {
-        if (!wm.autoConnect("NeueDekoder", "Ausserberg"))
+            Serial.println("tweede");
+        if (!wm.autoConnect("NeueDekoder"))
         {
             Serial.println("failed to connect and hit timeout");
             delay(3000);

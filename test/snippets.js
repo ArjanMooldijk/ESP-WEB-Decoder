@@ -1,5 +1,5 @@
 const plaatjeHTML = '' +
-    '<img src="{{sigType}}" height="80">';
+    '<img src="{{sigImage}}" height="80">';
 
 const lampHTML = '' +
     '<div class="item2">' +
@@ -91,7 +91,7 @@ const cleanAllConnected = '' +
     '{{#connSignal}}' +
     '<div class="signal-container">' +
     '<div id="image" class="plaatje">' +
-    '<img src="{{sigType}}" width="auto" height="80px">' +
+    '<img src="{{sigImage}}" width="auto" height="80px">' +
     '</div>' +
     '<div class="s-display">' +
     '<div class="s-data">' +

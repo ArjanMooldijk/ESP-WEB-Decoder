@@ -41,59 +41,59 @@ void init_Servers()
     server.on("/snippets.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/snippets.js", "text/plain"); });
     // Route to load jquery-3.6.0.min.js file
-    server.on("/Vor2.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/Vor2", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor2.gif", "image/gif"); });
     // Route to load jquery-3.6.0.min.js file
-    server.on("/Vor4.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/Vor4", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor4.gif", "image/gif"); });
     // Route to load jquery-3.6.0.min.js file
-    server.on("/Vor5.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/Vor5", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor5.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H2gr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H2gr.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H3gro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H3gro.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H3grg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H3grg.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H4grog", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H4grog.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H4goro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H4goro.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H5grogo", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H5grogo.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H5grgog", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H5grgog.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H3H7ggogrro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7ggogr.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H7gogor", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7gogor.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H7gogogr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7gogogr.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/SIM Vor", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/SIM Vor.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/sim", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/sim.png", "image/png"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/fsm", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/fsm.jpg", "image/jpg"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/Bedraf-Halt", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Bedraf-Halt.gif", "image/gif"); });
               
-    server.on("/H3gro.gif", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/Zwerg", "image/gif"); });
+    server.on("/Zwerg", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/Zwerg.gif", "image/gif"); });
 
     // server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request) {}, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
     //     { 

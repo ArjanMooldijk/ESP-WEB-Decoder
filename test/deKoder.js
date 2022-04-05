@@ -12,6 +12,7 @@ const deKoder = `
                 512,
                 513
             ],
+            "sigImage": "Vor4",
             "sigFade": 150,
             "sigDark": 300,
             "sigLamp": [200,200,110,110]
@@ -25,6 +26,7 @@ const deKoder = `
                 514,
                 515
             ],
+            "sigImage": "H3gro",
             "sigFade": 150,
             "sigDark": 300,
             "sigLamp": [110,200,150]
