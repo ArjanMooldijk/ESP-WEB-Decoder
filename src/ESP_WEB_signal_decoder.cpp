@@ -51,11 +51,11 @@ NmraDcc Dcc;
 // Die folgende Funktion wird von Dcc.process() aufgerufen, wenn ein Weichentelegramm empfangen wurde
 void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State)
 {
-  for (uint8_t signr = 0; signr < this_dec[0].nbrofsig; signr++)
+  for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
   {
     for (uint8_t index = 0; index < 3; index++)
     {
-      if (Addr == signale[signr].adress[index])
+      if (Addr == signale[signr].sigAdressen[index])
       {
         HandleCommand(signr, index, OutputAddr);
       }
@@ -84,9 +84,8 @@ void setup()
   {
     Serial.println("FS connect big success");
   }
-
-  GetDecoderValues();
-  GetSignalValues();
+  PutDecoderValues();
+  // getDekoderJson();
 
   // connect to WiFi
   // MakeWiFiConnection();

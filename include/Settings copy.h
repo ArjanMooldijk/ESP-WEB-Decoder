@@ -8,10 +8,8 @@ QueueHandle_t queueCh[16];
 
 const bool uit = false;
 const bool aan = true;
-
-class Sein
+struct Sein
 {
-public:
     uint8_t sigId;
     char* sigType;
     uint8_t sigDraden;
@@ -20,32 +18,13 @@ public:
     int sigFade;
     int sigDark;
     uint8_t sigLamp[6];
-
-public:
-    uint8_t addresSize()    
-    {
-        return sizeof(sigAdressen);
-    };
-
-public:
-    uint8_t lampSize()
-    {
-        return sizeof(sigLamp);
-    };
 };
 
-class Decoder
+struct Decoder
 {
-    public:
-    char *dekName; // Name of the decoder
+    char *dekName;       // Name of the decoder
     uint8_t nbrofsig;
-    Sein sigConnected[8];
-
-public:
-    uint8_t nbrConnected()    
-    {
-        return sizeof(sigConnected)/sizeof(sigConnected[0]);
-    };
+    Sein sigConnected [8];
 };
 
 Decoder this_dec;

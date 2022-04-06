@@ -67,165 +67,144 @@ bool loadHostNameFile()
     return false;
 }
 
-void GetDecoderValues()
-{
-    SigDec_pref.begin("parameters", true);
-
-    size_t decLen = SigDec_pref.getBytesLength("Decoder");
-    char d_buffer[decLen]; // prepare a buffer for the data
-    SigDec_pref.getBytes("Decoder", d_buffer, decLen);
-    memcpy(this_dec, d_buffer, decLen);
-
-    SigDec_pref.end();
-}
-void GetSignalValues()
-{
-    SigDec_pref.begin("parameters", true);
-
-    size_t sigLen = SigDec_pref.getBytesLength("Signale");
-    char s_buffer[sigLen]; // prepare a buffer for the data
-    SigDec_pref.getBytes("Signale", s_buffer, sigLen);
-    memcpy(signale, s_buffer, sigLen);
-
-    SigDec_pref.end();
-}
 
 void PutDecoderValues()
 {
-    SigDec_pref.begin("parameters", false);
-    SigDec_pref.putBytes("Decoder", this_dec, sizeof(this_dec));
-    SigDec_pref.end();
+    Serial.println("begin vullen");
+    this_dec.sigConnected[0].sigId = 0;
+    this_dec.sigConnected[0].sigType = "Vor4";
+    this_dec.sigConnected[0].sigDraden = 4;
+    this_dec.sigConnected[0].sigChannel = 0;
+    this_dec.sigConnected[0].sigAdressen[0] = 511;
+    this_dec.sigConnected[0].sigAdressen[1] = 512;
+    this_dec.sigConnected[0].sigAdressen[2] = 513;
+    this_dec.sigConnected[0].sigFade = 150;
+    this_dec.sigConnected[0].sigDark = 300;
+    this_dec.sigConnected[0].sigLamp[0] = 200;
+    this_dec.sigConnected[0].sigLamp[1] = 200;
+    this_dec.sigConnected[0].sigLamp[2] = 200;
+    this_dec.sigConnected[0].sigLamp[3] = 200;
+
+    this_dec.sigConnected[1].sigId = 1;
+    this_dec.sigConnected[1].sigType = "H3gro";
+    this_dec.sigConnected[1].sigDraden = 3;
+    this_dec.sigConnected[1].sigChannel = 4;
+    this_dec.sigConnected[1].sigAdressen[0] = 514;
+    this_dec.sigConnected[1].sigAdressen[1] = 515;
+    this_dec.sigConnected[1].sigFade = 150;
+    this_dec.sigConnected[1].sigDark = 300;
+    this_dec.sigConnected[1].sigLamp[0] = 110;
+    this_dec.sigConnected[1].sigLamp[1] = 200;
+    this_dec.sigConnected[1].sigLamp[2] = 150;
+
+    this_dec.dekName = hostName;
+    this_dec.nbrofsig = 2;
+    StaticJsonDocument<768> dekoder;
+
+    dekoder["dekName"] = this_dec.dekName;
+    dekoder["nbrofsig"] = this_dec.nbrofsig;
+
+    JsonArray sigConnected = dekoder.createNestedArray("sigConnected");
+    uint8_t index = 0;
+    while (index < this_dec.nbrofsig)
+    {
+        sigConnected[index]["sigId"] = this_dec.sigConnected[index].sigId;
+        sigConnected[index]["sigType"] = this_dec.sigConnected[index].sigType;
+        sigConnected[index]["sigDraden"] = this_dec.sigConnected[index].sigDraden;
+        sigConnected[index]["sigAdressen"][0] = this_dec.sigConnected[index].sigAdressen[0];
+        sigConnected[index]["sigAdressen"][1] = this_dec.sigConnected[index].sigAdressen[1];
+        sigConnected[index]["sigAdressen"][2] = this_dec.sigConnected[index].sigAdressen[2];
+        sigConnected[index]["sigFade"] = this_dec.sigConnected[index].sigType;
+        sigConnected[index]["sigDark"] = this_dec.sigConnected[index].sigDark;
+        sigConnected[index]["sigLamp"][0] = this_dec.sigConnected[index].sigLamp[0];
+        sigConnected[index]["sigLamp"][1] = this_dec.sigConnected[index].sigLamp[1];
+        sigConnected[index]["sigLamp"][2] = this_dec.sigConnected[index].sigLamp[2];
+        sigConnected[index]["sigLamp"][3] = this_dec.sigConnected[index].sigLamp[3];
+        sigConnected[index]["sigLamp"][4] = this_dec.sigConnected[index].sigLamp[4];
+        sigConnected[index]["sigLamp"][5] = this_dec.sigConnected[index].sigLamp[5];
+        index++;
+    };
+    // Open config file
+    File decFile = SPIFFS.open(SIGNALE_JSON, "w");
+    if (!decFile)
+    {
+        // Error, file did not open
+        Serial.println("failed to open decoder file for writing");
+    }
+
+    // Serialize JSON data to write to file
+    // serializeJsonPretty(dekoder, Serial);
+    if (serializeJson(dekoder, decFile) == 0)
+    {
+        // Error writing file
+        Serial.println(F("Failed to write to file"));
+    }
+    // Close file
+    decFile.close();
 }
 
-void PutSignalValues()
+void getDekoderJson()
 {
-    SigDec_pref.begin("parameters", false);
-    SigDec_pref.putBytes("Signale", signale, sizeof(signale));
-    SigDec_pref.end();
-}
+    StaticJsonDocument<1024> dekoder;
+    if (SPIFFS.exists(SIGNALE_JSON))
+    {
+        // The file exists, reading and loading
+        Serial.println("reading Signale.json");
+        File decFile = SPIFFS.open(SIGNALE_JSON, "r");
+        if (decFile)
+        {
+            Serial.println("Opened configuration file");
 
-void createSignale()
-{
+            DeserializationError error = deserializeJson(dekoder, decFile);
 
-    signale[0].sigId = 0;
-    signale[0].stype = "Vor4";
+            if (error)
+            {
+                Serial.print("deserializeJson() failed: ");
+                Serial.println(error.c_str());
+                return;
+            };
 
-    signale[0].adress[0] = 401;
-    signale[0].adress[1] = 402;
-    signale[0].adress[2] = NULL;
+            uint8_t count = 0;
+            while (dekoder["dekName"][count] != NULL && count<20)
+            {
+                this_dec.dekName[count] = dekoder["dekName"][count];
+                count++;
+            }
+            Serial.print("dekname : ");
+            Serial.println(this_dec.dekName);
+            Serial.print("count : ");
+            Serial.print(count);
+            this_dec.nbrofsig = dekoder["nbrofsig"];
+            JsonArray sigConn = dekoder["sigConnected"];
+            uint8_t index = 0;
+            while (index < this_dec.nbrofsig)
+            {
+                this_dec.sigConnected[index].sigId = sigConn[index]["sigId"];
+                count = 0;
+                while (sigConn[index]["sigType"][count] != NULL && count < 9)
+                {
+                    this_dec.sigConnected[index].sigType[count] = sigConn[index]["sigType"][count];
+                    count++;
+                }
+                this_dec.sigConnected[index].sigDraden = sigConn[index]["sigDraden"];
+                this_dec.sigConnected[index].sigAdressen[0] = sigConn[index]["sigAdressen"][0];
+                this_dec.sigConnected[index].sigAdressen[1] = sigConn[index]["sigAdressen"][1];
+                this_dec.sigConnected[index].sigAdressen[2] = sigConn[index]["sigAdressen"][2];
+                this_dec.sigConnected[index].sigFade = sigConn[index]["sigFade"];
+                this_dec.sigConnected[index].sigDark = sigConn[index]["sigDark"];
+                this_dec.sigConnected[index].sigLamp[0] = sigConn[index]["sigLamp"][0];
+                this_dec.sigConnected[index].sigLamp[1] = sigConn[index]["sigLamp"][1];
+                this_dec.sigConnected[index].sigLamp[2] = sigConn[index]["sigLamp"][2];
+                this_dec.sigConnected[index].sigLamp[3] = sigConn[index]["sigLamp"][3];
+                this_dec.sigConnected[index].sigLamp[4] = sigConn[index]["sigLamp"][4];
+                this_dec.sigConnected[index].sigLamp[5] = sigConn[index]["sigLamp"][5];
+                index++;
+            };
 
-    signale[0].fadetime = 150;
-    signale[0].darktime = 300;
-    signale[0].firstCH = 0;
-    signale[0].pins = 4;
-
-    signale[0].ChBright[0] = 200;
-    signale[0].ChBright[1] = 200;
-    signale[0].ChBright[2] = 200;
-    signale[0].ChBright[3] = 200;
-    signale[0].ChBright[4] = NULL;
-    signale[0].ChBright[5] = NULL;
-
-    signale[1].sigId = 1;
-    signale[1].stype = "H3gro";
-
-    signale[1].adress[0] = 403;
-    signale[1].adress[1] = 404;
-    signale[1].adress[2] = NULL;
-
-    signale[1].fadetime = 150;
-    signale[1].darktime = 300;
-    signale[1].firstCH = 0;
-    signale[1].pins = 4;
-
-    signale[1].ChBright[0] = 200;
-    signale[1].ChBright[1] = 200;
-    signale[1].ChBright[2] = 200;
-    signale[1].ChBright[3] = NULL;
-    signale[1].ChBright[4] = NULL;
-    signale[1].ChBright[5] = NULL;
-}
-
-void cleanSignale()
-{
-    signale[0].sigId = NULL;
-    signale[0].stype = "";
-
-    signale[0].adress[0] = NULL;
-    signale[0].adress[1] = NULL;
-    signale[0].adress[2] = NULL;
-
-    signale[0].fadetime = NULL;
-    signale[0].darktime = NULL;
-    signale[0].firstCH = NULL;
-    signale[0].pins = NULL;
-
-    signale[0].ChBright[0] = NULL;
-    signale[0].ChBright[1] = NULL;
-    signale[0].ChBright[2] = NULL;
-    signale[0].ChBright[3] = NULL;
-    signale[0].ChBright[4] = NULL;
-    signale[0].ChBright[5] = NULL;
-
-    signale[1].sigId = NULL;
-    signale[1].stype = "";
-
-    signale[1].adress[0] = NULL;
-    signale[1].adress[1] = NULL;
-    signale[1].adress[2] = NULL;
-
-    signale[1].fadetime = NULL;
-    signale[1].darktime = NULL;
-    signale[1].firstCH = NULL;
-    signale[1].pins = NULL;
-
-    signale[1].ChBright[0] = NULL;
-    signale[1].ChBright[1] = NULL;
-    signale[1].ChBright[2] = NULL;
-    signale[1].ChBright[3] = NULL;
-    signale[1].ChBright[4] = NULL;
-    signale[1].ChBright[5] = NULL;
-}
-
-void printSignale()
-{
-    Serial.println(signale[0].sigId);
-    Serial.println(signale[0].stype);
-
-    Serial.println(signale[0].adress[0]);
-    Serial.println(signale[0].adress[1]);
-    Serial.println(signale[0].adress[2]);
-
-    Serial.println(signale[0].fadetime);
-    Serial.println(signale[0].darktime);
-    Serial.println(signale[0].firstCH);
-    Serial.println(signale[0].pins);
-
-    Serial.println(signale[0].ChBright[0]);
-    Serial.println(signale[0].ChBright[1]);
-    Serial.println(signale[0].ChBright[2]);
-    Serial.println(signale[0].ChBright[3]);
-    Serial.println(signale[0].ChBright[4]);
-    Serial.println(signale[0].ChBright[5]);
-
-    Serial.println(signale[1].sigId);
-    Serial.println(signale[1].stype);
-
-    Serial.println(signale[1].adress[0]);
-    Serial.println(signale[1].adress[1]);
-    Serial.println(signale[1].adress[2]);
-
-    Serial.println(signale[1].fadetime);
-    Serial.println(signale[1].darktime);
-    Serial.println(signale[1].firstCH);
-    Serial.println(signale[1].pins);
-
-    Serial.println(signale[1].ChBright[0]);
-    Serial.println(signale[1].ChBright[1]);
-    Serial.println(signale[1].ChBright[2]);
-    Serial.println(signale[1].ChBright[3]);
-    Serial.println(signale[1].ChBright[4]);
-    Serial.println(signale[1].ChBright[5]);
+            // Close file
+            decFile.close();
+        }
+    }
 }
 
 #endif

@@ -13,14 +13,14 @@ void setHilfsignal(uint8_t signr, uint8_t Fb)
    {
    case 0: // zet channel uit
       Blink[signr] = 0;
-      xQueueSend(queueCh[signale[signr].firstCH], &uit, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].sigChannel], &uit, portMAX_DELAY);
       break;
    case 1: // zet channel blink aan
       Blink[signr] = 1;
-      xQueueSend(queueCh[signale[signr].firstCH], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].sigChannel], &aan, portMAX_DELAY);
       break;
    case 2: // zet channel aan
-      xQueueSend(queueCh[signale[signr].firstCH], &aan, portMAX_DELAY);
+      xQueueSend(queueCh[signale[signr].sigChannel], &aan, portMAX_DELAY);
       break;
    default:
       break;

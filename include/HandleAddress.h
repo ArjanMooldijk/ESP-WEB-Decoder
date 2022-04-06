@@ -4,11 +4,11 @@
 void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 {
 
-    switch (signale[signr].stype[index])
+    switch (signale[signr].sigType[index])
     {
     // Vorsignal Addr 1 Fb1 & Fb0
     case VorAdr1:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelVorsignal(signr);
         }
@@ -25,7 +25,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Vorsignal 1 Addr Fb1 & Fb0
     case Vor1Adr:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelVorsignal(signr);
         }
@@ -42,7 +42,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Vorsignal Addr 2 Fb3 & Fb2
     case VorAdr2:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelVorsignal(signr);
         }
@@ -69,7 +69,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Vorsignal Addr 3 Fb5
     case VorAdr3:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelVorsignal(signr);
         }
@@ -78,7 +78,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Zwergsignal Addr 1 Fahrt & Halt
     case ZwergAdr1:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelZwergsignal(signr);
         }
@@ -95,7 +95,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Zwergsignal Addr 2 Fahrt mit Vorsicht
     case ZwergAdr2:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelZwergsignal(signr);
         }
@@ -156,7 +156,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 1 Fb1 & Fb0
     case HptAdr1:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -173,7 +173,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 2 Fb2
     case HptAdr2O:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -182,7 +182,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 2 Fb3
     case HptAdr2G:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -191,7 +191,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 2 Fb3 & Fb2 Oranje, Groen
     case HptAdr2OG:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -208,7 +208,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 2 Fb3 & Fb2  Groen, Oranje
     case HptAdr2GO:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -225,7 +225,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal 5L Addr 3 Fb5
     case HptAdr3G:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -234,7 +234,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal 5L Addr 3 Fb6
     case HptAdr3O:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
@@ -243,7 +243,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 
     // Hauptsignal Addr 3 Fb6 & Fb5
     case HptAdr3OG:
-        if (signale[signr].darktime>0)
+        if (signale[signr].sigDark>0)
         {
             dunkelHauptsignal(signr);
         }
