@@ -2,8 +2,6 @@ $(function() {
 
     //////////// Build main screen
     getDatafromServer();
-    headers.makeHeader();
-    mainScreen.makeMain();
 });
 
 // Get base dekoder data
@@ -16,24 +14,24 @@ var saveVal = {
 };
 var changedValues = false;
 
+
 function getDatafromServer() {
-    //doe GET voor dekoder data
-    var deKoder;
-
-    function getDecoderData {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                deKoder = this.responseText;
-            }
-        };
-        xhttp.open("GET", "/GetDecVal", true);
-        xhttp.send();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            deKoder = this.responseText;
+            console.log(deKoder);
+            dekoder = JSON.parse(deKoder);
+            console.log(dekoder);
+            typeSig = JSON.parse(typeSignalen);
+            headers.makeHeader();
+            mainScreen.makeMain();
+        }
     };
-
-    dekoder = JSON.parse(deKoder);
-    //doe GET voor signalen data
-    typeSig = JSON.parse(typeSignalen);
+    console.log('getDataFromServer');
+    xhttp.open("GET", "/GetDecVal", true);
+    xhttp.send();
+    console.log('request for data sent');
 };
 
 function getObjects(obj, key, val) {
@@ -96,6 +94,7 @@ var headers = function() {
     };
 
     function _render() {
+        data.h1 = dekoder.dekName;
         data.h2 = dekoder.sigConnected.length;
         $($el).html(cleanHeader1);
         if (data.h2 == 0) {
@@ -157,7 +156,32 @@ var mainScreen = (function() {
         //doe post naar server
         changedValues = false;
         $(".storebutton").hide();
-    }
+        const xhr = new XMLHttpRequest();
+
+        // listen for `load` event
+        xhr.onload = () => {
+            // print JSON response
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // parse JSON
+                // const response = JSON.parse(xhr.responseText);
+                console.log(xhr.responseText);
+            }
+        };
+
+        // create a JSON object
+        console.log(dekoder);
+        const jsonDekoder = JSON.stringify(dekoder);
+        console.log(jsonDekoder);
+
+        // open request
+        xhr.open("POST", "/PostDecVal");
+
+        // set `Content-Type` header
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // send rquest with JSON payload
+        xhr.send(JSON.stringify(jsonDekoder));
+    };
 
     function _changeSig() {
         Csein.changeSignal($(this).attr('id'));
@@ -406,6 +430,7 @@ var Nsein = (function() {
             "sigType": seinType,
             "sigDraden": selSignalType[0].sigDraden,
             "sigChannel": nextChannel,
+            "sigNbrAdr": 1,
             "sigAdressen": [parseInt($("#adres1").val())],
             // "sigImage": selSignalType[0].sigImage,
             "sigFade": $("#fade").val() * 10,
@@ -413,14 +438,18 @@ var Nsein = (function() {
             "sigLamp": [200]
         };
 
+        var adrCount = 0;
         tmpAdr = $('.adresInput');
         $.each(tmpAdr, function(index, item) {
             newSignal.sigAdressen[index] = parseInt($(item).val());
+            adrCount++;
         });
+        newSignal.sigNbrAdr = adrCount;
 
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
         };
+        dekoder.nbrofsig++;
         dekoder.sigConnected.push(newSignal);
         changedValues = true;
 

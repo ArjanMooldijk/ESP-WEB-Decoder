@@ -46,7 +46,9 @@ int interval;
 #define DECODER_JSON "/deKoder.json"
 #define JSON_CONFIG_FILE "/hostname.json"
 StaticJsonDocument<512> jsonHostNameFile;
-char hostName[20];
+
+char hostName[] = "Ausserberg";
+// char hostName[20];
 bool shouldSaveConfig = false;
 
 #endif

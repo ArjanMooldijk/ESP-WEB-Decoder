@@ -20,13 +20,13 @@ using namespace std;
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// const char *ssid = "CazMool";
-// const char *password = "steak74;Mlles";
-// IPAddress staticIP(192, 168, 178, 30); // fixed IP of booster monitor
-// IPAddress gateway(192, 168, 178, 1);
-// IPAddress subnet(255, 255, 255, 0);
-// IPAddress DNS(8, 8, 8, 8);
-// const char *deviceName = "Stadel";
+const char *ssid = "CazMool";
+const char *password = "steak74;Mlles";
+IPAddress staticIP(192, 168, 178, 30); // fixed IP of booster monitor
+IPAddress gateway(192, 168, 178, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress DNS(8, 8, 8, 8);
+const char *deviceName = "Stadel";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 
@@ -84,11 +84,32 @@ void setup()
   }
   else
   {
+    // SPIFFS.format();
+    // Serial.println("Spiffs formatted");
     Serial.println("FS connect big success");
   }
 
   // connect to WiFi
-  MakeWiFiConnection();
+  // MakeWiFiConnection();
+
+  //////////////////////////////////////////////////////////// temp
+
+  // Connect to Wi-Fi with fixed IP
+  WiFi.disconnect();
+  WiFi.config(staticIP, gateway, subnet);
+  WiFi.hostname(hostName);
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  //////////////////////////////////////////////////////////// temp
+
+  // Print ESP Local IP Address
+  Serial.println(WiFi.localIP());
   ///// Fill this_decoder values
   // PutDecoderValues(); // for testing
   getDekoderJson();

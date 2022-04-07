@@ -49,66 +49,85 @@ void init_Servers()
     // Route to load jquery-3.6.0.min.js file
     server.on("/Vor5", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor5.gif", "image/gif"); });
-              
+
     server.on("/H2gr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H2gr.gif", "image/gif"); });
-              
+
     server.on("/H3gro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H3gro.gif", "image/gif"); });
-              
+
     server.on("/H3grg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H3grg.gif", "image/gif"); });
-              
+
     server.on("/H4grog", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H4grog.gif", "image/gif"); });
-              
+
     server.on("/H4goro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H4goro.gif", "image/gif"); });
-              
+
     server.on("/H5grogo", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H5grogo.gif", "image/gif"); });
-              
+
     server.on("/H5grgog", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H5grgog.gif", "image/gif"); });
-              
+
     server.on("/H3H7ggogrro", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7ggogr.gif", "image/gif"); });
-              
+
     server.on("/H7gogor", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7gogor.gif", "image/gif"); });
-              
+
     server.on("/H7gogogr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7gogogr.gif", "image/gif"); });
-              
+
     server.on("/SIMV", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/SIMV.gif", "image/gif"); });
-              
+
     server.on("/SIMH", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/SIMH.png", "image/png"); });
-              
+
     server.on("/Fsm", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Fsm.jpg", "image/jpg"); });
-              
+
     server.on("/HbB", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/HbB.gif", "image/gif"); });
-              
+
     server.on("/Zwerg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Zwerg.gif", "image/gif"); });
 
     // server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request) {}, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
-    //     { 
+    //     {
     //     //Handling function implementation
-    //     for (size_t i = 0; i < len; i++) 
+    //     for (size_t i = 0; i < len; i++)
     //     {
     //         Serial.write(data[i]);
-    //     } 
+    //     }
     //     Serial.println();
-        
+
     //     request->send(200);
     //     });
 
     server.on("/GetDecVal", HTTP_GET, [](AsyncWebServerRequest *request)
-        { request->send (200, "application/json", getDecoderValues()); });
+              { request->send(200, "application/json", getDecoderValues()); });
+
+    // server.on( "/PostDecVal", HTTP_POST, [](AsyncWebServerRequest *request)
+    //         {
+
+    server.on("/PostDecVal",HTTP_POST, [](AsyncWebServerRequest * request){},
+        NULL, [](AsyncWebServerRequest * request, uint8_t *data, size_t len, size_t index, size_t total) {
+        string newJsonDec;
+        Serial.println("Ontvangen van client:");
+        for (size_t i = 0; i < len; i++) {
+            newJsonDec += data[i];
+            Serial.write("|");
+            Serial.write(data[i]);
+        }
+        Serial.println();
+        Serial.println("En dit zit in de char");
+        Serial.println(newJsonDec);
+        processJsonFromClient(newJsonDec);
+        request->send(200);
+    });
 }
 
 #endif
