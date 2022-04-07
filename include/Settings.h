@@ -12,40 +12,23 @@ const bool aan = true;
 class Sein
 {
 public:
-    uint8_t sigId;
-    char* sigType;
-    uint8_t sigDraden;
-    uint8_t sigChannel;
-    int sigAdressen[3];
-    int sigFade;
-    int sigDark;
-    uint8_t sigLamp[6];
-
-public:
-    uint8_t addresSize()    
-    {
-        return sizeof(sigAdressen);
-    };
-
-public:
-    uint8_t lampSize()
-    {
-        return sizeof(sigLamp);
-    };
+  uint8_t sigId;
+  const char *sigType;
+  uint8_t sigDraden;
+  uint8_t sigChannel;
+  uint8_t sigNbrAdr;
+  int sigAdressen[3];
+  int sigFade;
+  int sigDark;
+  uint8_t sigLamp[6];
 };
 
 class Decoder
 {
     public:
-    char *dekName; // Name of the decoder
+    const char *dekName; // Name of the decoder
     uint8_t nbrofsig;
     Sein sigConnected[8];
-
-public:
-    uint8_t nbrConnected()    
-    {
-        return sizeof(sigConnected)/sizeof(sigConnected[0]);
-    };
 };
 
 Decoder this_dec;
@@ -60,7 +43,7 @@ unsigned long busyWait[8] = {0};
 int dimStep[16][20] = {0};
 int darkDelay[16];
 int interval;
-#define SIGNALE_JSON "/deKoder.json"
+#define DECODER_JSON "/deKoder.json"
 #define JSON_CONFIG_FILE "/hostname.json"
 StaticJsonDocument<512> jsonHostNameFile;
 char hostName[20];

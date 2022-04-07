@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <FS.h>
 #include <SPIFFS.h>
+#include <string>
+using namespace std;
 #include <WiFi.h>
 #include <WiFiManager.h>
 
@@ -84,11 +86,9 @@ void setup()
   {
     Serial.println("FS connect big success");
   }
-  PutDecoderValues();
-  // getDekoderJson();
 
   // connect to WiFi
-  // MakeWiFiConnection();
+  MakeWiFiConnection();
   ///////////////////////////////////////////////////////////////
   // Connect to Wi-Fi with fixed IP
   // WiFi.disconnect();
@@ -106,10 +106,14 @@ void setup()
   // // Print ESP Local IP Address
   // Serial.println(WiFi.localIP());
   /////////////////////////////////////////////////
-  // init_Servers();
-  // // Start servers
-  // AsyncElegantOTA.begin(&server);
-  // server.begin();
+  ///// Fill this_decoder values
+  // PutDecoderValues(); // for testing
+  getDekoderJson();
+
+  init_Servers();
+  // Start servers
+  AsyncElegantOTA.begin(&server);
+  server.begin();
 
   for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
