@@ -89,23 +89,6 @@ void setup()
 
   // connect to WiFi
   MakeWiFiConnection();
-  ///////////////////////////////////////////////////////////////
-  // Connect to Wi-Fi with fixed IP
-  // WiFi.disconnect();
-  // WiFi.config(staticIP, gateway, subnet);
-  // WiFi.hostname("booster-monitor");
-  // WiFi.begin(ssid, password);
-  // Serial.println("Connecting to WiFi");
-  // while (WiFi.status() != WL_CONNECTED)
-  // {
-  //   delay(500);
-  //   Serial.print(".");
-  // }
-  // Serial.println();
-
-  // // Print ESP Local IP Address
-  // Serial.println(WiFi.localIP());
-  /////////////////////////////////////////////////
   ///// Fill this_decoder values
   // PutDecoderValues(); // for testing
   getDekoderJson();

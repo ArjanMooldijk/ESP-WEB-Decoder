@@ -107,13 +107,8 @@ void init_Servers()
     //     request->send(200);
     //     });
 
-
-
-    // server.on("/get", HTTP_GET, [](AsyncWebServerRequest *request)
-        //       {
-        //   request->send_P(200, "text/plain", readINA219Current(1).c_str()); 
-        // });
-
+    server.on("/GetDecVal", HTTP_GET, [](AsyncWebServerRequest *request)
+        { request->send (200, "application/json", getDecoderValues()); });
 }
 
 #endif

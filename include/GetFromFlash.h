@@ -2,9 +2,6 @@
 #define GetFromFlash_h
 
 #include <Arduino.h>
-#include <Preferences.h>
-
-Preferences SigDec_pref;
 
 void saveHostNameFile()
 // Save Config in JSON format
@@ -69,13 +66,10 @@ bool loadHostNameFile()
 
 void initDecJson()
 {
-    this_dec.dekName = hostName;
-    this_dec.nbrofsig= 0;
+    StaticJsonDocument<512> dekoder;
 
-    StaticJsonDocument<768> dekoder;
-
-    dekoder["dekName"] = this_dec.dekName;
-    dekoder["nbrofsig"] = this_dec.nbrofsig;
+    dekoder["dekName"] = hostName;
+    dekoder["nbrofsig"] = 0;
 
     JsonArray sigConnected = dekoder.createNestedArray("sigConnected");
     File decFile = SPIFFS.open(DECODER_JSON, "w");
@@ -86,16 +80,10 @@ void initDecJson()
     if (serializeJson(dekoder, decFile) == 0)
     {
         Serial.println(F("Failed to write to file"));
-    }
-    else
-    {
-        Serial.println("Initiele waarden weggeschreven naar SPIFFS :");
-        serializeJson(dekoder, Serial);
-        Serial.println();
     };
-    // Close file
     decFile.close();
 }
+
 
 void PutDecoderValues()
 {
@@ -179,17 +167,36 @@ void PutDecoderValues()
     decFile.close();
 }
 
-void getDekoderJson()
+
+ String getDecoderValues()
 {
-    StaticJsonDocument<1024> dekoder;
+    String decDataS;
     if (SPIFFS.exists(DECODER_JSON))
     {
-        // The file exists, reading and loading
-        Serial.println("reading Signale.json");
         File decFile = SPIFFS.open(DECODER_JSON, "r");
         if (decFile)
         {
-            Serial.println("Opened configuration file");
+            while (decFile.available())
+            {
+                decDataS += char(decFile.read());
+            }
+            decFile.close();
+        }
+    }
+    return decDataS;
+}
+
+
+void getDekoderJson()
+{
+    StaticJsonDocument<2048> dekoder;
+    if (SPIFFS.exists(DECODER_JSON))
+    {
+        // The file exists, reading and loading
+        File decFile = SPIFFS.open(DECODER_JSON, "r");
+        if (decFile)
+        {
+            // Serial.println("Opened configuration file");
 
             String decDataS;
             uint16_t nbrOfChars = 0;
@@ -200,8 +207,10 @@ void getDekoderJson()
             nbrOfChars = decDataS.length() + 1;
             char decData[nbrOfChars];
             decDataS.toCharArray(decData, nbrOfChars);
+            // Serial.print("Gelezen uit deKoder.json : ");
+            // Serial.println(decData);
 
-            DeserializationError error = deserializeJson(dekoder, decFile);
+            DeserializationError error = deserializeJson(dekoder, decData);
 
             if (error)
             {
@@ -242,6 +251,7 @@ void getDekoderJson()
     }
     else
     {
+        Serial.println("file not found, creating decoder");
         initDecJson();
     };
 }
