@@ -127,7 +127,7 @@ void init_Servers()
                 newJsonDec += char(data[i]);
             }
         }
-        newJsonDec.remove(i-1,1);           // Verwijder open en sluit "
+        // newJsonDec.remove(lastquote,);           // Verwijder open en sluit "
         newJsonDec.remove(0,1);
         processJsonFromClient(newJsonDec);
         request->send(200); });

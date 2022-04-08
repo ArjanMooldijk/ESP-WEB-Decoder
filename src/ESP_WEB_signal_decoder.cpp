@@ -149,7 +149,7 @@ void setup()
   Serial.println("Taken gestart");
   setDimSteps();
   Serial.println("Dim curves ingesteld");
-  Initialiseer_decoder();
+  // Initialiseer_decoder();
   Serial.println("Decoder geinitialiseerd");
 }
 ////////////////////////////////////////////////////////////////
