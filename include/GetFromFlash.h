@@ -64,6 +64,48 @@ bool loadHostNameFile()
     return false;
 }
 
+void printDecoder() {
+
+            Serial.println("en de nieuwe waardes zijn: ");
+    Serial.print ("decName ");
+   Serial.println(this_dec.dekName);
+    Serial.print ("Aantal seinen: ");
+   Serial.println(this_dec.nbrofsig);
+    for (uint8_t i = 0; i<this_dec.nbrofsig;i++)
+    {
+    Serial.print ("ID: ");
+       Serial.println(this_dec.sigConnected[i].sigId);
+    Serial.print ("Type: ");
+       Serial.println(this_dec.sigConnected[i].sigType);
+    Serial.print ("Draden: ");
+       Serial.println(this_dec.sigConnected[i].sigDraden);
+    Serial.print ("#Adressen: ");
+       Serial.println(this_dec.sigConnected[i].sigNbrAdr);
+    Serial.print ("Fade: ");
+       Serial.println(this_dec.sigConnected[i].sigFade);
+    Serial.print ("Dark: ");
+       Serial.println(this_dec.sigConnected[i].sigDark);
+    Serial.print ("Adr1: ");
+       Serial.println(this_dec.sigConnected[i].sigAdressen[0]);
+    Serial.print ("Adr2: ");
+       Serial.println(this_dec.sigConnected[i].sigAdressen[1]);
+    Serial.print ("Adr3: ");
+       Serial.println(this_dec.sigConnected[i].sigAdressen[2]);
+    Serial.print ("Lamp1: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[0]);
+    Serial.print ("Lamp2: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[1]);
+    Serial.print ("Lamp3: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[2]);
+    Serial.print ("Lamp4: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[3]);
+    Serial.print ("Lamp5: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[4]);
+    Serial.print ("Lamp6: ");
+       Serial.println(this_dec.sigConnected[i].sigLamp[5]);
+    };
+}
+
 void initDecJson()
 {
     StaticJsonDocument<512> dekoder;
@@ -124,7 +166,7 @@ void makeDekoderFromJson(String inputJson)
     Serial.println();
 
     StaticJsonDocument<2048> dekoder;
-    DeserializationError error = deserializeJson(dekoder, decData);
+    DeserializationError error = deserializeJson(dekoder, inputJson);
 
     if (error)
     {
@@ -132,8 +174,12 @@ void makeDekoderFromJson(String inputJson)
         Serial.println(error.c_str());
         return;
     };
-
+        Serial.println(error.c_str());
+    const char * named = dekoder["dekName"];
     this_dec.dekName = dekoder["dekName"];
+    Serial.println("-------");
+    Serial.println(named);
+    Serial.println("-------");
     this_dec.nbrofsig = dekoder["nbrofsig"];
 
     uint8_t sCc = 0;
@@ -160,10 +206,13 @@ void makeDekoderFromJson(String inputJson)
         sCc++;
     };
             Serial.println("nieuwe decoder waarden gevuld ");
+            printDecoder();
 }
 
 void processJsonFromClient(String clientJson)
 {
+
+    serializeJsonPretty(jsonHostNameFile, Serial);
     makeDekoderFromJson(clientJson);
     // putDecoderValuesToFile(clientJson);
 };
@@ -188,7 +237,6 @@ String getDecoderValues()
 
 void getDekoderJson()
 {
-    StaticJsonDocument<2048> dekoder;
     if (SPIFFS.exists(DECODER_JSON))
     {
         // The file exists, reading and loading

@@ -6,6 +6,9 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <string>
+using namespace std;
+#include <cctype>
 
 // Replaces placeholder with DHT values
 String processor(const String &var)
@@ -113,21 +116,21 @@ void init_Servers()
     // server.on( "/PostDecVal", HTTP_POST, [](AsyncWebServerRequest *request)
     //         {
 
-    server.on("/PostDecVal",HTTP_POST, [](AsyncWebServerRequest * request){},
-        NULL, [](AsyncWebServerRequest * request, uint8_t *data, size_t len, size_t index, size_t total) {
-        string newJsonDec;
-        Serial.println("Ontvangen van client:");
-        for (size_t i = 0; i < len; i++) {
-            newJsonDec += data[i];
-            Serial.write("|");
-            Serial.write(data[i]);
+    server.on(
+        "/PostDecVal", HTTP_POST, [](AsyncWebServerRequest *request) {},
+        NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
+        {
+        String newJsonDec;
+        size_t i;
+        for (i = 0; i < len; i++) {
+            if (data[i] != 92){                // haal de \ eruit
+                newJsonDec += char(data[i]);
+            }
         }
-        Serial.println();
-        Serial.println("En dit zit in de char");
-        Serial.println(newJsonDec);
+        newJsonDec.remove(i-1,1);           // Verwijder open en sluit "
+        newJsonDec.remove(0,1);
         processJsonFromClient(newJsonDec);
-        request->send(200);
-    });
+        request->send(200); });
 }
 
 #endif

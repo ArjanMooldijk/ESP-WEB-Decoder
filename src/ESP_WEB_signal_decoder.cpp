@@ -11,7 +11,8 @@ using namespace std;
 
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <ArduinoJson.h>
+#include "AsyncJson.h"
+#include "ArduinoJson.h"
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
 #include <Settings.h>

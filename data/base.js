@@ -444,7 +444,6 @@ var Nsein = (function() {
             newSignal.sigAdressen[index] = parseInt($(item).val());
             adrCount++;
         });
-        newSignal.sigNbrAdr = adrCount;
 
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
