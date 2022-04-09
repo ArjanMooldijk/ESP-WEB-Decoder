@@ -58,7 +58,7 @@ $(function() {
         $('#changeSignal').delegate('input.slider', 'input', showSliderVal);
         $('.footercontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
         $('.footercontainer').delegate('#BDel', 'click', _deleteSignal);
-        $('.footercontainer').delegate('#BApply', 'click', _processValues);
+        $('.footercontainer').delegate('#BApply', 'click', _processChange.bind(this));
         $('.footercontainer').delegate('#BTest', 'click', _testLights);
         $('.footercontainer').delegate('#BTestEnd', 'click', _endTestLights);
 
@@ -85,7 +85,6 @@ $(function() {
         };
 
         // create a JSON object
-        console.log(dekoder);
         const jsonDekoder = JSON.stringify(dekoder);
         console.log(jsonDekoder);
 
@@ -121,11 +120,13 @@ $(function() {
         makeMainScreen();
     };
 
-    function _processValues() {
+    function _processChange() {
         var i = signalToChange.sigId;
-
-        dekoder.sigConnected[i].sigFade = $("#fade").val() * 10;
-        dekoder.sigConnected[i].sigDark = $("#dark").val() * 10;
+        var $el = ('#changeForm');
+        // dekoder.sigConnected[i].sigFade = $(this).find('#fade').next('.sout').html() * 10;
+        // dekoder.sigConnected[i].sigDark = $(this).find('#dark').next('.sout').html() * 10;
+        dekoder.sigConnected[i].sigFade = $($el).find('#fade').next('.sout').html();
+        dekoder.sigConnected[i].sigDark = $($el).find('#dark').next('.sout').html() * 10;
 
         var tmpLamp = $('.lampInput');
         $.each(tmpLamp, function(count, item) {
@@ -220,8 +221,6 @@ $(function() {
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
         };
-        console.log('newSignal');
-        console.log(newSignal);
         dekoder.sigConnected.push(newSignal);
         dekoder.nbrofsig++;
         changedValues = true;
@@ -289,7 +288,6 @@ $(function() {
 
         data.connSignal = dekoder.sigConnected;
         $($el).html(cleanAllConnected);
-        console.log(data);
         template = $el.find('#signal-template').html();
         $el.html(Mustache.render(template, data));
         $(".signal-set").show();
