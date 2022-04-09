@@ -1,5 +1,5 @@
 const plaatjeHTML = '' +
-    '<img src="{{sigType}}" height="80">';
+    '<img src="{{sigImage}}" height="80">';
 
 const lampHTML = '' +
     '<div class="item2">' +
@@ -82,6 +82,14 @@ const cleanHeader1 = '' +
     '<script id="header-template" type="text/template">' +
     '{{#h1}}{{#h2}}' +
     '<h1>Seindecoder {{h1}}</h1>' +
+    '<h2> {{h2}} sein aangesloten</h2>' +
+    '{{/h2}}{{/h1}}' +
+    '</script>';
+
+const cleanHeader2 = '' +
+    '<script id="header-template" type="text/template">' +
+    '{{#h1}}{{#h2}}' +
+    '<h1>Seindecoder {{h1}}</h1>' +
     '<h2> {{h2}} seinen aangesloten</h2>' +
     '{{/h2}}{{/h1}}' +
     '</script>';
@@ -91,7 +99,7 @@ const cleanAllConnected = '' +
     '{{#connSignal}}' +
     '<div class="signal-container">' +
     '<div id="image" class="plaatje">' +
-    '<img src="{{sigType}}" width="auto" height="80px">' +
+    '<img src="{{sigImage}}" width="auto" height="80px">' +
     '</div>' +
     '<div class="s-display">' +
     '<div class="s-data">' +
@@ -143,6 +151,6 @@ const cleanNewSignal = '' +
     '<button id="BKeuze" class="sb-display">Voeg nieuw sein toe</button>' +
     '</div>' +
     '<div class="cancelbut">' +
-    '<button id="BCancel" class="sb-display">cancel</button>' +
+    '<button id="BCancelN" class="sb-display">cancel</button>' +
     '</div>' +
     '</script>';
