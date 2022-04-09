@@ -23,33 +23,30 @@ void init_Servers()
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/index.html", String(), false, processor); });
     // Route to load style.css file
-    server.on("/cleanstyle.css", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/cleanstyle.css", "text/css"); });
-    // Route to load jquery-3.6.0.min.js file
-    server.on("/base.js", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/base.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
+    server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/style.css", "text/css"); });
+
+    server.on("/script.js", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/script.js", "text/plain"); });
+
     server.on("/jquery-3.6.0.min.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/jquery-3.6.0.min.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/mustache.min.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/mustache.min.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
-    server.on("/deKoder.js", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SPIFFS, "/deKoder.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/signale.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/signale.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/snippets.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/snippets.js", "text/plain"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/Vor2", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor2.gif", "image/gif"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/Vor4", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor4.gif", "image/gif"); });
-    // Route to load jquery-3.6.0.min.js file
+              
     server.on("/Vor5", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor5.gif", "image/gif"); });
 
@@ -123,12 +120,12 @@ void init_Servers()
         String newJsonDec;
         size_t i;
         for (i = 0; i < len; i++) {
-            if (data[i] != 92){                // haal de \ eruit
+            // if (data[i] != 92){                // haal de \ eruit
                 newJsonDec += char(data[i]);
-            }
+            // }
         }
-        // newJsonDec.remove(lastquote,);           // Verwijder open en sluit "
-        newJsonDec.remove(0,1);
+        // Serial.println("ontvangen :");
+        // Serial.println(newJsonDec);
         processJsonFromClient(newJsonDec);
         request->send(200); });
 }

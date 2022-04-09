@@ -5,10 +5,6 @@ $(function() {
 
     // Get base dekoder data
     getDatafromServer();
-    //////////// Build main screen
-    makeHeader();
-    makeMainScreen();
-    setEvents();
 
 
     var typeSig;
@@ -19,24 +15,27 @@ $(function() {
     };
     var changedValues = false;
     var signalToChange;
+    var dekoder;
+    var deKoder;
+    var typeSig
 
     function getDatafromServer() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 deKoder = this.responseText;
-                console.log(deKoder);
+                // console.log(deKoder);
                 dekoder = JSON.parse(deKoder);
-                console.log(dekoder);
+                // console.log(dekoder);
                 typeSig = JSON.parse(typeSignalen);
-                headers.makeHeader();
-                mainScreen.makeMain();
+                //////////// Build main screen
+                makeHeader();
+                makeMainScreen();
+                setEvents();
             }
         };
-        console.log('getDataFromServer');
         xhttp.open("GET", "/GetDecVal", true);
         xhttp.send();
-        console.log('request for data sent');
     };
 
     function getObjects(obj, key, val) {
@@ -97,7 +96,8 @@ $(function() {
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         // send rquest with JSON payload
-        xhr.send(JSON.stringify(jsonDekoder));
+        xhr.send(jsonDekoder);
+        // xhr.send(JSON.stringify(jsonDekoder));
 
     };
 
@@ -109,7 +109,6 @@ $(function() {
         dekoder.sigConnected[signalToChange.sigId].sigLamp = saveOldVal.lamp;
         dekoder.sigConnected[signalToChange.sigId].sigFade = saveOldVal.fade;
         dekoder.sigConnected[signalToChange.sigId].sigDark = saveOldVal.dark;
-        console.log(dekoder.sigConnected[signalToChange.sigId]);
         makeHeader();
         makeMainScreen();
     };
@@ -208,7 +207,6 @@ $(function() {
             "sigChannel": nextChannel,
             "sigNbrAdr": selSignalType[0].sigNbrAdr,
             "sigAdressen": [parseInt($("#adres1").val())],
-            "sigImage": selSignalType[0].sigImage,
             "sigFade": $("#fade").val() * 10,
             "sigDark": $("#dark").val() * 10,
             "sigLamp": [200]
@@ -222,7 +220,10 @@ $(function() {
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
         };
+        console.log('newSignal');
+        console.log(newSignal);
         dekoder.sigConnected.push(newSignal);
+        dekoder.nbrofsig++;
         changedValues = true;
 
         makeHeader();
@@ -265,7 +266,6 @@ $(function() {
             h2: dekoder.sigConnected.length
         };
         var $el = $('.header-container');
-        console.log('make header');
         if (data.h2 == 0) {
             $($el).html(cleanHeader0);
         } else {
@@ -277,7 +277,6 @@ $(function() {
             }
         }
         var template = $el.find('#header-template').html();
-        console.log(data);
         $el.html(Mustache.render(template, data));
     };
 
@@ -290,6 +289,7 @@ $(function() {
 
         data.connSignal = dekoder.sigConnected;
         $($el).html(cleanAllConnected);
+        console.log(data);
         template = $el.find('#signal-template').html();
         $el.html(Mustache.render(template, data));
         $(".signal-set").show();
@@ -319,8 +319,6 @@ $(function() {
         $(".testbutTE").hide();
 
         signalToChange = dekoder.sigConnected[index];
-        console.log(dekoder);
-        console.log(signalToChange);
         saveOldVal.lamp = dekoder.sigConnected[index].sigLamp;
         saveOldVal.fade = dekoder.sigConnected[index].sigFade;
         saveOldVal.dark = dekoder.sigConnected[index].sigDark;
@@ -401,6 +399,4 @@ $(function() {
         $(".signal-types").show();
 
     };
-
-
 });

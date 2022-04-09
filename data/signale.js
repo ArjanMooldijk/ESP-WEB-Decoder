@@ -36,7 +36,7 @@ const typeSignalen = `
           "sigDraden": 4
      },
      {
-          "sigType": "Vors5",
+          "sigType": "Vor5",
           "sigHoofdtype": "voorsein",
           "sigComment": "Voorsein 5 draden",
           "sigNbrAdr": 3,

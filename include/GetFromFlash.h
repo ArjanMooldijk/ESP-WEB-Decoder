@@ -109,6 +109,7 @@ void printDecoder()
 
 void initDecJson()
 {
+    // Serial.println("initDecJson");
     StaticJsonDocument<512> dekoder;
 
     dekoder["dekName"] = hostName;
@@ -129,6 +130,7 @@ void initDecJson()
 
 void putDecoderValuesToFile()
 {
+    // Serial.println("putDecoderValuesToFile");
     StaticJsonDocument<2048> dekoder;
 
     dekoder["dekName"] = hostName;
@@ -424,16 +426,18 @@ void putDecoderValuesToFile()
         Serial.println(F("Failed to write to file"));
     };
     decFile.close();
+    Serial.println("end putDecoderValuesToFile");
 }
 
 void makeDekoderFromJson(String inputJson)
 {
+    // Serial.println("makeDekoderFromJson");
     int nbrOfChars = inputJson.length() + 1;
     char decData[nbrOfChars];
     // inputJson.toCharArray(decData, nbrOfChars);
-    // Serial.println("ontvangen Json string : ");
-    // Serial.println(inputJson);
-    // Serial.println();
+    Serial.println("ontvangen Json string : ");
+    Serial.println(inputJson);
+    Serial.println();
 
     StaticJsonDocument<2048> dekoder;
     DeserializationError error = deserializeJson(dekoder, inputJson);
@@ -476,12 +480,14 @@ void makeDekoderFromJson(String inputJson)
 
 void processJsonFromClient(String clientJson)
 {
+    // Serial.println("processJsonFromClient");
     makeDekoderFromJson(clientJson);
     putDecoderValuesToFile();
 };
 
 String getDecoderValues()
 {
+    // Serial.println("getDecoderValues");
     String decDataS;
     if (SPIFFS.exists(DECODER_JSON))
     {
@@ -500,6 +506,7 @@ String getDecoderValues()
 
 void getDekoderJson()
 {
+    // Serial.println("getDekoderJson");
     if (SPIFFS.exists(DECODER_JSON))
     {
         // The file exists, reading and loading
