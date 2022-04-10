@@ -33,6 +33,7 @@ class Decoder
 
 Decoder this_dec;
 Sein signale[8];
+uint8_t typeArray[8];
 bool signalFade[16] = {false};
 int fadeConst[8];
 int maxLight[16] = {0};

@@ -19,7 +19,7 @@ function getDatafromServer() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            deKoder = this.responseText;
+            var deKoder = this.responseText;
             console.log(deKoder);
             dekoder = JSON.parse(deKoder);
             console.log(dekoder);
@@ -169,7 +169,6 @@ var mainScreen = (function() {
         };
 
         // create a JSON object
-        console.log(dekoder);
         const jsonDekoder = JSON.stringify(dekoder);
         console.log(jsonDekoder);
 
@@ -280,8 +279,8 @@ var Csein = (function() {
 
     function _processValues() {
         var i = signalToChange.sigId;
-        dekoder.sigConnected[i].sigFade = saveVal.fade;
-        dekoder.sigConnected[i].sigDark = saveVal.dark;
+        dekoder.sigConnected[i].sigFade ;
+        dekoder.sigConnected[i].sigDark ;
 
         var tmpLamp = $('.lampInput');
         $.each(tmpLamp, function(count, item) {
@@ -319,6 +318,7 @@ var Csein = (function() {
 
     function _deleteSignal() {
         dekoder.sigConnected.pop();
+        dekoder.nbrofsig --;
         changedValues = true;
         setMainScreen();
     };
@@ -430,9 +430,8 @@ var Nsein = (function() {
             "sigType": seinType,
             "sigDraden": selSignalType[0].sigDraden,
             "sigChannel": nextChannel,
-            "sigNbrAdr": 1,
+            "sigNbrAdr": selSignalType[0].sigNbrAdr,
             "sigAdressen": [parseInt($("#adres1").val())],
-            // "sigImage": selSignalType[0].sigImage,
             "sigFade": $("#fade").val() * 10,
             "sigDark": $("#dark").val() * 10,
             "sigLamp": [200]
@@ -444,7 +443,6 @@ var Nsein = (function() {
             newSignal.sigAdressen[index] = parseInt($(item).val());
             adrCount++;
         });
-        newSignal.sigNbrAdr = adrCount;
 
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;

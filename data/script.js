@@ -189,6 +189,10 @@ $(function() {
 
     function _processKeuze() {
         var selSignalType = getObjects(typeSig, 'sigType', seinType);
+        if (dekoder.nbrofsig == 8) {
+            alert('Het maximum aantal aan te sluiten seinen is bereikt!');
+            return;
+        };
         if (dekoder.sigConnected.length == 0) {
             var nextId = 0;
             var nextChannel = 0;
@@ -200,7 +204,7 @@ $(function() {
         if (nextChannel + selSignalType[0].sigDraden > 16) {
             alert('te weinig aansluitingen voor dit sein op de decoder!');
             return;
-        }
+        };
         var newSignal = {
             "sigId": nextId,
             "sigType": seinType,

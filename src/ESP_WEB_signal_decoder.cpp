@@ -111,8 +111,6 @@ void setup()
 
   // Print ESP Local IP Address
   Serial.println(WiFi.localIP());
-  ///// Fill this_decoder values
-  // PutDecoderValues(); // for testing
   getDekoderJson();
 
   init_Servers();
@@ -149,7 +147,7 @@ void setup()
   Serial.println("Taken gestart");
   setDimSteps();
   Serial.println("Dim curves ingesteld");
-  // Initialiseer_decoder();
+  Initialiseer_decoder();
   Serial.println("Decoder geinitialiseerd");
 }
 ////////////////////////////////////////////////////////////////

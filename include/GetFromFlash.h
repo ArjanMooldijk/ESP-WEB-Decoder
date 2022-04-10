@@ -2,6 +2,7 @@
 #define GetFromFlash_h
 
 #include <Arduino.h>
+#include <Initialisatie.h>
 
 void saveHostNameFile()
 // Save Config in JSON format
@@ -128,56 +129,62 @@ void initDecJson()
     decFile.close();
 }
 
-void putDecoderValuesToFile()
+void putDecoderValuesToFile(String inputJson)
 {
     Serial.println("putDecoderValuesToFile");
-    StaticJsonDocument<2048> dekoder;
+    // StaticJsonDocument<2048> dekoder;
 
-    dekoder["dekName"] = hostName;
-    dekoder["nbrofsig"] = this_dec.nbrofsig;
+    // dekoder["dekName"] = hostName;
+    // dekoder["nbrofsig"] = this_dec.nbrofsig;
 
-    JsonArray sigConnected = dekoder.createNestedArray("sigConnected");
+    // JsonArray sigConnected = dekoder.createNestedArray("sigConnected");
 
-    for(uint8_t i=0;i<this_dec.nbrofsig;i++){
+    // for(uint8_t i=0;i<this_dec.nbrofsig;i++){
 
-        sigConnected[i]["sigId"] = this_dec.sigConnected[i].sigId;
-        sigConnected[i]["sigType"] = this_dec.sigConnected[i].sigType;
-        sigConnected[i]["sigDraden"] = this_dec.sigConnected[i].sigDraden;
-        sigConnected[i]["sigChannel"] = this_dec.sigConnected[i].sigChannel;
-        sigConnected[i]["sigNbrAdr"] = this_dec.sigConnected[i].sigNbrAdr;
-        JsonArray sigAdressen = sigConnected[i].createNestedArray("sigAdressen");
-        for(uint8_t ai=0;ai<this_dec.sigConnected[i].sigNbrAdr;ai++){
-            sigConnected[i]["sigAdressen"].add(this_dec.sigConnected[i].sigAdressen[ai]);
-        };
-        sigConnected[i]["sigFade"] = this_dec.sigConnected[i].sigFade;
-        sigConnected[i]["sigDark"] = this_dec.sigConnected[i].sigDark;
-        JsonArray sigLamp = sigConnected[i].createNestedArray("sigLamp");
-        for(uint8_t li=0;li<this_dec.sigConnected[i].sigDraden;li++){
-            sigConnected[i]["sigLamp"].add(this_dec.sigConnected[i].sigLamp[li]);
-        };
-    };
+    //     sigConnected[i]["sigId"] = this_dec.sigConnected[i].sigId;
+    //     sigConnected[i]["sigType"] = this_dec.sigConnected[i].sigType;
+    //     sigConnected[i]["sigDraden"] = this_dec.sigConnected[i].sigDraden;
+    //     sigConnected[i]["sigChannel"] = this_dec.sigConnected[i].sigChannel;
+    //     sigConnected[i]["sigNbrAdr"] = this_dec.sigConnected[i].sigNbrAdr;
+    //     JsonArray sigAdressen = sigConnected[i].createNestedArray("sigAdressen");
+    //     for(uint8_t ai=0;ai<this_dec.sigConnected[i].sigNbrAdr;ai++){
+    //         sigConnected[i]["sigAdressen"].add(this_dec.sigConnected[i].sigAdressen[ai]);
+    //     };
+    //     sigConnected[i]["sigFade"] = this_dec.sigConnected[i].sigFade;
+    //     sigConnected[i]["sigDark"] = this_dec.sigConnected[i].sigDark;
+    //     JsonArray sigLamp = sigConnected[i].createNestedArray("sigLamp");
+    //     for(uint8_t li=0;li<this_dec.sigConnected[i].sigDraden;li++){
+    //         sigConnected[i]["sigLamp"].add(this_dec.sigConnected[i].sigLamp[li]);
+    //     };
+    // };
 
-
-
-    serializeJson(dekoder, Serial);
+    // serializeJson(dekoder, Serial);
     File decFile = SPIFFS.open(DECODER_JSON, "w");
     if (!decFile)
     {
         Serial.println("failed to open decoder file for writing");
     };
-    if (serializeJson(dekoder, decFile) == 0)
+    int bytesWritten = decFile.print(inputJson);
+
+    if (bytesWritten > 0)
     {
-        Serial.println(F("Failed to write to file"));
+        Serial.println("File was written");
+        Serial.println(bytesWritten);
+    }
+    else
+    {
+        Serial.println("File write failed");
     };
+    // if (serializeJson(dekoder, decFile) == 0)
+    // {
+    //     Serial.println(F("Failed to write to file"));
+    // };
     decFile.close();
 }
 
 void makeDekoderFromJson(String inputJson)
 {
     // Serial.println("makeDekoderFromJson");
-    int nbrOfChars = inputJson.length() + 1;
-    char decData[nbrOfChars];
-    // inputJson.toCharArray(decData, nbrOfChars);
     Serial.println("ontvangen Json string : ");
     Serial.println(inputJson);
     Serial.println();
@@ -215,6 +222,9 @@ void makeDekoderFromJson(String inputJson)
         this_dec.sigConnected[sCc].sigLamp[4] = sigConnected_item_sigLamp[4];
         this_dec.sigConnected[sCc].sigLamp[5] = sigConnected_item_sigLamp[5];
 
+        signale[sCc]=this_dec.sigConnected[sCc];
+        setSignalType();
+
         sCc++;
     };
     // Serial.println("nieuwe decoder waarden gevuld ");
@@ -225,7 +235,8 @@ void processJsonFromClient(String clientJson)
 {
     // Serial.println("processJsonFromClient");
     makeDekoderFromJson(clientJson);
-    putDecoderValuesToFile();
+    Initialiseer_decoder();
+    putDecoderValuesToFile(clientJson);
 };
 
 String getDecoderValues()

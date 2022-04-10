@@ -120,9 +120,7 @@ void init_Servers()
         String newJsonDec;
         size_t i;
         for (i = 0; i < len; i++) {
-            // if (data[i] != 92){                // haal de \ eruit
                 newJsonDec += char(data[i]);
-            // }
         }
         // Serial.println("ontvangen :");
         // Serial.println(newJsonDec);

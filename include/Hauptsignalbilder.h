@@ -2,7 +2,7 @@
 #define Hauptsignalbilder_h
 
 /////////////////////////////////////// Hauptsignal Fade ////////////////////////////////////////////////////////////////
-// lamp 1 = grun (hoch)
+// lamp 1 = grun
 // lamp 2 = rot
 //////////////
 void dunkelHauptsignal(uint8_t signr)
@@ -111,6 +111,13 @@ void setFb3Hauptsignalgo(uint8_t signr)
       xQueueSend(queueCh[signale[signr].sigChannel + x], &uit, portMAX_DELAY);
     }
   }
+}
+void setFb6Hauptsignaloo(uint8_t signr)
+{ // led 3&4 (x=2&3) aan
+  xQueueSend(queueCh[signale[signr].sigChannel + 0], &uit, portMAX_DELAY);
+  xQueueSend(queueCh[signale[signr].sigChannel + 1], &uit, portMAX_DELAY);
+  xQueueSend(queueCh[signale[signr].sigChannel + 2], &aan, portMAX_DELAY);
+  xQueueSend(queueCh[signale[signr].sigChannel + 3], &aan, portMAX_DELAY);
 }
 
 /////////////
