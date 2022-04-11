@@ -5,21 +5,6 @@
     padding: 0;
 }
 
-#hoofd {
-    /* background-color: #7794a8; */
-    width: 100%;
-    height: 600px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-}
-
-#header-container {
-    /* background-color: #2187da; */
-    width:100%;
-    height: 150px;
-}
-
 h1 {
     text-align: center;
     background-color: #0F3376;
@@ -36,16 +21,17 @@ h2 {
     padding: 10px;
 }
 
-#info {
-    /* background-color: aquamarine; */
-    width: 98%;
-    height: 600px;
+.main-container {
+    /* background-color: blanchedalmond; */
+    padding: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
-.box1 {
+.signal-set {
     /* background-color: #8bc75a; */
     width: 100%;
-    height: 600px;
     justify-content: space-evenly;
     display: flex;
     flex-flow: row wrap;
@@ -60,19 +46,25 @@ h2 {
     display: flex;
     flex-direction: column;
 }
+
 .plaatje {
     /* background-color: aqua; */
     flex: 1;
     padding: 10px;
 }
-.signal-types {
-    /* background-color: #89be8d; */
-    padding: 30px;
-    height: 600px;
-    width: 50%;
-    align-items: flex-start;
+
+.plaatjeC {
+    /* background-color: aqua; */
+    flex: 1;
+    padding: 10px;
+    margin: auto;
+}
+
+.s-display {
+    /* background-color: antiquewhite; */
+    flex: 5;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .s-data {
@@ -85,21 +77,52 @@ h2 {
     /* background-color: blueviolet; */
     flex: 0.5;
     padding: 10px;
-    margin-top: 20px;
 }
 
-.signal-config {
-    padding-top: 30px;
-    align-items: stretch;
-    height: 600px;
+.sb-display {
+    background-color: rgb(218, 218, 248);
+    color: black;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+.sb-display:hover {
+    cursor: pointer;
+}
+
+.sb-display:active {
+    background-color: rgb(3, 3, 218);
+}
+
+.signal-types {
+    /* background-color: #89be8d; */
+    padding: 10px;
+    height: 550px;
     width: 50%;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
 }
-.instellingen{
-    width: 100%;
+
+.signal-config {
+    align-items: stretch;
+    height: 400px;
 }
+
+.full-line {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.toggle-lijst {
+    color: blue;
+    cursor: pointer;
+}
+
 .changeForm {
     width: 100%;
     height: 400px;
@@ -118,29 +141,6 @@ h2 {
     flex-flow: row wrap;
     align-items: flex-end;
 }
-#plaatContainer {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-#plaatFiller {
-    flex: 1;
-}
-.plaatjeC {
-    /* background-color: aqua; */
-    flex: 4;
-    padding: 10px;
-    text-align: center;
-
-    
-}
-
-.s-display {
-    /* background-color: antiquewhite; */
-    flex: 5;
-    display: flex;
-    flex-direction: row;
-}
 
 .labelcontainer {
     width: 10%;
@@ -155,60 +155,131 @@ h2 {
     font-size: 16px;
     flex: 2;
 }
-#knophoofd {
-    /* background-color: burlywood; */
-    width: 98%;
-    height: 100px;
+
+.footercontainer {
+    padding: 15px;
+    width: 60%;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
 }
 
-#knop-filler {
-    /* background-color: #8bc75a; */
-    width: 10%;
-    height: 100px;
+.filler {
+    margin-top: 100px;
+    width: 90%;
 }
 
-#knopcontainer {
-    /* background-color: rgb(58, 155, 159); */
-    width: 60%;
-    height: 100px;
+.NBcontainer {
+    max-width: 300px;
+    justify-content: flex-start;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.buttoncontainer {
+    padding-top: 15px;
+    width: 80%;
+    margin-top: 50px;
+    vertical-align: bottom;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-content: flex-end;
+}
+
+.newbutton {
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 20px;
+    flex: 1;
+}
+
+.storebutton {
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 20px;
+    flex: 1;
+}
+
+#BNew {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.keuzebut {
+    width: 25%;
+    flex: 1;
+}
+
+.applybut {
+    width: 25%;
+    flex: 1;
+}
+
+.deletebut,
+.testbutTB,
+.testbutTE,
+.cancelbut {
+    width: 25%;
+    flex: 1;
+}
+
+.signal-mutate {
+    padding: 10px;
+    height: 600px;
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
 }
-.knopbox{
-    /* background-color: blueviolet; */
-    width: 20%;
-    flex: 1;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-content: center;
-}
 
-
-.sb-display {
-    background-color: rgb(218, 218, 248);
-    color: black;
-    text-align: center;
-    vertical-align: baseline;
+.signal-change {
+    /* background-color: #cecb2b; */
     padding: 10px;
-    width: 120px;
-    height: 50px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 8px;
-    border: 1px solid black;
-}
-.sb-display:hover {
-    cursor: pointer;
+    height: 400px;
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
 }
 
-.sb-display:active {
-    background-color: rgb(3, 3, 218);
+@media (max-width: 1200px) {
+    .main-container,
+    #changeSignal {
+        flex-direction: column;
+    }
+    .signal-types,
+    .s-display,
+    .footercontainer {
+        width: 100%;
+    }
+    #sigKeuze,
+    #changeSignal {
+        font-size: 14px;
+    }
+    .instellingen,
+    #changeForm,
+    .footercontainer,
+    .sb-display,
+    .s-data {
+        font-size: 12px;
+    }
+    .sb-display {
+        padding: 5px;
+    }
+    #image {
+        width: 25px;
+        height: auto;
+    }
+    .signal-container {
+        height: 250px
+    }
+    .bfiller {
+        margin-top: 10px;
+    }
 }
+
+
 /* ///////////////////*/
 
 

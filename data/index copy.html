@@ -1,0 +1,124 @@
+<!doctype html>
+<html style="width:100%;height:100%">
+
+<head>
+    <title>Signaldekoder </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="signale.js"></script>
+    <script type="text/javascript" src="snippets.js"></script>
+    <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+    <script src="mustache.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+    <div class="header-container">
+        <script id="header-template" type="text/template">
+            {{#h1}}{{#h2}}
+            <h1>Signaldekoder {{h1}}</h1>
+            <h2> {{h2}} signalen aangesloten</h2>
+            {{/h2}}{{/h1}}
+        </script>
+    </div>
+
+
+    <div class="main-container">
+
+        <div id="connectedSignal" class="signal-set">
+        </div>
+        <div class="bfiller">
+            <div class="NBcontainer">
+                <div class="newbutton">
+                    <button id="BNew" class="sb-display">Nieuw Sein</button>
+                </div>
+                <div class="storebutton">
+                    <button id="BStore" class="sb-display">Sla op</button>
+                </div>
+            </div>
+        </div>
+        <!-- /////////////////////////////////////////// -->
+
+        <div id="allTypes" class="signal-types">
+        </div>
+
+
+        <div id="signal-config" class="signal-types signal-config">
+            <div class="instellingen">
+                <div class="full-line">
+                    <p><strong>Stel eigenschappen van het sein in</strong></p><br>
+                </div>
+                <div class="item2">
+                    <div class="labelcontainer">
+                        <label class="lichtLabel" for="fade">fade duur (0 - 500 msec)</label>
+                    </div>
+                    <div class="slidecontainer" id="slider">
+                        <input name="fade" type="range" min="0" max="50" value="15" class="slider" id="fade">
+                        <span id="sout" class="sout">150</span>
+                    </div>
+                </div>
+                <div class="item2">
+                    <div class="labelcontainer">
+                        <label class="lichtLabel" for="dark">donker pauze (1 - 500 msec)</label>
+                    </div>
+                    <div class="slidecontainer">
+                        <input name="dark" type="range" min="0" max="50" value="30" class="slider" id="dark">
+                        <span id="sout" class="sout">300</span>
+                    </div>
+                </div>
+                <div class="item2 1adres 2adres 3adres">
+                    <div class="labelcontainer">
+                        <label class="adreslabel" for="adres1">Eerste adres</label>
+                    </div>
+                    <div class="adrescontainer">
+                        <input type="number" name="adres1" class="adresInput" id="adres1">
+                    </div>
+                </div>
+                <div class="item2 2adres 3adres">
+                    <div class="labelcontainer">
+                        <label class="adreslabel" for="adres2">Tweede adres</label>
+                    </div>
+                    <div class="adrescontainer">
+                        <input type="number" name="adres2" class="adresInput" id="adres2">
+                    </div>
+                </div>
+                <div class="item2 3adres">
+                    <div class="labelcontainer">
+                        <label class="adreslabel" for="adres3">Derde adres</label>
+                    </div>
+                    <div class="adrescontainer">
+                        <input type="number" name="adres3" class="adresInput" id="adres3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="signal-mutate">
+            <div id="changeSignal" class="signal-change">
+            </div>
+
+            <div class="footercontainer">
+                <div class="applybut">
+                    <button id="BApply" class="sb-display">Pas waardes toe</button>
+                </div>
+                <div class="deletebut">
+                    <button id="BDel" class="sb-display">Verwijder sein</button>
+                </div>
+                <div class="testbutTB">
+                    <button id="BTest" class="sb-display">Test lichtsterkte</button>
+                </div>
+                <div class="testbutTE">
+                    <button id="BTestEnd" class="sb-display">Einde test</button>
+                </div>
+                <div class="cancelbut">
+                    <button id="BCancelC" class="sb-display">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>

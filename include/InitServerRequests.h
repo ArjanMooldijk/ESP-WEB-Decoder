@@ -71,7 +71,7 @@ void init_Servers()
     server.on("/H5grgog", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H5grgog.gif", "image/gif"); });
 
-    server.on("/H3H7ggogrro", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/H7ggogr", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/H7ggogr.gif", "image/gif"); });
 
     server.on("/H7gogor", HTTP_GET, [](AsyncWebServerRequest *request)

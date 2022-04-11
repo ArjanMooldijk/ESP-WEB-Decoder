@@ -61,7 +61,10 @@ const fadeHTML = '' +
     '</div>';
 
 const cleanChangeSignal = '' +
+    '<div id="plaatContainer">'+
+    '<div id="plaatFiller"></div>'+
     '<div id="imageC" class="plaatjeC">' +
+    '</div>' +
     '</div>' +
     '<div class="s-display">' +
     '<form class=changeForm>' +
@@ -146,11 +149,4 @@ const cleanNewSignal = '' +
     '<br>' +
     '</div>' +
     '</form>' +
-    '<div class="buttoncontainer">' +
-    '<div class="keuzebut">' +
-    '<button id="BKeuze" class="sb-display">Voeg nieuw sein toe</button>' +
-    '</div>' +
-    '<div class="cancelbut">' +
-    '<button id="BCancelN" class="sb-display">cancel</button>' +
-    '</div>' +
     '</script>';

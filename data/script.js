@@ -1,7 +1,7 @@
 $(function() {
 
 
-    $(".signal-types").hide();
+    // $(".signal-types").hide();
 
     // Get base dekoder data
     getDatafromServer();
@@ -14,6 +14,7 @@ $(function() {
         lamp: []
     };
     var changedValues = false;
+    var bdelWasVisibale;
     var signalToChange;
     var dekoder;
     var deKoder;
@@ -32,6 +33,9 @@ $(function() {
                 makeHeader();
                 makeMainScreen();
                 setEvents();
+            } else if (this.status > 200){
+                console.log('get from server failed');
+                console.log(this.status);
             }
         };
         xhttp.open("GET", "/GetDecVal", true);
@@ -52,20 +56,20 @@ $(function() {
     };
 
     function setEvents() {
-        $('.main-container').delegate('#BNew', 'click', newSignal);
-        $('.main-container').delegate('#BStore', 'click', _storeValues);
+        $('.Mainbuttoncontainer').delegate('#BNew', 'click', newSignal);
+        $('.Mainbuttoncontainer').delegate('#BStore', 'click', _storeValues);
         $('#connectedSignal').delegate('.sigBut', 'click', _changeSig);
         $('#changeSignal').delegate('input.slider', 'input', showSliderVal);
-        $('.footercontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
-        $('.footercontainer').delegate('#BDel', 'click', _deleteSignal);
-        $('.footercontainer').delegate('#BApply', 'click', _processChange.bind(this));
-        $('.footercontainer').delegate('#BTest', 'click', _testLights);
-        $('.footercontainer').delegate('#BTestEnd', 'click', _endTestLights);
+        $('.ChangeButtoncontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
+        $('.ChangeButtoncontainer').delegate('#BDel', 'click', _deleteSignal);
+        $('.ChangeButtoncontainer').delegate('#BApply', 'click', _processChange.bind(this));
+        $('.ChangeButtoncontainer').delegate('#BTest', 'click', _testLights);
+        $('.ChangeButtoncontainer').delegate('#BTestEnd', 'click', _endTestLights);
 
-        $('#allTypes').delegate('input:radio[name=sigGekozen]', 'click', _showAdresInput);
+        $('#allTypeSeinen').delegate('input:radio[name=sigGekozen]', 'click', _showAdresInput);
         $('#signal-config').delegate('input.slider', 'input', showSliderVal);
-        $('#allTypes').delegate('#BKeuze', 'click', _processKeuze);
-        $('#allTypes').delegate('#BCancelN', 'click', _cancelKeuzeN.bind(this));
+        $('.NewButtoncontainer').delegate('#BKeuze', 'click', _processKeuze);
+        $('.NewButtoncontainer').delegate('#BCancelN', 'click', _cancelKeuzeN);
     };
 
     function _storeValues() {
@@ -140,7 +144,9 @@ $(function() {
     function _endTestLights() {
         //call server met waardes van alle lampen
         $("#BApply").show();
-        $("#BDel").show();
+        if (bdelWasVisibale) {
+            $("#BDel").show();
+        };
         $("#BCancel").show();
         $(".testbutTE").hide();
     };
@@ -148,7 +154,12 @@ $(function() {
     function _testLights() {
         //call server met waardes van alle lampen
         $("#BApply").hide();
-        $("#BDel").hide();
+        if($("#BDel").is(":visible")){
+            bdelWasVisibale = true;
+            $("#BDel").hide();
+        } else{            
+            bdelWasVisibale = false;
+        };
         $("#BCancel").hide();
         $(".testbutTE").show();
     };
@@ -236,12 +247,13 @@ $(function() {
 
     function _cancelKeuzeN() {
 
-        var $el = $('#allTypes');
+        var $el = $('#allTypeSeinen');
         var $sc = $('#signal-config');
         _cleanInput($el, $sc);
-        $(".signal-set").show();
-        $(".NBcontainer").show();
-        $(".signal-types").hide();
+        $("#connectedSignal").show();
+        $(".Mainbuttoncontainer").show();
+        $(".NewButtoncontainer").hide();
+        $("#signalNew").hide();
     };
 
     function _cleanInput($el, $sc) {
@@ -288,34 +300,36 @@ $(function() {
             connSignal: [],
         };
         var $el = $('#connectedSignal');
-        var $al = $('.main-container');
 
         data.connSignal = dekoder.sigConnected;
         $($el).html(cleanAllConnected);
         template = $el.find('#signal-template').html();
         $el.html(Mustache.render(template, data));
-        $(".signal-set").show();
-        $(".signal-types").hide();
-        $(".signal-mutate").hide();
+        $("#connectedSignal").show();
+        $("#signalNew").hide();
+        $(".NewButtoncontainer").hide();
+        $("#signal-change").hide();
+        $(".ChangeButtoncontainer").hide();
         if (changedValues) {
             $(".storebutton").show();
         } else {
             $(".storebutton").hide();
         };
-        $(".NBcontainer").show();
-        $(".signal-mutate").hide();
+        $(".Mainbuttoncontainer").show();
     };
 
     function changeSignal(index) {
-        var $el;
         var $el = $('#changeSignal');
 
-        $(".signal-set").hide();
-        $(".NBcontainer").hide();
-        $(".signal-mutate").show();
+        $("#connectedSignal").hide();
+        $(".Mainbuttoncontainer").hide();
+        $(".ChangeButtoncontainer").show();
+        $("#signal-change").show();
         if (index == (dekoder.sigConnected.length - 1)) {
+            bdelWasVisibale = true;
             $("#BDel").show();
         } else {
+            bdelWasVisibale = false;
             $("#BDel").hide();
         };
         $(".testbutTE").hide();
@@ -380,7 +394,7 @@ $(function() {
             allHoofdseinen: [],
             allOverig: []
         };
-        var $el = $('#allTypes');
+        var $el = $('#allTypeSeinen');
         var $sc = $('#signal-config');
         var template;
         data.allVoorseinen = getObjects(typeSig, 'sigHoofdtype', 'voorsein');
@@ -395,10 +409,11 @@ $(function() {
 
         _cleanInput($el, $sc);
 
-        $(".signal-set").hide();
-        $(".NBcontainer").hide();
-        $(".instellingen").hide();
-        $(".signal-types").show();
+        $("#connectedSignal").hide();
+        $("#signal-change").hide();
+        $(".Mainbuttoncontainer").hide();
+        $("#signalNew").show();
+        $(".NewButtoncontainer").show();
 
     };
 });
