@@ -90,22 +90,22 @@ void setup()
   }
 
   // connect to WiFi
-  // MakeWiFiConnection();
+  MakeWiFiConnection();
 
   //////////////////////////////////////////////////////////// temp
 
   // Connect to Wi-Fi with fixed IP
-  WiFi.disconnect();
-  WiFi.config(staticIP, gateway, subnet);
-  WiFi.hostname(hostName);
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
+  // WiFi.disconnect();
+  // WiFi.config(staticIP, gateway, subnet);
+  // WiFi.hostname(hostName);
+  // WiFi.begin(ssid, password);
+  // Serial.println("Connecting to WiFi");
+  // while (WiFi.status() != WL_CONNECTED)
+  // {
+  //   delay(500);
+  //   Serial.print(".");
+  // }
+  // Serial.println();
   //////////////////////////////////////////////////////////// temp
 
   // Print ESP Local IP Address

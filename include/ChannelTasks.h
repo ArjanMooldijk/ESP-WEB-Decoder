@@ -175,7 +175,6 @@ void testLights(void *parameter)
   {
 
     testData testSein;
-    const bool OK = true;
     xQueueReceive(testLightsQueue, &testSein, portMAX_DELAY);
 
     Serial.println("message to start test received");

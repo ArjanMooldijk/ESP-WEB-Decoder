@@ -376,7 +376,6 @@ String endTestLights()
 
     Serial.println("processing end test request");
     testData testSein;
-    bool Confirm = false;
     testSein.Action = uit;
     xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
     delay(2);
