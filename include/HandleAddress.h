@@ -5,6 +5,7 @@
 #include <Hauptsignalbilder.h>
 #include <Hilfsignalbilder.h>
 #include <Zwergsignalbilder.h>
+#include <ChannelTasks.h>
 
 void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
 {
@@ -173,7 +174,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
                 setFb2Hauptsignalog(signr);
             }
         case H4grog:
-        case H5grogo:// Fb2 & Fb3
+        case H5grogo: // Fb2 & Fb3
             if (signale[signr].sigDark > 0)
             {
                 dunkelHauptsignal(signr);
@@ -188,7 +189,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
             }
             break;
         case H5grgog:
-        case H7ggogr:// Fb2 & Fb3
+        case H7ggogr: // Fb2 & Fb3
             if (signale[signr].sigDark > 0)
             {
                 dunkelHauptsignal(signr);
@@ -288,29 +289,104 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
         break;
     }
 }
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    void handle_blink()
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+void handle_blink()
+{
+    unsigned long currentMillis = millis();
+    for (byte blindex = 0; blindex < 16; blindex++)
     {
-        unsigned long currentMillis = millis();
-        for (byte blindex = 0; blindex < 16; blindex++)
-        {
-            if (Blink[blindex] == 1)
-            { // Blinkt deze pin/led?
-                if (currentMillis - previousMillis[blindex] >= interval)
-                { // Is de wachtperiode al voorbij?
-                    previousMillis[blindex] = currentMillis;
-                    if (blinkState[blindex] == 1)
-                    { // Led is aan, zet uit
-                        xQueueSend(queueCh[blindex], &uit, portMAX_DELAY);
-                        blinkState[blindex] = 0;
-                    }
-                    else
-                    { // Led is uit, zet aan
-                        xQueueSend(queueCh[blindex], &aan, portMAX_DELAY);
-                        blinkState[blindex] = 1;
-                    }
+        if (Blink[blindex] == 1)
+        { // Blinkt deze pin/led?
+            if (currentMillis - previousMillis[blindex] >= interval)
+            { // Is de wachtperiode al voorbij?
+                previousMillis[blindex] = currentMillis;
+                if (blinkState[blindex] == 1)
+                { // Led is aan, zet uit
+                    xQueueSend(queueCh[blindex], &uit, portMAX_DELAY);
+                    blinkState[blindex] = 0;
+                }
+                else
+                { // Led is uit, zet aan
+                    xQueueSend(queueCh[blindex], &aan, portMAX_DELAY);
+                    blinkState[blindex] = 1;
                 }
             }
         }
     }
+}
+
+postResponse startTestLights(String JsonData)
+{
+    testData testSein;
+    postResponse resultaat;
+    Serial.println("processing test request");
+    Serial.println(JsonData);
+    StaticJsonDocument<256> subject;
+    DeserializationError error = deserializeJson(subject, JsonData);
+
+    if (error)
+    {
+        resultaat.message = "deserialize failed";
+        resultaat.succes = false;
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+    }
+    else
+    {
+        testSein.Id = subject["sigId"];
+        bool idFound = false;
+        for (uint8_t i = 0; i < this_dec.nbrofsig; i++)
+        {
+            if (testSein.Id == this_dec.sigConnected[i].sigId)
+            {
+                idFound = true;
+            }
+        };
+        if (idFound)
+        {
+            processingDCC = false;
+            testSein.fade = subject["sigFade"];
+            testSein.dark = subject["sigDark"];
+            uint8_t sCc = 0;
+            for (JsonObject lamp_item : subject["sigLamp"].as<JsonArray>())
+            {
+                testSein.Lamp[sCc] = lamp_item["sigLamp"];
+                sCc++;
+            };
+
+            xTaskCreate(testLights, "testLights", 1000, &testSein, 1, &testTask);
+            testSein.Action = aan;
+            xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
+            resultaat.message = "";
+            resultaat.succes = true;
+        }
+        else
+        {
+            resultaat.message = "sein niet bekend";
+            resultaat.succes = false;
+        }
+    }
+    return resultaat;
+}
+
+String endTestLights()
+{
+    // send message to stop test
+    // wait 100 msec
+
+    Serial.println("processing end test request");
+    testData testSein;
+    bool Confirm = false;
+    testSein.Action = uit;
+    xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
+    delay(2);
+    Serial.println("terminating test task");
+    if (testTask != NULL )
+    {
+        vTaskDelete(testTask);
+    }
+    processingDCC = true;
+
+    return "200";
+}
 #endif

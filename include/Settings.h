@@ -5,6 +5,7 @@
 
 TaskHandle_t Task_Ch[16];
 QueueHandle_t queueCh[16];
+QueueHandle_t testLightsQueue;
 
 const bool uit = false;
 const bool aan = true;
@@ -23,12 +24,27 @@ public:
   uint8_t sigLamp[6];
 };
 
-class Decoder
+struct Decoder
 {
     public:
     const char *dekName; // Name of the decoder
     uint8_t nbrofsig;
     Sein sigConnected[8];
+};
+
+struct testData
+{
+    bool Action;
+    uint8_t Id;
+    uint8_t fade;
+    uint16_t dark;
+    uint8_t Lamp[6];
+};
+
+struct postResponse
+{
+  bool succes;
+  String message;
 };
 
 Decoder this_dec;
@@ -51,5 +67,8 @@ StaticJsonDocument<512> jsonHostNameFile;
 char hostName[] = "Ausserberg";
 // char hostName[20];
 bool shouldSaveConfig = false;
+bool processingDCC = true;
+
+TaskHandle_t testTask = NULL;
 
 #endif

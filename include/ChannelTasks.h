@@ -2,13 +2,14 @@
 #define ChannelTasks_h
 
 #include <Arduino.h>
+#include <ControlLeds.h>
 
 void HandleQueMsg(int pin)
 {
   bool click;
   xQueueReceive(queueCh[pin], &click, portMAX_DELAY);
-/*   Serial.print("Msg received channel: ");
-  Serial.println(pin); */
+  /*   Serial.print("Msg received channel: ");
+    Serial.println(pin); */
 
   if (click)
   {
@@ -32,11 +33,11 @@ void HandleQueMsg(int pin)
       LED_off_nofade(pin);
     }
   }
-  //Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
+  // Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
 
   if (darkDelay[pin] > (millis() - busyWait[pin]))
   {
-    delay(darkDelay[pin] -(millis() - busyWait[pin]));
+    delay(darkDelay[pin] - (millis() - busyWait[pin]));
   }
 }
 ////////////////////////////////////////////////////////
@@ -167,5 +168,47 @@ void ch15Loop(void *parameter)
     HandleQueMsg(15);
   }
 }
+////////////////////////////////////////////////////////
+void testLights(void *parameter)
+{
+  for (;;)
+  {
 
+    testData testSein;
+    const bool OK = true;
+    xQueueReceive(testLightsQueue, &testSein, portMAX_DELAY);
+
+    Serial.println("message to start test received");
+    if (testSein.Action)
+    {
+      Serial.println("parameter.id");
+      Serial.println(testSein.Id);
+    }
+    else
+    {
+      Serial.println("ending test");
+    }
+    /*
+   Bepaal wat voor sein het is
+   save huidige lamp waardes
+   schrijf tijdelijke lampwaardes voor iedere lamp
+
+         fadeConst[sigChannel + chNr] = sigFade / 10;
+         darkDelay[sigChannel + chNr] = sigDark;
+         maxLight[sigChannel + chNr] = sigLamp[chNr];
+         if (sigFade > 0)
+         {
+           signalFade[sigChannel + chNr] = true;
+         }
+     afhankelijk van het type sein, roep één voor één de seinbeelden Fb0, Fb1, Fb2, Fb3, Fb5, Fb6
+     delay van 1500 msec (actieve loop)
+     check message queue voor stop
+     als stop,
+       zet waardes terug
+       zet sein op Fb0
+       (geef semafoor vrij?)
+
+    */
+  }
+}
 #endif

@@ -35,7 +35,6 @@ const int anZahl = 16;
 const int ledPin[16] = {23, 22, 21, 19, 18, 17, 16, 15, 32, 33, 25, 26, 27, 14, 12, 13}; // corresponds to GPIO's for LED's
 const int freq = 5000;
 const int resolution = 8;
-const bool runMode = true;
 
 #include <ConnectWiFi.h>
 #include <InitServerRequests.h>
@@ -126,6 +125,11 @@ void setup()
     // Create the queue with 5 slots of 1 byte
     queueCh[ledChannel] = xQueueCreate(5, sizeof(bool));
   }
+
+    // Create message queue for light tests with 2 slots of 11 bytes
+    // (start/stop, id, lamp[6])
+    testLightsQueue = xQueueCreate(2, 11);
+
   // Create a separate task for each led channel (16 total)
   xTaskCreatePinnedToCore(ch0Loop, "CH0Task", 1000, NULL, 1, &Task_Ch[0], 1);
   xTaskCreatePinnedToCore(ch1Loop, "CH1Task", 1000, NULL, 1, &Task_Ch[1], 1);
@@ -153,7 +157,7 @@ void setup()
 ////////////////////////////////////////////////////////////////
 void loop()
 { /*
-   if (runMode)
+   if (processingDCC)
    {
      Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
      delay(1);

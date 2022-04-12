@@ -63,7 +63,7 @@ $(function() {
         $('.ChangeButtoncontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
         $('.ChangeButtoncontainer').delegate('#BDel', 'click', _deleteSignal);
         $('.ChangeButtoncontainer').delegate('#BApply', 'click', _processChange.bind(this));
-        $('.ChangeButtoncontainer').delegate('#BTest', 'click', _testLights);
+        $('.ChangeButtoncontainer').delegate('#BTest', 'click', _testLights.bind(this));
         $('.ChangeButtoncontainer').delegate('#BTestEnd', 'click', _endTestLights);
 
         $('#allTypeSeinen').delegate('input:radio[name=sigGekozen]', 'click', _showAdresInput);
@@ -149,6 +149,15 @@ $(function() {
         };
         $("#BCancel").show();
         $(".testbutTE").hide();
+        console.log("sending end test")
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            } 
+        };
+        xhttp.open("GET", "/EndTest", true);
+        xhttp.send();
     };
 
     function _testLights() {
@@ -162,6 +171,52 @@ $(function() {
         };
         $("#BCancel").hide();
         $(".testbutTE").show();
+        // verzamel de waarden
+
+        var $el = ('#changeForm');
+
+        var subject = {
+            sigId : signalToChange.sigId,
+            sigFade: 0,
+            sigDark: 0,
+            sigLamp: []
+        };
+        // dekoder.sigConnected[i].sigFade = $(this).find('#fade').next('.sout').html() * 10;
+        // dekoder.sigConnected[i].sigDark = $(this).find('#dark').next('.sout').html() * 10;
+        subject.sigFade = $($el).find('#fade').next('.sout').html();
+        subject.sigDark = $($el).find('#dark').next('.sout').html();
+
+        var tmpLamp = $('.lampInput');
+        $.each(tmpLamp, function(count, item) {
+            subject.sigLamp[count] = $(item).val();
+        });
+
+        const xhr = new XMLHttpRequest();
+
+        // listen for `load` event
+        xhr.onload = () => {
+            // print JSON response
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // parse JSON
+                // const response = JSON.parse(xhr.responseText);
+                console.log(xhr.responseText);
+            } else {
+                alert(xhr.responseText);
+            }
+        };
+
+        // create a JSON object
+        const jsonSubject = JSON.stringify(subject);
+        console.log(jsonSubject);
+
+        // open request
+        xhr.open("POST", "/testLights");
+
+        // set `Content-Type` header
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // send rquest with JSON payload
+        xhr.send(jsonSubject);    
     };
 
     function showSliderVal() {

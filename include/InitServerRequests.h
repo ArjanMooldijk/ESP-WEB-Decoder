@@ -9,6 +9,7 @@
 #include <string>
 using namespace std;
 #include <cctype>
+#include <HandleAddress.h>
 
 // Replaces placeholder with DHT values
 String processor(const String &var)
@@ -31,22 +32,22 @@ void init_Servers()
 
     server.on("/jquery-3.6.0.min.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/jquery-3.6.0.min.js", "text/plain"); });
-              
+
     server.on("/mustache.min.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/mustache.min.js", "text/plain"); });
-              
+
     server.on("/signale.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/signale.js", "text/plain"); });
-              
+
     server.on("/snippets.js", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/snippets.js", "text/plain"); });
-              
+
     server.on("/Vor2", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor2.gif", "image/gif"); });
-              
+
     server.on("/Vor4", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor4.gif", "image/gif"); });
-              
+
     server.on("/Vor5", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Vor5.gif", "image/gif"); });
 
@@ -126,6 +127,27 @@ void init_Servers()
         // Serial.println(newJsonDec);
         processJsonFromClient(newJsonDec);
         request->send(200); });
+
+    server.on(
+        "/testLights", HTTP_POST, [](AsyncWebServerRequest *request) {},
+        NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
+        {
+        String newJsonDec;
+        size_t i;
+        for (i = 0; i < len; i++) {
+                newJsonDec += char(data[i]);
+        }
+        // Serial.println("ontvangen :");
+        // Serial.println(newJsonDec);
+        postResponse res = startTestLights(newJsonDec);
+        if (res.succes) 
+        {request->send(200); }
+        else {
+            request->send(500, "text/plain", res.message);
+        } });
+
+    server.on("/EndTest", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", endTestLights()); });
 }
 
 #endif
