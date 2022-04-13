@@ -64,8 +64,8 @@ int interval;
 #define JSON_CONFIG_FILE "/hostname.json"
 StaticJsonDocument<512> jsonHostNameFile;
 
-char hostName[] = "Ausserberg";
-// char hostName[20];
+// char hostName[] = "Ausserberg";
+char hostName[20];
 bool shouldSaveConfig = false;
 bool processingDCC = true;
 
