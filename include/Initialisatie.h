@@ -2,6 +2,7 @@
 #define Initialisatie_h
 
 #include <Signale.h>
+#include <ChannelTasks.h>
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>
 #include <Hilfsignalbilder.h>
@@ -34,6 +35,42 @@ void setDimSteps()
       }
     }
   }
+}
+
+void init_leds_andQueues () {
+    for (int ledChannel = 0; ledChannel < 16; ledChannel++)
+  {
+    // configure and attach LED PWM functionalitites
+    ledcSetup(ledChannel, freq, resolution);
+    ledcAttachPin(ledPin[ledChannel], ledChannel);
+    // Create the queue with 5 slots of 1 byte
+    queueCh[ledChannel] = xQueueCreate(5, sizeof(bool));
+  }
+
+    // Create message queue for light tests with 2 slots of 11 bytes
+    // (start/stop, id, lamp[6])
+    testLightsQueue = xQueueCreate(2, 11);
+}
+
+void init_tasks(){
+    // Create a separate task for each led channel (16 total)
+  xTaskCreatePinnedToCore(ch0Loop, "CH0Task", 1000, NULL, 1, &Task_Ch[0], 1);
+  xTaskCreatePinnedToCore(ch1Loop, "CH1Task", 1000, NULL, 1, &Task_Ch[1], 1);
+  xTaskCreatePinnedToCore(ch2Loop, "CH2Task", 1000, NULL, 1, &Task_Ch[2], 1);
+  xTaskCreatePinnedToCore(ch3Loop, "CH3Task", 1000, NULL, 1, &Task_Ch[3], 1);
+  xTaskCreatePinnedToCore(ch4Loop, "CH4Task", 1000, NULL, 1, &Task_Ch[4], 1);
+  xTaskCreatePinnedToCore(ch5Loop, "CH5Task", 1000, NULL, 1, &Task_Ch[5], 1);
+  xTaskCreatePinnedToCore(ch6Loop, "CH6Task", 1000, NULL, 1, &Task_Ch[6], 1);
+  xTaskCreatePinnedToCore(ch7Loop, "CH7Task", 1000, NULL, 1, &Task_Ch[7], 1);
+  xTaskCreatePinnedToCore(ch8Loop, "CH8Task", 1000, NULL, 1, &Task_Ch[8], 1);
+  xTaskCreatePinnedToCore(ch9Loop, "CH9Task", 1000, NULL, 1, &Task_Ch[9], 1);
+  xTaskCreatePinnedToCore(ch10Loop, "CH10Task", 1000, NULL, 1, &Task_Ch[10], 1);
+  xTaskCreatePinnedToCore(ch11Loop, "CH11Task", 1000, NULL, 1, &Task_Ch[11], 1);
+  xTaskCreatePinnedToCore(ch12Loop, "CH12Task", 1000, NULL, 1, &Task_Ch[12], 1);
+  xTaskCreatePinnedToCore(ch13Loop, "CH13Task", 1000, NULL, 1, &Task_Ch[13], 1);
+  xTaskCreatePinnedToCore(ch14Loop, "CH14Task", 1000, NULL, 1, &Task_Ch[14], 1);
+  xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
+
 }
 
 void setSignalType()

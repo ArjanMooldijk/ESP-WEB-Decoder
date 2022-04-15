@@ -10,6 +10,10 @@ QueueHandle_t testLightsQueue;
 const bool uit = false;
 const bool aan = true;
 
+const int ledPin[16] = {23, 22, 21, 19, 18, 17, 16, 15, 32, 33, 25, 26, 27, 14, 12, 13}; // corresponds to GPIO's for LED's
+const int freq = 5000;
+const int resolution = 8;
+
 class Sein
 {
 public:
