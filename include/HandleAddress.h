@@ -354,7 +354,6 @@ postResponse startTestLights(String JsonData)
                 sCc++;
             };
 
-            xTaskCreate(testLights, "testLights", 1000, &testSein, 1, &testTask);
             testSein.Action = aan;
             xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
             resultaat.message = "";
@@ -364,8 +363,8 @@ postResponse startTestLights(String JsonData)
         {
             resultaat.message = "sein niet bekend";
             resultaat.succes = false;
-        }
-    }
+        };
+    };
     return resultaat;
 }
 
@@ -378,12 +377,6 @@ String endTestLights()
     testData testSein;
     testSein.Action = uit;
     xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
-    delay(2);
-    Serial.println("terminating test task");
-    if (testTask != NULL )
-    {
-        vTaskDelete(testTask);
-    }
     processingDCC = true;
 
     return "200";

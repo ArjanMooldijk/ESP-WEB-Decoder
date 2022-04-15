@@ -4,6 +4,7 @@
 #include <Arduino.h>
 
 TaskHandle_t Task_Ch[16];
+TaskHandle_t testTask = NULL;
 QueueHandle_t queueCh[16];
 QueueHandle_t testLightsQueue;
 
@@ -73,6 +74,5 @@ char hostName[20];
 bool shouldSaveConfig = false;
 bool processingDCC = true;
 
-TaskHandle_t testTask = NULL;
 
 #endif

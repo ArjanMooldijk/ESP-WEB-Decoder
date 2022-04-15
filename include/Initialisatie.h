@@ -71,6 +71,8 @@ void init_tasks(){
   xTaskCreatePinnedToCore(ch14Loop, "CH14Task", 1000, NULL, 1, &Task_Ch[14], 1);
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
+  xTaskCreate(testLights, "testLights", 1000, NULL, 1, &testTask);
+
 }
 
 void setSignalType()

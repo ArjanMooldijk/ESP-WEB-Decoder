@@ -235,6 +235,7 @@ void processJsonFromClient(String clientJson)
 {
     // Serial.println("processJsonFromClient");
     makeDekoderFromJson(clientJson);
+    setDimSteps();
     Initialiseer_decoder();
     putDecoderValuesToFile(clientJson);
 };
