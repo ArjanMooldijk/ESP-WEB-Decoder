@@ -130,7 +130,7 @@ $(function() {
         // dekoder.sigConnected[i].sigFade = $(this).find('#fade').next('.sout').html() * 10;
         // dekoder.sigConnected[i].sigDark = $(this).find('#dark').next('.sout').html() * 10;
         dekoder.sigConnected[i].sigFade = $($el).find('#fade').next('.sout').html();
-        dekoder.sigConnected[i].sigDark = $($el).find('#dark').next('.sout').html() * 10;
+        dekoder.sigConnected[i].sigDark = $($el).find('#dark').next('.sout').html();
 
         var tmpLamp = $('.lampInput');
         $.each(tmpLamp, function(count, item) {
