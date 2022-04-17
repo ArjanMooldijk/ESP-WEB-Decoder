@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 #include <ControlLeds.h>
+#include <Hauptsignalbilder.h>
+#include <Vorsignalbilder.h>
+#include <Zwergsignalbilder.h>
+#include <Hilfsignalbilder.h>
 
 void HandleQueMsg(int pin)
 {
@@ -175,39 +179,57 @@ void testLights(void *parameter)
   {
 
     testData testSein;
+    // vTaskDelay(250 / portTICK_PERIOD_MS
     xQueueReceive(testLightsQueue, &testSein, portMAX_DELAY);
 
-    Serial.println("message to start test received");
     if (testSein.Action)
     {
       Serial.println("parameter.id");
       Serial.println(testSein.Id);
+      for (uint8_t i = 0; i < signale[testSein.Id].sigDraden; i++)
+      {
+        ledcWrite(signale[testSein.Id].sigChannel + i, testSein.Lamp[i]);
+      }
     }
     else
     {
       Serial.println("ending test");
+      switch (typeArray[testSein.Id])
+      {
+        case Vor2:
+        case Vor4:
+        case Vor5:
+          setFb0Vorsignal(testSein.Id);
+          break;
+
+        case H2gr:
+        case H3gro:
+        case H3grg:
+        case H4goro:
+        case H4grog:
+        case H5grogo:
+        case H5grgog:
+        case H7ggogr:
+        case H7gogor:
+        case H7gogogr:
+          setFb0Hauptsignal(testSein.Id);
+          break;
+
+        case Zwerg:
+          setZwergsignal(testSein.Id, 0);
+          break;
+
+        case SIMH:
+        case SIMV:
+        case HbB:
+        case Fsm:
+          setHilfsignal(testSein.Id, 0);
+          break;
+
+        default:
+          break;
+      }
     }
-    /*
-   Bepaal wat voor sein het is
-   save huidige lamp waardes
-   schrijf tijdelijke lampwaardes voor iedere lamp
-
-         fadeConst[sigChannel + chNr] = sigFade / 10;
-         darkDelay[sigChannel + chNr] = sigDark;
-         maxLight[sigChannel + chNr] = sigLamp[chNr];
-         if (sigFade > 0)
-         {
-           signalFade[sigChannel + chNr] = true;
-         }
-     afhankelijk van het type sein, roep één voor één de seinbeelden Fb0, Fb1, Fb2, Fb3, Fb5, Fb6
-     delay van 1500 msec (actieve loop)
-     check message queue voor stop
-     als stop,
-       zet waardes terug
-       zet sein op Fb0
-       (geef semafoor vrij?)
-
-    */
   }
 }
 #endif
