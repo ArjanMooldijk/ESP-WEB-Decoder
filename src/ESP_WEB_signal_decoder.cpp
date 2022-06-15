@@ -88,6 +88,10 @@ void setup()
   // connect to WiFi
   MakeWiFiConnection();
 
+
+
+  
+
   //////////////////////////////////////////////////////////// temp
 
   // Connect to Wi-Fi with fixed IP

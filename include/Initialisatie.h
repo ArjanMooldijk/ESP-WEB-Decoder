@@ -13,14 +13,23 @@ void setDimSteps()
 {
   double dimFactor;
   uint8_t maxStep;
+  Serial.print("aantal signalen: ");
+  Serial.println(this_dec.nbrofsig);
 
   for (uint8_t scount = 0; scount < this_dec.nbrofsig; scount++) // voor ieder signaal
   {
     for (int x = 0; x < signale[scount].sigDraden; x++) // voor ieder kanaal
     {
+      fadeConst[signale[scount].sigChannel + x] = signale[scount].sigFade / 10;
+      darkDelay[signale[scount].sigChannel + x] = signale[scount].sigDark;
+      maxLight[signale[scount].sigChannel + x] = signale[scount].sigLamp[x];
+      if (signale[scount].sigFade > 0)
+      {
+        signalFade[signale[scount].sigChannel + x] = true;
+      }
       float dimExp = 1.0 / (fadeConst[signale[scount].sigChannel] - 1);
-      dimStep[signale[scount].sigChannel + x][0] = 0;      // [0] is altijd 0
-      dimFactor = pow(signale[scount].sigLamp[x], dimExp); // grondgetal voor exponent
+      dimStep[signale[scount].sigChannel + x][0] = 0;            // [0] is altijd 0
+      dimFactor = pow(1.0 * signale[scount].sigLamp[x], dimExp); // grondgetal voor exponent
       if (signale[scount].sigFade > 200)
       {
         maxStep = 20; // nooit meer dan 20 stappen dimmen
@@ -31,14 +40,17 @@ void setDimSteps()
       }
       for (int y = maxStep - 1; y > 0; y--) //
       {
-        dimStep[x][y] = pow(dimFactor, y);
+        double a = 1.0 * x;
+        double b = 1.0 * y;
+        dimStep[x][y] = pow(dimFactor, b);
       }
     }
   }
 }
 
-void init_leds_andQueues () {
-    for (int ledChannel = 0; ledChannel < 16; ledChannel++)
+void init_leds_andQueues()
+{
+  for (int ledChannel = 0; ledChannel < 16; ledChannel++)
   {
     // configure and attach LED PWM functionalitites
     ledcSetup(ledChannel, freq, resolution);
@@ -47,13 +59,14 @@ void init_leds_andQueues () {
     queueCh[ledChannel] = xQueueCreate(5, sizeof(bool));
   }
 
-    // Create message queue for light tests with 2 slots of 11 bytes
-    // (start/stop, id, lamp[6])
-    testLightsQueue = xQueueCreate(2, 11);
+  // Create message queue for light tests with 2 slots of 11 bytes
+  // (start/stop, id, lamp[6])
+  testLightsQueue = xQueueCreate(2, 11);
 }
 
-void init_tasks(){
-    // Create a separate task for each led channel (16 total)
+void init_tasks()
+{
+  // Create a separate task for each led channel (16 total)
   xTaskCreatePinnedToCore(ch0Loop, "CH0Task", 1000, NULL, 1, &Task_Ch[0], 1);
   xTaskCreatePinnedToCore(ch1Loop, "CH1Task", 1000, NULL, 1, &Task_Ch[1], 1);
   xTaskCreatePinnedToCore(ch2Loop, "CH2Task", 1000, NULL, 1, &Task_Ch[2], 1);
@@ -72,7 +85,6 @@ void init_tasks(){
   xTaskCreatePinnedToCore(ch15Loop, "CH15Task", 1000, NULL, 1, &Task_Ch[15], 1);
 
   xTaskCreate(testLights, "testLights", 1000, NULL, 1, &testTask);
-
 }
 
 void setSignalType()
@@ -164,18 +176,7 @@ void Initialiseer_decoder()
   else
   {
     for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
-
-    { // set nbr of fade steps and darkdelay for each channel
-      for (uint8_t chNr = 0; chNr < signale[signr].sigDraden; chNr++)
-      {
-        fadeConst[signale[signr].sigChannel + chNr] = signale[signr].sigFade / 10;
-        darkDelay[signale[signr].sigChannel + chNr] = signale[signr].sigDark;
-        maxLight[signale[signr].sigChannel + chNr] = signale[signr].sigLamp[chNr];
-        if (signale[signr].sigFade > 0)
-        {
-          signalFade[signale[signr].sigChannel + chNr] = true;
-        }
-      }
+    {
       switch (typeArray[signr])
       {
       case Vor2:

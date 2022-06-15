@@ -8,7 +8,7 @@
 #hoofd {
     /* background-color: #7794a8; */
     width: 100%;
-    height: 600px;
+    height: 500px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -39,13 +39,13 @@ h2 {
 #info {
     /* background-color: aquamarine; */
     width: 98%;
-    height: 600px;
+    height: 500px;
 }
 
 .box1 {
     /* background-color: #8bc75a; */
     width: 100%;
-    height: 600px;
+    height: 500px;
     justify-content: space-evenly;
     display: flex;
     flex-flow: row wrap;
@@ -68,7 +68,7 @@ h2 {
 .signal-types {
     /* background-color: #89be8d; */
     padding: 30px;
-    height: 600px;
+    height: 500px;
     width: 50%;
     align-items: flex-start;
     display: flex;
@@ -91,7 +91,7 @@ h2 {
 .signal-config {
     padding-top: 30px;
     align-items: stretch;
-    height: 600px;
+    height: 500px;
     width: 50%;
     align-items: flex-start;
     display: flex;
