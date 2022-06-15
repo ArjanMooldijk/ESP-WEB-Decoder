@@ -12,14 +12,11 @@ void HandleQueMsg(int pin)
 {
   bool click;
   xQueueReceive(queueCh[pin], &click, portMAX_DELAY);
-    Serial.print("Msg received channel: ");
-    Serial.println(pin);
+  /*   Serial.print("Msg received channel: ");
+    Serial.println(pin); */
 
   if (click)
   {
-    Serial.print("Led ");
-    Serial.print(pin);
-    Serial.println(" on");
     if (signalFade[pin])
     {
       LED_on_fade(pin);
@@ -31,9 +28,6 @@ void HandleQueMsg(int pin)
   }
   else
   {
-    Serial.print("Led ");
-    Serial.print(pin);
-    Serial.println(" off");
     if (signalFade[pin])
     {
       LED_off_fade(pin);

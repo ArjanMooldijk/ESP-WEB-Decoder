@@ -228,7 +228,7 @@ void makeDekoderFromJson(String inputJson)
 
         sCc++;
     };
-    Serial.println("nieuwe decoder waarden gevuld ");
+    // Serial.println("nieuwe decoder waarden gevuld ");
     setSignalType();
     // printDecoder();
 }

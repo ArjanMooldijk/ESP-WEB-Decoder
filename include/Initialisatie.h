@@ -40,7 +40,6 @@ void setDimSteps()
       }
       for (int y = maxStep - 1; y > 0; y--) //
       {
-        double a = 1.0 * x;
         double b = 1.0 * y;
         dimStep[x][y] = pow(dimFactor, b);
       }
