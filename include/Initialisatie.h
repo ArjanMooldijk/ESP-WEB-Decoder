@@ -90,9 +90,6 @@ void setSignalType()
 { // in geval van kernal panic, is de vergelijking van een char* met een fixed string mogelijk de oorzaak.
   for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
   {
-
-  Serial.print("type signaal :  ");
-  Serial.println(signale[signr].sigType);
     if (signale[signr].sigType[3] == '2') //Vor2
     {
       typeArray[signr] = Vor2;
