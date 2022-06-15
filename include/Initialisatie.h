@@ -91,75 +91,78 @@ void setSignalType()
 { // in geval van kernal panic, is de vergelijking van een char* met een fixed string mogelijk de oorzaak.
   for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
   {
-    if (signale[signr].sigType == "Vor2")
+
+  Serial.print("type signaal :  ");
+  Serial.println(signale[signr].sigType);
+    if (signale[signr].sigType[3] == '2') //Vor2
     {
       typeArray[signr] = Vor2;
     };
-    if (signale[signr].sigType == "Vor4")
+    if (signale[signr].sigType[3] == '4') //Vor4
     {
       typeArray[signr] = Vor4;
     };
-    if (signale[signr].sigType == "Vor5")
+    if (signale[signr].sigType[3] == '5') //Vor5
     {
       typeArray[signr] = Vor5;
     };
-    if (signale[signr].sigType == "H2gr")
+    if (signale[signr].sigType[1] == '2') // H2gr
     {
       typeArray[signr] = H2gr;
     };
-    if (signale[signr].sigType == "H3gro")
+    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'o') //H3gro
     {
       typeArray[signr] = H3gro;
     };
-    if (signale[signr].sigType == "H3grg")
+    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'g') //H3grg
     {
       typeArray[signr] = H3grg;
     };
-    if (signale[signr].sigType == "H4grog")
+    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'r') //H4grog
     {
       typeArray[signr] = H4grog;
     };
-    if (signale[signr].sigType == "H4goro")
+    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == '0') //H4goro
     {
       typeArray[signr] = H4goro;
     };
-    if (signale[signr].sigType == "H5grgog")
+    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'g') //H5grgog
     {
       typeArray[signr] = H5grgog;
     };
-    if (signale[signr].sigType == "H5grogo")
+    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'o') //H5grogo
     {
       typeArray[signr] = H5grogo;
     };
-    if (signale[signr].sigType == "H7ggogr")
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[3] == 'g') //H7ggogr
     {
       typeArray[signr] = H7ggogr;
     };
-    if (signale[signr].sigType == "H7gogor")
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'r') //H7gogor
     {
       typeArray[signr] = H7gogor;
     };
-    if (signale[signr].sigType == "H7gogogr")
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'g') //H7gogogr
     {
       typeArray[signr] = H7gogogr;
     };
-    if (signale[signr].sigType == "Zwerg")
+    if (signale[signr].sigType[0] == 'Z') //Zwerg
     {
       typeArray[signr] = Zwerg;
     };
-    if (signale[signr].sigType == "SIMV")
+    if (signale[signr].sigType[3] == 'V') //SIMV
     {
       typeArray[signr] = SIMV;
     };
-    if (signale[signr].sigType == "SIMH")
+    if (signale[signr].sigType[3] == 'H') //SIMH
     {
       typeArray[signr] = SIMH;
     };
-    if (signale[signr].sigType == "HbB")
+    if (signale[signr].sigType[1] == 'b') //HbB
     {
       typeArray[signr] = HbB;
     };
-    if (signale[signr].sigType == "Fsm")
+    if (signale[signr].sigType[0] == 'F') //Fsm
     {
       typeArray[signr] = Fsm;
     };

@@ -31,10 +31,13 @@ void dunkelVorsignal(uint8_t signr)
 /////////////
 void setFb0Vorsignal(uint8_t signr)
 {
+  Serial.print("type = ");
+  Serial.println(typeArray[signr]);
   // led 1&2 aan, de rest uit
   xQueueSend(queueCh[signale[signr].sigChannel + 0], &aan, portMAX_DELAY);
   if (typeArray[signr] == Vor4 || typeArray[signr] == Vor5)
   { // led 2 ook aan en 3&4 uit
+    Serial.println("Vor4 sein it is");
     xQueueSend(queueCh[signale[signr].sigChannel + 1], &aan, portMAX_DELAY);
     xQueueSend(queueCh[signale[signr].sigChannel + 2], &uit, portMAX_DELAY);
     xQueueSend(queueCh[signale[signr].sigChannel + 3], &uit, portMAX_DELAY);

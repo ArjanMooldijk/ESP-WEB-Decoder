@@ -2,6 +2,8 @@
 #define GetFromFlash_h
 
 #include <Arduino.h>
+#include <string>
+using namespace std;
 #include <Initialisatie.h>
 
 void saveHostNameFile()
@@ -222,12 +224,12 @@ void makeDekoderFromJson(String inputJson)
         this_dec.sigConnected[sCc].sigLamp[4] = sigConnected_item_sigLamp[4];
         this_dec.sigConnected[sCc].sigLamp[5] = sigConnected_item_sigLamp[5];
 
-        signale[sCc]=this_dec.sigConnected[sCc];
-        setSignalType();
+        signale[sCc] = this_dec.sigConnected[sCc];
 
         sCc++;
     };
-    // Serial.println("nieuwe decoder waarden gevuld ");
+    Serial.println("nieuwe decoder waarden gevuld ");
+    setSignalType();
     // printDecoder();
 }
 
