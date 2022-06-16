@@ -150,14 +150,42 @@ $(function() {
         $("#BCancel").show();
         $(".testbutTE").hide();
         console.log("sending end test")
-        var xhttp = new XMLHttpRequest();
+        var subject = {
+            sigId : signalToChange.sigId
+        };
+        const xhttp = new XMLHttpRequest();
+
+        // listen for `load` event
+        xhttp.onload = () => {
+            // print JSON response
+            if (xhttp.status >= 200 && xhttp.status < 300) {
+                console.log(xhttp.responseText);
+            } else {
+                alert(xhttp.responseText);
+            }
+        };
+
+        // create a JSON object
+        const jsonSubject = JSON.stringify(subject);
+        console.log(jsonSubject);
+
+        // open request
+        xhttp.open("POST", "/EndTest");
+
+        // set `Content-Type` header
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+
+        // send rquest with JSON payload
+        xhttp.send(jsonSubject);    
+
+/*         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText);
             } 
         };
         xhttp.open("GET", "/EndTest", true);
-        xhttp.send();
+        xhttp.send(); */
     };
 
     function _testLights() {

@@ -348,12 +348,11 @@ postResponse startTestLights(String JsonData)
             testSein.fade = subject["sigFade"];
             testSein.dark = subject["sigDark"];
             uint8_t sCc = 0;
-            for (JsonObject lamp_item : subject["sigLamp"].as<JsonArray>())
+            JsonArray lamp_item = subject["sigLamp"];
+            for (sCc = 0; sCc < sizeof(lamp_item); sCc++)
             {
-                testSein.Lamp[sCc] = lamp_item["sigLamp"];
-                sCc++;
-            };
-
+                testSein.Lamp[sCc] = lamp_item[sCc];
+            }
             testSein.Action = aan;
             xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
             resultaat.message = "";
@@ -368,17 +367,34 @@ postResponse startTestLights(String JsonData)
     return resultaat;
 }
 
-String endTestLights()
+postResponse endTestLights(String JsonData)
 {
     // send message to stop test
     // wait 100 msec
 
     Serial.println("processing end test request");
     testData testSein;
-    testSein.Action = uit;
-    xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
-    processingDCC = true;
+    postResponse resultaat;
+    Serial.println(JsonData);
+    StaticJsonDocument<32> subject;
+    DeserializationError error = deserializeJson(subject, JsonData);
 
-    return "200";
+    if (error)
+    {
+        resultaat.message = "deserialize failed";
+        resultaat.succes = false;
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+    }
+    else
+    {
+        testSein.Id = subject["sigId"];
+        testSein.Action = uit;
+        xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
+        processingDCC = true;
+        resultaat.message = "";
+        resultaat.succes = true;
+    }
+    return resultaat;
 }
 #endif
