@@ -1,5 +1,7 @@
 #ifndef HandleAddress_h
 #define HandleAddress_h
+#include <string>
+using namespace std;
 
 #include <Vorsignalbilder.h>
 #include <Hauptsignalbilder.h>

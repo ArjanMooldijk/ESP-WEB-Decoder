@@ -124,7 +124,7 @@ void setup()
 }
 ////////////////////////////////////////////////////////////////
 void loop()
-{ /*
+{ 
    if (processingDCC)
    {
      Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
@@ -132,10 +132,16 @@ void loop()
      handle_blink();
 
      dunkelVorsignal(0);
+     setFb2Vorsignal(0);
+     delay(5000);
+     dunkelVorsignal(0);
+     setFb3Vorsignal(0);
+     delay(5000);
+     dunkelVorsignal(0);
      setFb1Vorsignal(0);
      delay(5000);
      dunkelVorsignal(0);
      setFb0Vorsignal(0);
      delay(5000);
-   } */
+   }
 }
