@@ -27,21 +27,19 @@ void setDimSteps()
       {
         signalFade[signale[scount].sigChannel + x] = true;
       }
+      else
+      {
+        signalFade[signale[scount].sigChannel + x] = false;
+      }
+
       float dimExp = 1.0 / (fadeConst[signale[scount].sigChannel] - 1);
       dimStep[signale[scount].sigChannel + x][0] = 0;            // [0] is altijd 0
       dimFactor = pow(1.0 * signale[scount].sigLamp[x], dimExp); // grondgetal voor exponent
-      if (signale[scount].sigFade > 200)
-      {
-        maxStep = 20; // nooit meer dan 20 stappen dimmen
-      }
-      else
-      {
-        maxStep = signale[scount].sigFade / 10;
-      }
+      maxStep = signale[scount].sigFade / 10;
       for (int y = maxStep - 1; y > 0; y--) //
       {
         double b = 1.0 * y;
-        dimStep[x][y] = pow(dimFactor, b);
+        dimStep[signale[scount].sigChannel +x][y] = pow(dimFactor, b);
       }
     }
   }
@@ -90,15 +88,15 @@ void setSignalType()
 { // in geval van kernal panic, is de vergelijking van een char* met een fixed string mogelijk de oorzaak.
   for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
   {
-    if (signale[signr].sigType[3] == '2') //Vor2
+    if (signale[signr].sigType[3] == '2') // Vor2
     {
       typeArray[signr] = Vor2;
     };
-    if (signale[signr].sigType[3] == '4') //Vor4
+    if (signale[signr].sigType[3] == '4') // Vor4
     {
       typeArray[signr] = Vor4;
     };
-    if (signale[signr].sigType[3] == '5') //Vor5
+    if (signale[signr].sigType[3] == '5') // Vor5
     {
       typeArray[signr] = Vor5;
     };
@@ -106,59 +104,59 @@ void setSignalType()
     {
       typeArray[signr] = H2gr;
     };
-    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'o') //H3gro
+    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'o') // H3gro
     {
       typeArray[signr] = H3gro;
     };
-    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'g') //H3grg
+    if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'g') // H3grg
     {
       typeArray[signr] = H3grg;
     };
-    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'r') //H4grog
+    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'r') // H4grog
     {
       typeArray[signr] = H4grog;
     };
-    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == '0') //H4goro
+    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == '0') // H4goro
     {
       typeArray[signr] = H4goro;
     };
-    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'g') //H5grgog
+    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'g') // H5grgog
     {
       typeArray[signr] = H5grgog;
     };
-    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'o') //H5grogo
+    if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'o') // H5grogo
     {
       typeArray[signr] = H5grogo;
     };
-    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[3] == 'g') //H7ggogr
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[3] == 'g') // H7ggogr
     {
       typeArray[signr] = H7ggogr;
     };
-    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'r') //H7gogor
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'r') // H7gogor
     {
       typeArray[signr] = H7gogor;
     };
-    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'g') //H7gogogr
+    if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'g') // H7gogogr
     {
       typeArray[signr] = H7gogogr;
     };
-    if (signale[signr].sigType[0] == 'Z') //Zwerg
+    if (signale[signr].sigType[0] == 'Z') // Zwerg
     {
       typeArray[signr] = Zwerg;
     };
-    if (signale[signr].sigType[3] == 'V') //SIMV
+    if (signale[signr].sigType[3] == 'V') // SIMV
     {
       typeArray[signr] = SIMV;
     };
-    if (signale[signr].sigType[3] == 'H') //SIMH
+    if (signale[signr].sigType[3] == 'H') // SIMH
     {
       typeArray[signr] = SIMH;
     };
-    if (signale[signr].sigType[1] == 'b') //HbB
+    if (signale[signr].sigType[1] == 'b') // HbB
     {
       typeArray[signr] = HbB;
     };
-    if (signale[signr].sigType[0] == 'F') //Fsm
+    if (signale[signr].sigType[0] == 'F') // Fsm
     {
       typeArray[signr] = Fsm;
     };

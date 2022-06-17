@@ -16,16 +16,14 @@
 void dunkelVorsignal(uint8_t signr)
 {
   for (uint8_t x = 0; x < signale[signr].sigDraden; x++)
-  { // Set wait time for darkDelay
-    if (signale[signr].sigFade > 0)
-    {
-      busyWait[signale[signr].sigChannel + x] = millis() + signale[signr].sigFade;
-    }
-    else
-    {
-      busyWait[signale[signr].sigChannel + x] = millis();
-    }
+  { 
     xQueueSend(queueCh[signale[signr].sigChannel + x], &uit, portMAX_DELAY);
+  };
+      // Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
+
+  if (signale[signr].sigDark > 0)
+  {
+    delay(signale[signr].sigDark);
   }
 }
 /////////////
@@ -47,6 +45,7 @@ void setFb0Vorsignal(uint8_t signr)
   { // anders uit
     xQueueSend(queueCh[signale[signr].sigChannel + 1], &uit, portMAX_DELAY);
   }
+
 }
 
 /////////////

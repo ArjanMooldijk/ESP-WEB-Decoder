@@ -63,7 +63,7 @@ uint8_t Blink[16] = {0};                // Flag to blink pin (for SIM)
 uint8_t blinkState[16] = {0};           // Blink on/off
 unsigned long previousMillis[16] = {0}; // will store last time LED was updated
 unsigned long busyWait[8] = {0};
-double dimStep[16][20] = {0};
+double dimStep[16][50] = {0};
 int darkDelay[16];
 int interval;
 #define DECODER_JSON "/deKoder.json"

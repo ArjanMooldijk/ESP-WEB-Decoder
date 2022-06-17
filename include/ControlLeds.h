@@ -14,13 +14,13 @@ void LED_on_fade(int channelNr)
     {
       // changing the LED brightness with PWM
       ledcWrite(channelNr, dimStep[channelNr][dutyCycle]);
-      // Serial.println(dimStep[channelNr][dutyCycle]);
       delay(10);
     }
     ledcWrite(channelNr, dimStep[channelNr][fadeConst[channelNr]-1]);
       // Serial.println(dimStep[channelNr][fadeConst[channelNr]-1]);
   }
 }
+
 void LED_on_nofade(int channelNr)
 {
   // Check if led is already on

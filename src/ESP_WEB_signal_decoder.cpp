@@ -88,10 +88,6 @@ void setup()
   // connect to WiFi
   MakeWiFiConnection();
 
-
-
-  
-
   //////////////////////////////////////////////////////////// temp
 
   // Connect to Wi-Fi with fixed IP
@@ -124,24 +120,24 @@ void setup()
 }
 ////////////////////////////////////////////////////////////////
 void loop()
-{ 
-   if (processingDCC)
-   {
-     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
-     delay(1);
-     handle_blink();
+{
+  if (processingDCC)
+  {
+    Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
+    delay(1);
+    handle_blink();
 
-     dunkelVorsignal(0);
-     setFb2Vorsignal(0);
-     delay(5000);
-     dunkelVorsignal(0);
-     setFb3Vorsignal(0);
-     delay(5000);
-     dunkelVorsignal(0);
-     setFb1Vorsignal(0);
-     delay(5000);
-     dunkelVorsignal(0);
-     setFb0Vorsignal(0);
-     delay(5000);
-   }
+    HandleCommand(0, 0, 0);
+    delay(5000);
+    HandleCommand(0, 0, 1);
+    delay(5000);
+    HandleCommand(0, 1, 0);
+    delay(5000);
+    HandleCommand(0, 1, 1);
+    delay(5000);
+    HandleCommand(0, 2, 0);
+    delay(1000);
+    HandleCommand(0, 2, 1);
+    delay(1000);
+  }
 }

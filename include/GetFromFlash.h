@@ -134,33 +134,6 @@ void initDecJson()
 void putDecoderValuesToFile(String inputJson)
 {
     Serial.println("putDecoderValuesToFile");
-    // StaticJsonDocument<2048> dekoder;
-
-    // dekoder["dekName"] = hostName;
-    // dekoder["nbrofsig"] = this_dec.nbrofsig;
-
-    // JsonArray sigConnected = dekoder.createNestedArray("sigConnected");
-
-    // for(uint8_t i=0;i<this_dec.nbrofsig;i++){
-
-    //     sigConnected[i]["sigId"] = this_dec.sigConnected[i].sigId;
-    //     sigConnected[i]["sigType"] = this_dec.sigConnected[i].sigType;
-    //     sigConnected[i]["sigDraden"] = this_dec.sigConnected[i].sigDraden;
-    //     sigConnected[i]["sigChannel"] = this_dec.sigConnected[i].sigChannel;
-    //     sigConnected[i]["sigNbrAdr"] = this_dec.sigConnected[i].sigNbrAdr;
-    //     JsonArray sigAdressen = sigConnected[i].createNestedArray("sigAdressen");
-    //     for(uint8_t ai=0;ai<this_dec.sigConnected[i].sigNbrAdr;ai++){
-    //         sigConnected[i]["sigAdressen"].add(this_dec.sigConnected[i].sigAdressen[ai]);
-    //     };
-    //     sigConnected[i]["sigFade"] = this_dec.sigConnected[i].sigFade;
-    //     sigConnected[i]["sigDark"] = this_dec.sigConnected[i].sigDark;
-    //     JsonArray sigLamp = sigConnected[i].createNestedArray("sigLamp");
-    //     for(uint8_t li=0;li<this_dec.sigConnected[i].sigDraden;li++){
-    //         sigConnected[i]["sigLamp"].add(this_dec.sigConnected[i].sigLamp[li]);
-    //     };
-    // };
-
-    // serializeJson(dekoder, Serial);
     File decFile = SPIFFS.open(DECODER_JSON, "w");
     if (!decFile)
     {
@@ -177,10 +150,7 @@ void putDecoderValuesToFile(String inputJson)
     {
         Serial.println("File write failed");
     };
-    // if (serializeJson(dekoder, decFile) == 0)
-    // {
-    //     Serial.println(F("Failed to write to file"));
-    // };
+
     decFile.close();
 }
 
@@ -209,6 +179,7 @@ void makeDekoderFromJson(String inputJson)
         this_dec.sigConnected[sCc].sigId = sigConnected_item["sigId"];
         this_dec.sigConnected[sCc].sigType = sigConnected_item["sigType"];
         this_dec.sigConnected[sCc].sigDraden = sigConnected_item["sigDraden"];
+        this_dec.sigConnected[sCc].sigChannel = sigConnected_item["sigChannel"];
         this_dec.sigConnected[sCc].sigNbrAdr = sigConnected_item["sigNbrAdr"];
         this_dec.sigConnected[sCc].sigFade = sigConnected_item["sigFade"];
         this_dec.sigConnected[sCc].sigDark = sigConnected_item["sigDark"];

@@ -96,23 +96,8 @@ void init_Servers()
     server.on("/Zwerg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Zwerg.gif", "image/gif"); });
 
-    // server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request) {}, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
-    //     {
-    //     //Handling function implementation
-    //     for (size_t i = 0; i < len; i++)
-    //     {
-    //         Serial.write(data[i]);
-    //     }
-    //     Serial.println();
-
-    //     request->send(200);
-    //     });
-
     server.on("/GetDecVal", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(200, "application/json", getDecoderValues()); });
-
-    // server.on( "/PostDecVal", HTTP_POST, [](AsyncWebServerRequest *request)
-    //         {
 
     server.on(
         "/PostDecVal", HTTP_POST, [](AsyncWebServerRequest *request) {},
@@ -123,8 +108,6 @@ void init_Servers()
         for (i = 0; i < len; i++) {
                 newJsonDec += char(data[i]);
         }
-        // Serial.println("ontvangen :");
-        // Serial.println(newJsonDec);
         processJsonFromClient(newJsonDec);
         request->send(200); });
 
@@ -162,9 +145,6 @@ void init_Servers()
         else {
             request->send(500, "text/plain", res.message);
         } });
-
-    /*     server.on("/EndTest", HTTP_GET, [](AsyncWebServerRequest *request)
-                  { request->send(200, "application/json", endTestLights()); }); */
 }
 
 #endif

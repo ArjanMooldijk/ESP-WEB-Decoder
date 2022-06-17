@@ -123,6 +123,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
         default:
             break;
         }
+        break;
     case 1:
         switch (typeArray[signr])
         {
@@ -232,6 +233,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
         default:
             break;
         }
+        break;
     case 2:
         switch (typeArray[signr])
         {
@@ -287,6 +289,7 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
         default:
             break;
         }
+        break;
     default:
         break;
     }

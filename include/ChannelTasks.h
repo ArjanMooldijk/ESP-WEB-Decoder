@@ -37,12 +37,6 @@ void HandleQueMsg(int pin)
       LED_off_nofade(pin);
     }
   }
-  // Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
-
-  if (darkDelay[pin] > (millis() - busyWait[pin]))
-  {
-    delay(darkDelay[pin] - (millis() - busyWait[pin]));
-  }
 }
 ////////////////////////////////////////////////////////
 void ch0Loop(void *parameter)
