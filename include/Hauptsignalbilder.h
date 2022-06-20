@@ -9,16 +9,12 @@ void dunkelHauptsignal(uint8_t signr)
 {
   for (uint8_t x = 0; x < signale[signr].sigDraden; x++)
   {
-    // Set wait time for darkDelay
-    if (signale[signr].sigFade > 0)
-    {
-      busyWait[signale[signr].sigChannel + x] = millis() + signale[signr].sigFade;
-    }
-    else
-    {
-      busyWait[signale[signr].sigChannel + x] = millis();
-    }
+
     xQueueSend(queueCh[signale[signr].sigChannel + x], &uit, portMAX_DELAY);
+  }
+  if (signale[signr].sigDark > 0 || signale[signr].sigFade > 0)
+  {
+    delay(signale[signr].sigDark + signale[signr].sigFade);
   }
 }
 /////////////////

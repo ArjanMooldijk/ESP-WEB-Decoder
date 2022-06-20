@@ -4,22 +4,13 @@
 //////////////////////////////// Zwergsignal Fade ///////////////////////////////////////////////////////////////////////
 void dunkelZwergsignal(uint8_t signr)
 {
-  // Set wait time for darkDelay
-  if (signale[signr].sigFade >0)
-  {
-    busyWait[signale[signr].sigChannel + 0] = millis() + signale[signr].sigFade; // Set wait time for darkDelay
-    busyWait[signale[signr].sigChannel + 1] = millis() + signale[signr].sigFade; // Set wait time for darkDelay
-    busyWait[signale[signr].sigChannel + 2] = millis() + signale[signr].sigFade; // Set wait time for darkDelay
-  }
-  else
-  {
-    busyWait[signale[signr].sigChannel + 0] = millis(); // Set wait time for darkDelay
-    busyWait[signale[signr].sigChannel + 1] = millis(); // Set wait time for darkDelay
-    busyWait[signale[signr].sigChannel + 2] = millis(); // Set wait time for darkDelay
-  }
   xQueueSend(queueCh[signale[signr].sigChannel + 0], &uit, portMAX_DELAY);
   xQueueSend(queueCh[signale[signr].sigChannel + 1], &uit, portMAX_DELAY);
   xQueueSend(queueCh[signale[signr].sigChannel + 2], &uit, portMAX_DELAY);
+  if (signale[signr].sigDark > 0 || signale[signr].sigFade > 0)
+  {
+    delay(signale[signr].sigDark + signale[signr].sigFade);
+  }
 }
 //////////////
 void setZwergsignal(uint8_t signr, uint8_t Fb)

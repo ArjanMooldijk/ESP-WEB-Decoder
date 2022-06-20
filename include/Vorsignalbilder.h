@@ -20,10 +20,9 @@ void dunkelVorsignal(uint8_t signr)
     xQueueSend(queueCh[signale[signr].sigChannel + x], &uit, portMAX_DELAY);
   };
       // Wait in case of a darkDelay. Time is set in dunkelZwergsignal, dunkelVorsignal & dunkelHauptsignal
-
-  if (signale[signr].sigDark > 0)
+  if (signale[signr].sigDark > 0 || signale[signr].sigFade > 0)
   {
-    delay(signale[signr].sigDark);
+    delay(signale[signr].sigDark + signale[signr].sigFade);
   }
 }
 /////////////
