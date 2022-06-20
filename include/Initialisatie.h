@@ -116,7 +116,7 @@ void setSignalType()
     {
       typeArray[signr] = H4grog;
     };
-    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == '0') // H4goro
+    if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'o') // H4goro
     {
       typeArray[signr] = H4goro;
     };
