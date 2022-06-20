@@ -65,35 +65,31 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
             if (OutputAddr & 0x1)
             {
                 setZwergsignal(index, 1);
-                break;
             }
             else
             {
                 setZwergsignal(index, 0);
-                break;
             }
+            break;
 
         case SIMH:
             if (OutputAddr & 0x1)
             {
                 setHilfsignal(signr, 2); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
             else
             {
                 setHilfsignal(signr, 0); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
+            break;
         case SIMV:
             if (OutputAddr & 0x1)
             {
                 setHilfsignal(signr, 1);
-                break;
             }
             else
             {
                 setHilfsignal(signr, 0);
-                break;
             }
 
             break;
@@ -101,25 +97,20 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
             if (OutputAddr & 0x1)
             {
                 setHilfsignal(signr, 2); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
             else
             {
                 setHilfsignal(signr, 0); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
-
-        case Fsm:
             if (OutputAddr & 0x1)
             {
                 setHilfsignal(signr, 2); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
             else
             {
                 setHilfsignal(signr, 0); // Hetzelfde als SIM Hauptsignal; gebruik dezelfde routines voor aansturing
-                break;
             }
+            break;
         default:
             break;
         }
