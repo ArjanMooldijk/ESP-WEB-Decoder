@@ -137,7 +137,5 @@ void loop()
     delay(5000);
     HandleCommand(0, 2, 0);
     delay(1000);
-    HandleCommand(0, 2, 1);
-    delay(1000);
   }
 }
