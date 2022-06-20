@@ -91,92 +91,74 @@ void setSignalType()
     if (signale[signr].sigType[3] == '2') // Vor2
     {
       typeArray[signr] = Vor2;
-      return;
     };
     if (signale[signr].sigType[3] == '4') // Vor4
     {
       typeArray[signr] = Vor4;
-      return;
     };
     if (signale[signr].sigType[3] == '5') // Vor5
     {
       typeArray[signr] = Vor5;
-      return;
     };
     if (signale[signr].sigType[1] == '2') // H2gr
     {
       typeArray[signr] = H2gr;
-      return;
     };
     if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'o') // H3gro
     {
       typeArray[signr] = H3gro;
-      return;
     };
     if (signale[signr].sigType[1] == '3' && signale[signr].sigType[4] == 'g') // H3grg
     {
       typeArray[signr] = H3grg;
-      return;
     };
     if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'r') // H4grog
     {
       typeArray[signr] = H4grog;
-      return;
     };
     if (signale[signr].sigType[1] == '4' && signale[signr].sigType[3] == 'o') // H4goro
     {
       typeArray[signr] = H4goro;
-      return;
     };
     if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'g') // H5grgog
     {
       typeArray[signr] = H5grgog;
-      return;
     };
     if (signale[signr].sigType[1] == '5' && signale[signr].sigType[4] == 'o') // H5grogo
     {
       typeArray[signr] = H5grogo;
-      return;
     };
     if (signale[signr].sigType[1] == '7' && signale[signr].sigType[3] == 'g') // H7ggogr
     {
       typeArray[signr] = H7ggogr;
-      return;
     };
     if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'r') // H7gogor
     {
       typeArray[signr] = H7gogor;
-      return;
     };
     if (signale[signr].sigType[1] == '7' && signale[signr].sigType[6] == 'g') // H7gogogr
     {
       typeArray[signr] = H7gogogr;
-      return;
     };
     if (signale[signr].sigType[0] == 'Z') // Zwerg
     {
       typeArray[signr] = Zwerg;
-      return;
     };
     if (signale[signr].sigType[3] == 'V') // SIMV
     {
       typeArray[signr] = SIMV;
-      return;
     };
     if (signale[signr].sigType[3] == 'H') // SIMH
     {
       typeArray[signr] = SIMH;
-      return;
     };
     if (signale[signr].sigType[1] == 'b') // HbB
     {
       typeArray[signr] = HbB;
-      return;
     };
     if (signale[signr].sigType[0] == 'F') // Fsm
     {
       typeArray[signr] = Fsm;
-      return;
     };
   };
 }
