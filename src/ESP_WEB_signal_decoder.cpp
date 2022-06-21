@@ -126,7 +126,7 @@ void loop()
     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
     delay(1);
     handle_blink();
-
+/* 
     HandleCommand(0, 0, 0);
     delay(5000);
     HandleCommand(0, 0, 1);
@@ -136,6 +136,6 @@ void loop()
     HandleCommand(0, 1, 1);
     delay(5000);
     HandleCommand(0, 2, 0);
-    delay(1000);
+    delay(1000); */
   }
 }
