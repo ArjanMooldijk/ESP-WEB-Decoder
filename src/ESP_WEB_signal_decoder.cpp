@@ -47,11 +47,32 @@ NmraDcc Dcc;
 //////////////////////////////////////////////////////////////
 // Unterprogramme, die von der DCC Library aufgerufen werden:
 // Die folgende Funktion wird von Dcc.process() aufgerufen, wenn ein Weichentelegramm empfangen wurde
+/* 
 void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State)
 {
+  Serial.print("DCC command received. Address: ");
+  Serial.println(Addr);
   for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
   {
-    for (uint8_t index = 0; index < 3; index++)
+    for (uint8_t index = 0; index < signale[signr].sigNbrAdr; index++)
+    {
+      if (Addr == signale[signr].sigAdressen[index])
+      {
+        HandleCommand(signr, index, OutputAddr);
+      }
+    }
+  }
+} */
+//////////////////////////////////////////////////////////////
+// Unterprogramme, die von der DCC Library aufgerufen werden:
+// Die folgende Funktion wird von Dcc.process() aufgerufen, wenn ein Weichentelegramm empfangen wurde
+//void notifyDccAccState( uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State ){
+void notifyDccAccTurnoutOutput( uint16_t Addr, uint8_t OutputAddr, uint8_t OutputPower ) {
+  Serial.print("DCC command received. Address: ");
+  Serial.println(Addr);
+  for (uint8_t signr = 0; signr < this_dec.nbrofsig; signr++)
+  {
+    for (uint8_t index = 0; index < signale[signr].sigNbrAdr; index++)
     {
       if (Addr == signale[signr].sigAdressen[index])
       {
@@ -126,8 +147,8 @@ void loop()
     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
     delay(1);
     handle_blink();
-/* 
-    HandleCommand(0, 0, 0);
+
+/*     HandleCommand(0, 0, 0);
     delay(5000);
     HandleCommand(0, 0, 1);
     delay(5000);

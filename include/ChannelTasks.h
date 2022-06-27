@@ -178,8 +178,8 @@ void testLights(void *parameter)
 
     if (testSein.Action)
     {
-      Serial.println("parameter.id");
-      Serial.println(testSein.Id);
+/*       Serial.print("parameter.id : ");
+      Serial.println(testSein.Id); */
       for (uint8_t i = 0; i < signale[testSein.Id].sigDraden; i++)
       {
         ledcWrite(signale[testSein.Id].sigChannel + i, testSein.Lamp[i]);
