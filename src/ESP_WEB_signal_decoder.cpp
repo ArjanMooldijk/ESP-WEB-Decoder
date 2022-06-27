@@ -125,7 +125,8 @@ void setup()
 void loop()
 {
   if (processingDCC)
-  {Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
+  {
+    Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
     delay(1);
     handle_blink();
 
