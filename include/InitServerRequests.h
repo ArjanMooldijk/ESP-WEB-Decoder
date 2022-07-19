@@ -124,7 +124,7 @@ void init_Servers()
         // Serial.println(newJsonDec);
         postResponse res = startTestLights(newJsonDec);
         if (res.succes) {
-        request->send(200); }
+            request->send(200); }
         else {
             request->send(500, "text/plain", res.message);
         } });
