@@ -131,16 +131,19 @@ void loop()
     AsyncElegantOTA.loop();
     // delay(1);
     handle_blink();
+// hoofd rood, Voor donker
+    HandleCommand(1, 0, 0);
+    HandleCommand(0, 2, 0);
+    delay(3500);
 
-    /*     HandleCommand(0, 0, 0);
-        delay(5000);
-        HandleCommand(0, 0, 1);
-        delay(5000);
-        HandleCommand(0, 1, 0);
-        delay(5000);
-        HandleCommand(0, 1, 1);
-        delay(5000);
-        HandleCommand(0, 2, 0);
-        delay(1000); */
+// hoofd Fb1, Voor Halt
+    HandleCommand(1, 0, 1);
+    HandleCommand(0, 0, 0);
+    delay(1100);
+
+// hoofd Fb1, Voor FB1
+    HandleCommand(0, 1, 1);
+    HandleCommand(0, 0, 1);
+    delay(4000);
   }
 }
