@@ -1,13 +1,10 @@
-$(function() {
-
+$(function () {
 
     // $(".signal-types").hide();
 
     // Get base dekoder data
     getDatafromServer();
 
-
-    var typeSig;
     var saveOldVal = {
         fade: null,
         dark: null,
@@ -22,7 +19,7 @@ $(function() {
 
     function getDatafromServer() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 deKoder = this.responseText;
                 // console.log(deKoder);
@@ -33,7 +30,7 @@ $(function() {
                 makeHeader();
                 makeMainScreen();
                 setEvents();
-            } else if (this.status > 200){
+            } else if (this.status > 200) {
                 console.log('get from server failed');
                 console.log(this.status);
             }
@@ -54,12 +51,12 @@ $(function() {
         }
         return objects;
     };
-
     function setEvents() {
         $('.Mainbuttoncontainer').delegate('#BNew', 'click', newSignal);
         $('.Mainbuttoncontainer').delegate('#BStore', 'click', _storeValues);
         $('#connectedSignal').delegate('.sigBut', 'click', _changeSig);
         $('#changeSignal').delegate('input.slider', 'input', showSliderVal);
+        $('.adrescontainer').delegate('#adres1', 'input', _filladressVal);
         $('.ChangeButtoncontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
         $('.ChangeButtoncontainer').delegate('#BDel', 'click', _deleteSignal);
         $('.ChangeButtoncontainer').delegate('#BApply', 'click', _processChange.bind(this));
@@ -71,6 +68,33 @@ $(function() {
         $('.NewButtoncontainer').delegate('#BKeuze', 'click', _processKeuze);
         $('.NewButtoncontainer').delegate('#BCancelN', 'click', _cancelKeuzeN);
     };
+
+    function _filladressVal() {
+        var aantal;
+        var a1, a2, a3;
+        if ($('#adres2').is(':visible')) {
+            if ($('#adres3').is(':visible')) {
+                aantal = 3;
+            } else {
+                aantal = 2;
+            }
+        } else {
+            aantal = 1;
+        }
+        a1 = parseInt($("#adres1").val());
+        if (aantal == 2) {
+            //vul tweede adres
+            a2 = a1 + 1;
+        } else {
+            if (aantal == 3) {
+                //vul tweede en derde adres
+                a2 = a1 + 1;
+                $('#adres2').val(String(a2));
+                a3 = a2 + 1;
+                $('#adres3').val(String(a3));
+            }
+        }
+    }
 
     function _storeValues() {
         //doe post naar server
@@ -133,7 +157,7 @@ $(function() {
         dekoder.sigConnected[i].sigDark = $($el).find('#dark').next('.sout').html();
 
         var tmpLamp = $('.lampInput');
-        $.each(tmpLamp, function(count, item) {
+        $.each(tmpLamp, function (count, item) {
             dekoder.sigConnected[i].sigLamp[count] = $(item).val();
         });
         changedValues = true;
@@ -151,7 +175,7 @@ $(function() {
         $(".testbutTE").hide();
         console.log("sending end test")
         var subject = {
-            sigId : signalToChange.sigId
+            sigId: signalToChange.sigId
         };
         const xhttp = new XMLHttpRequest();
 
@@ -176,25 +200,25 @@ $(function() {
         xhttp.setRequestHeader('Content-Type', 'application/json');
 
         // send rquest with JSON payload
-        xhttp.send(jsonSubject);    
+        xhttp.send(jsonSubject);
 
-/*         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-            } 
-        };
-        xhttp.open("GET", "/EndTest", true);
-        xhttp.send(); */
+        /*         var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                    } 
+                };
+                xhttp.open("GET", "/EndTest", true);
+                xhttp.send(); */
     };
 
     function _testLights() {
         //call server met waardes van alle lampen
         $("#BApply").hide();
-        if($("#BDel").is(":visible")){
+        if ($("#BDel").is(":visible")) {
             bdelWasVisibale = true;
             $("#BDel").hide();
-        } else{            
+        } else {
             bdelWasVisibale = false;
         };
         $("#BCancel").hide();
@@ -204,7 +228,7 @@ $(function() {
         var $el = ('#changeForm');
 
         var subject = {
-            sigId : signalToChange.sigId,
+            sigId: signalToChange.sigId,
             sigFade: 0,
             sigDark: 0,
             sigLamp: []
@@ -215,7 +239,7 @@ $(function() {
         subject.sigDark = $($el).find('#dark').next('.sout').html();
 
         var tmpLamp = $('.lampInput');
-        $.each(tmpLamp, function(count, item) {
+        $.each(tmpLamp, function (count, item) {
             subject.sigLamp[count] = $(item).val();
         });
 
@@ -244,11 +268,11 @@ $(function() {
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         // send rquest with JSON payload
-        xhr.send(jsonSubject);    
+        xhr.send(jsonSubject);
     };
 
     function showSliderVal() {
-        return $(this).each(function() {
+        return $(this).each(function () {
             if ($(this).attr("id") == "fade" || $(this).attr("id") == "dark") {
                 var value = $(this).val() * 10;
             } else {
@@ -312,7 +336,7 @@ $(function() {
         };
 
         tmpAdr = $('.adresInput');
-        $.each(tmpAdr, function(index, item) {
+        $.each(tmpAdr, function (index, item) {
             if (parseInt($(item).val()) > 0) { newSignal.sigAdressen[index] = parseInt($(item).val()); }
         });
 
@@ -341,7 +365,7 @@ $(function() {
 
     function _cleanInput($el, $sc) {
         var allRadio = $($el).find('.radio');
-        $.each(allRadio, function(index, item) {
+        $.each(allRadio, function (index, item) {
             $(item).prop('checked', false);
         });
         var allFade = $($sc).find('#fade');
@@ -353,7 +377,7 @@ $(function() {
         $(allDark).next("#sout").html(300);
 
         var allAdr = $($sc).find('.adresInput');
-        $.each(allAdr, function(index, item) {
+        $.each(allAdr, function (index, item) {
             $(item).val("");
         });
     };
@@ -427,7 +451,7 @@ $(function() {
 
         // Build Adress HTML
         var htmlAdres = [];
-        $.each(signalToChange.sigAdressen, function(index, item) {
+        $.each(signalToChange.sigAdressen, function (index, item) {
             var waardes = {
                 item: item,
                 index: index + 1,
@@ -453,7 +477,7 @@ $(function() {
 
         // Build Lamp HTML
         var htmlLamp = [];
-        $.each(signalToChange.sigLamp, function(index, item) {
+        $.each(signalToChange.sigLamp, function (index, item) {
             var waardes = {
                 item: item,
                 index: index + 1

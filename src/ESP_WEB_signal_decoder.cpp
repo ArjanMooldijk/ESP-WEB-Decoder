@@ -130,7 +130,7 @@ void loop()
     Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
     AsyncElegantOTA.loop();
     // delay(1);
-    handle_blink();
+    handle_blink();/* 
 // hoofd rood, Voor donker
     HandleCommand(1, 0, 0);
     HandleCommand(0, 2, 0);
@@ -144,6 +144,6 @@ void loop()
 // hoofd Fb1, Voor FB1
     HandleCommand(0, 1, 1);
     HandleCommand(0, 0, 1);
-    delay(4000);
+    delay(4000); */
   }
 }
