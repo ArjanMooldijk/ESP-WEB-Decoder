@@ -205,11 +205,11 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
             }
             if (OutputAddr & 0x1)
             {
-                setFb3Hauptsignalog(signr);
+                setFb3Hauptsignalgo(signr);
             }
             else
             {
-                setFb2Hauptsignalog(signr);
+                setFb2Hauptsignalgo(signr);
             }
             break;
 
