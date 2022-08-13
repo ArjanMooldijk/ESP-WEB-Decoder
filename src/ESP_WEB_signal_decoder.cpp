@@ -21,7 +21,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // const char *ssid = "CazMool";
-// const char *password = "steak74;Mlles";
+// const char *password = "stMlleseak74;";
 // IPAddress staticIP(192, 168, 178, 30); // fixed IP of booster monitor
 // IPAddress gateway(192, 168, 178, 1);
 // IPAddress subnet(255, 255, 255, 0);
