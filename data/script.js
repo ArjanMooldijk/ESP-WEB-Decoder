@@ -72,26 +72,18 @@ $(function () {
     function _filladressVal() {
         var aantal;
         var a1, a2, a3;
+        a1 = parseInt($("#adres1").val());
         if ($('#adres2').is(':visible')) {
             if ($('#adres3').is(':visible')) {
-                aantal = 3;
-            } else {
-                aantal = 2;
-            }
-        } else {
-            aantal = 1;
-        }
-        a1 = parseInt($("#adres1").val());
-        if (aantal == 2) {
-            //vul tweede adres
-            a2 = a1 + 1;
-        } else {
-            if (aantal == 3) {
                 //vul tweede en derde adres
                 a2 = a1 + 1;
                 $('#adres2').val(String(a2));
                 a3 = a2 + 1;
                 $('#adres3').val(String(a3));
+            } else {
+                //vul tweede en derde adres
+                a2 = a1 + 1;
+                $('#adres2').val(String(a2));
             }
         }
     }
