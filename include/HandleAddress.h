@@ -311,57 +311,57 @@ void handle_blink()
     }
 }
 
-postResponse startTestLights(String JsonData)
+void sockEventHandler(byte num, WStype_t typeWs, uint8_t *payload, size_t length)
 {
-    testData testSein;
-    postResponse resultaat;
-    Serial.println("processing test request");
-    Serial.println(JsonData);
-    StaticJsonDocument<256> subject;
-    DeserializationError error = deserializeJson(subject, JsonData);
+    switch (typeWs)
+    {
+    case WStype_DISCONNECTED:
+        Serial.println("disconnected");
+        break;
+    case WStype_CONNECTED:
+        Serial.println("Client connected");
+        break;
+    case WStype_TEXT:
+        testData testSein;
+        uint8_t maxLight;
+        Serial.println("processing test request");
+        StaticJsonDocument<256> subject;
+        DeserializationError error = deserializeJson(subject, payload);
 
-    if (error)
-    {
-        resultaat.message = "deserialize failed";
-        resultaat.succes = false;
-        Serial.print("deserializeJson() failed: ");
-        Serial.println(error.c_str());
-    }
-    else
-    {
-        testSein.Id = subject["sigId"];
-        bool idFound = false;
-        for (uint8_t i = 0; i < this_dec.nbrofsig; i++)
+        if (error)
         {
-            if (testSein.Id == this_dec.sigConnected[i].sigId)
-            {
-                idFound = true;
-            }
-        };
-        if (idFound)
-        {
-            processingDCC = false;
-            testSein.fade = subject["sigFade"];
-            testSein.dark = subject["sigDark"];
-            uint8_t sCc = 0;
-            JsonArray lamp_item = subject["sigLamp"];
-            for (sCc = 0; sCc < sizeof(lamp_item); sCc++)
-            {
-                testSein.Lamp[sCc] = lamp_item[sCc];
-            }
-            testSein.Action = aan;
-            xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
-            resultaat.message = "";
-            resultaat.succes = true;
+            Serial.print("deserializeJson() failed: ");
+            Serial.println(error.c_str());
         }
         else
         {
-            resultaat.message = "sein niet bekend";
-            resultaat.succes = false;
+            testSein.Id = subject["sigId"];
+            bool idFound = false;
+            for (uint8_t i = 0; i < this_dec.nbrofsig; i++)
+            {
+                if (testSein.Id == this_dec.sigConnected[i].sigId)
+                {
+                    idFound = true;
+                    maxLight = this_dec.sigConnected[i].sigDraden;
+                }
+            };
+            if (idFound)
+            {
+                testSein.fade = subject["sigFade"];
+                testSein.dark = subject["sigDark"];
+                uint8_t sCc = 0;
+                JsonArray lamp_item = subject["sigLamp"];
+                for (sCc = 0; sCc < maxLight; sCc++)
+                {
+                    testSein.Lamp[sCc] = lamp_item[sCc];
+                }
+                testSein.Action = aan;
+                xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
+            };
         };
+        break;
     };
-    return resultaat;
-}
+};
 
 postResponse endTestLights(String JsonData)
 {
@@ -387,7 +387,6 @@ postResponse endTestLights(String JsonData)
         testSein.Id = subject["sigId"];
         testSein.Action = uit;
         xQueueSend(testLightsQueue, &testSein, portMAX_DELAY);
-        processingDCC = true;
         resultaat.message = "";
         resultaat.succes = true;
     }

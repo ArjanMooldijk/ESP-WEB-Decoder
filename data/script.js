@@ -15,7 +15,9 @@ $(function () {
     var signalToChange;
     var dekoder;
     var deKoder;
-    var typeSig
+    var typeSig;
+    var socket;
+    initSocket(); 
 
     function getDatafromServer() {
         var xhttp = new XMLHttpRequest();
@@ -39,6 +41,17 @@ $(function () {
         xhttp.send();
     };
 
+    function initSocket() {
+        socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+        socket.onmessage = function (event) {
+            processSockEvent(event);
+        }
+    };
+
+    function processSockEvent(event) {
+        console.log(event.data);
+    };
+
     function getObjects(obj, key, val) {
         var objects = [];
         for (var i in obj) {
@@ -60,7 +73,6 @@ $(function () {
         $('.ChangeButtoncontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
         $('.ChangeButtoncontainer').delegate('#BDel', 'click', _deleteSignal);
         $('.ChangeButtoncontainer').delegate('#BApply', 'click', _processChange.bind(this));
-        $('.ChangeButtoncontainer').delegate('#BTest', 'click', _testLights.bind(this));
         $('.ChangeButtoncontainer').delegate('#BTestEnd', 'click', _endTestLights);
 
         $('#allTypeSeinen').delegate('input:radio[name=sigGekozen]', 'click', _showAdresInput);
@@ -204,29 +216,14 @@ $(function () {
                 xhttp.send(); */
     };
 
-    function _testLights() {
-        //call server met waardes van alle lampen
-        $("#BApply").hide();
-        if ($("#BDel").is(":visible")) {
-            bdelWasVisibale = true;
-            $("#BDel").hide();
-        } else {
-            bdelWasVisibale = false;
-        };
-        $("#BCancel").hide();
-        $(".testbutTE").show();
-        // verzamel de waarden
-
+    function showSliderVal() {
         var $el = ('#changeForm');
-
         var subject = {
             sigId: signalToChange.sigId,
             sigFade: 0,
             sigDark: 0,
             sigLamp: []
         };
-        // dekoder.sigConnected[i].sigFade = $(this).find('#fade').next('.sout').html() * 10;
-        // dekoder.sigConnected[i].sigDark = $(this).find('#dark').next('.sout').html() * 10;
         subject.sigFade = $($el).find('#fade').next('.sout').html();
         subject.sigDark = $($el).find('#dark').next('.sout').html();
 
@@ -234,43 +231,46 @@ $(function () {
         $.each(tmpLamp, function (count, item) {
             subject.sigLamp[count] = $(item).val();
         });
-
-        const xhr = new XMLHttpRequest();
-
-        // listen for `load` event
-        xhr.onload = () => {
-            // print JSON response
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // parse JSON
-                // const response = JSON.parse(xhr.responseText);
-                console.log(xhr.responseText);
-            } else {
-                alert(xhr.responseText);
-            }
-        };
-
-        // create a JSON object
-        const jsonSubject = JSON.stringify(subject);
-        console.log(jsonSubject);
-
-        // open request
-        xhr.open("POST", "/testLights");
-
-        // set `Content-Type` header
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        // send rquest with JSON payload
-        xhr.send(jsonSubject);
-    };
-
-    function showSliderVal() {
         return $(this).each(function () {
-            if ($(this).attr("id") == "fade" || $(this).attr("id") == "dark") {
-                var value = $(this).val() * 10;
-            } else {
-                var value = $(this).val()
-            };
+            switch ($(this).attr("id")) {
+                case "fade":
+                    var value = $(this).val() * 10;
+                    subject.sigFade = value;
+                    break;
+                case "dark":
+                    var value = $(this).val() * 10;
+                    subject.sigDark = value;
+                    break;
+                case "lamp1":
+                    var value = $(this).val();
+                    subject.sigLamp[0] = value;
+                    break;
+                case "lamp2":
+                    var value = $(this).val();
+                    subject.sigLamp[1] = value;
+                    break;
+                case "lamp3":
+                    var value = $(this).val();
+                    subject.sigLamp[2] = value;
+                    break;
+                case "lamp4":
+                    var value = $(this).val();
+                    subject.sigLamp[3] = value;
+                    break;
+                case "lamp5":
+                    var value = $(this).val();
+                    subject.sigLamp[4] = value;
+                    break;
+                case "lamp6":
+                    var value = $(this).val();
+                    subject.sigLamp[5] = value;
+            }
             $(this).next("#sout").html(value);
+
+            // create a JSON object
+            const jsonSubject = JSON.stringify(subject);
+            socket.send(jsonSubject);
+            console.log(jsonSubject);
 
         })
     };

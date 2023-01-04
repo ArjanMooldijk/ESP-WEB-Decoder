@@ -112,24 +112,6 @@ void init_Servers()
         request->send(200); });
 
     server.on(
-        "/testLights", HTTP_POST, [](AsyncWebServerRequest *request) {},
-        NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
-        {
-        String newJsonDec;
-        size_t i;
-        for (i = 0; i < len; i++) {
-                newJsonDec += char(data[i]);
-        }
-        // Serial.println("ontvangen :");
-        // Serial.println(newJsonDec);
-        postResponse res = startTestLights(newJsonDec);
-        if (res.succes) {
-            request->send(200); }
-        else {
-            request->send(500, "text/plain", res.message);
-        } });
-
-    server.on(
         "/EndTest", HTTP_POST, [](AsyncWebServerRequest *request) {},
         NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
         {

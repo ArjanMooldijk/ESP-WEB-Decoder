@@ -11,6 +11,7 @@ using namespace std;
 
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <WebSocketsServer.h>
 #include "ArduinoJson.h"
 #include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
@@ -29,6 +30,8 @@ using namespace std;
 // const char *deviceName = "Stadel";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
+// Create AsyncWebSocketServer object on port 81
+WebSocketsServer webSock = WebSocketsServer(81);
 
 const int anZahl = 16;
 
@@ -116,6 +119,8 @@ void setup()
   // Start servers
   AsyncElegantOTA.begin(&server);
   server.begin();
+  webSock.begin();
+  webSock.onEvent(sockEventHandler);
 
   init_leds_andQueues();
   init_tasks();
@@ -125,25 +130,25 @@ void setup()
 ////////////////////////////////////////////////////////////////
 void loop()
 {
-  if (processingDCC)
-  {
-    Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
-    AsyncElegantOTA.loop();
-    // delay(1);
-    handle_blink();/* 
+  Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
+  AsyncElegantOTA.loop();
+  webSock.loop();
+  // delay(1);
+  handle_blink();
+  /*
+
 // hoofd rood, Voor donker
-    HandleCommand(1, 0, 0);
-    HandleCommand(0, 2, 0);
-    delay(3500);
+  HandleCommand(1, 0, 0);
+  HandleCommand(0, 2, 0);
+  delay(3500);
 
 // hoofd Fb1, Voor Halt
-    HandleCommand(1, 0, 1);
-    HandleCommand(0, 0, 0);
-    delay(1100);
+  HandleCommand(1, 0, 1);
+  HandleCommand(0, 0, 0);
+  delay(1100);
 
 // hoofd Fb1, Voor FB1
-    HandleCommand(0, 1, 1);
-    HandleCommand(0, 0, 1);
-    delay(4000); */
-  }
+  HandleCommand(0, 1, 1);
+  HandleCommand(0, 0, 1);
+  delay(4000); */
 }
