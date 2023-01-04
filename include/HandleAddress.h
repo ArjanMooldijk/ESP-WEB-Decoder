@@ -324,7 +324,6 @@ void sockEventHandler(byte num, WStype_t typeWs, uint8_t *payload, size_t length
     case WStype_TEXT:
         testData testSein;
         uint8_t maxLight;
-        Serial.println("processing test request");
         StaticJsonDocument<256> subject;
         DeserializationError error = deserializeJson(subject, payload);
 

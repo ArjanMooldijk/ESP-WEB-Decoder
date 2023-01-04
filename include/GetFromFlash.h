@@ -133,7 +133,7 @@ void initDecJson()
 
 void putDecoderValuesToFile(String inputJson)
 {
-    Serial.println("putDecoderValuesToFile");
+    // Serial.println("putDecoderValuesToFile");
     File decFile = SPIFFS.open(DECODER_JSON, "w");
     if (!decFile)
     {
@@ -143,8 +143,9 @@ void putDecoderValuesToFile(String inputJson)
 
     if (bytesWritten > 0)
     {
-        Serial.println("File was written");
-        Serial.println(bytesWritten);
+        Serial.print("File was written ");
+        Serial.print(bytesWritten);
+        Serial.println(" bytes");
     }
     else
     {
