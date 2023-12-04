@@ -3,8 +3,9 @@ $(function () {
     // $(".signal-types").hide();
 
     // Get base dekoder data
+    //----- weg voor prod
     getDatafromServer();
-
+   
     var saveOldVal = {
         fade: null,
         dark: null,
@@ -14,9 +15,23 @@ $(function () {
     var bdelWasVisibale;
     var signalToChange;
     var dekoder;
+    //----- weg voor prod
     var deKoder;
     var typeSig;
+    //----- weg voor prod
+     //================================
+    // Voor testen:
+    // console.log(deKoder);
+    // dekoder = JSON.parse(deKoder);
+    // // console.log(dekoder);
+    // typeSig = JSON.parse(typeSignalen);
+    // //////////// Build main screen
+    // makeHeader();
+    // makeMainScreen();
+    // setEvents();
+    //================================
     var socket;
+    //----- weg voor prod
     initSocket(); 
 
     function getDatafromServer() {
