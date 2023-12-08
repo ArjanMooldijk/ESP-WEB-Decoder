@@ -148,5 +148,12 @@ const cleanNewSignal = '' +
     '<label for="{{sigType}}">{{sigComment}}</label><br> {{/allOverig}}' +
     '<br>' +
     '</div>' +
+    '<h4 class="toggle-lijst">Verlichting</h4>' +
+    '<div id="sigKeuze">' +
+    '{{#allLicht}}' +
+    '<input class="radio" type="radio" id="{{sigType}}" name="sigGekozen" value={{sigNbrAdr}}>' +
+    '<label for="{{sigType}}">{{sigComment}}</label><br> {{/allLicht}}' +
+    '<br>' +
+    '</div>' +
     '</form>' +
     '</script>';

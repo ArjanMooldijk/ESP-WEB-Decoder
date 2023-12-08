@@ -4,7 +4,7 @@ $(function () {
 
     // Get base dekoder data
     //----- weg voor prod
-    getDatafromServer();
+    // getDatafromServer();
    
     var saveOldVal = {
         fade: null,
@@ -16,19 +16,19 @@ $(function () {
     var signalToChange;
     var dekoder;
     //----- weg voor prod
-    var deKoder;
+    // var deKoder;
     var typeSig;
     //----- weg voor prod
      //================================
     // Voor testen:
-    // console.log(deKoder);
-    // dekoder = JSON.parse(deKoder);
-    // // console.log(dekoder);
-    // typeSig = JSON.parse(typeSignalen);
+    console.log(deKoder);
+    dekoder = JSON.parse(deKoder);
+    // console.log(dekoder);
+    typeSig = JSON.parse(typeSignalen);
     // //////////// Build main screen
-    // makeHeader();
-    // makeMainScreen();
-    // setEvents();
+    makeHeader();
+    makeMainScreen();
+    setEvents();
     //================================
     var socket;
     //----- weg voor prod
@@ -314,6 +314,9 @@ $(function () {
 
     function _processKeuze() {
         var selSignalType = getObjects(typeSig, 'sigType', seinType);
+        if(seinType == 'Lamp') {
+            selSignalType[0].sigDraden = parseInt($("#nbrlamp").val())
+        }
         if (dekoder.nbrofsig == 8) {
             alert('Het maximum aantal aan te sluiten seinen is bereikt!');
             return;
@@ -350,6 +353,7 @@ $(function () {
         for (var i = 0; i < newSignal.sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
         };
+        console.log(newSignal);
         dekoder.sigConnected.push(newSignal);
         dekoder.nbrofsig++;
         changedValues = true;
@@ -506,7 +510,8 @@ $(function () {
         var data = {
             allVoorseinen: [],
             allHoofdseinen: [],
-            allOverig: []
+            allOverig: [],
+            allLicht: []
         };
         var $el = $('#allTypeSeinen');
         var $sc = $('#signal-config');
@@ -514,6 +519,7 @@ $(function () {
         data.allVoorseinen = getObjects(typeSig, 'sigHoofdtype', 'voorsein');
         data.allHoofdseinen = getObjects(typeSig, 'sigHoofdtype', 'hoofdsein');
         data.allOverig = getObjects(typeSig, 'sigHoofdtype', 'overig');
+        data.allLicht = getObjects(typeSig, 'sigHoofdtype', 'lamp');
         $($el).html(cleanNewSignal);
         template = $el.find('#seinen-template').html();
         $el.html(Mustache.render(template, data));

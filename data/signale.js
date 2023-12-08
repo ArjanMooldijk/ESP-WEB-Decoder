@@ -302,5 +302,19 @@ const typeSignalen = `
                "Fahrt"
           ],
           "sigDraden": 1
+     },
+     {
+          "sigType": "Lamp",
+          "sigHoofdtype": "lamp",
+          "sigComment": "1 of meer lampen op 1 adres",
+          "sigNbrAdr": 1,
+          "sigAdrType": [
+               "Lmp"
+          ],
+          "sigBeelden": [
+               "Aus",
+               "Ein"
+          ],
+          "sigDraden": 1
      }
 ]`;
