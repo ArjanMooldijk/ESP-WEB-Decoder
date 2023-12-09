@@ -81,13 +81,26 @@ void setup()
   {
     Serial.println("An Error has occurred while mounting FS");
     return;
-  }
+  }/* 
   else
   {
     // SPIFFS.format();
     // Serial.println("Spiffs formatted");
     Serial.println("FS connect big success");
-  }
+
+    File root = SPIFFS.open("/");
+
+    File file = root.openNextFile();
+
+    while (file)
+    {
+
+      Serial.print("FILE: ");
+      Serial.println(file.name());
+
+      file = root.openNextFile();
+    }
+  } */
 
   // connect to WiFi
   MakeWiFiConnection();
@@ -113,6 +126,7 @@ void setup()
   getDekoderJson();
 
   init_Servers();
+  server.begin();
   webSock.begin();
   webSock.onEvent(sockEventHandler);
 
@@ -128,7 +142,7 @@ void loop()
   webSock.loop();
   // delay(1);
   handle_blink();
-  
+
   /*
 // hoofd rood, Voor donker
   HandleCommand(1, 0, 0);

@@ -306,13 +306,31 @@ $(function () {
                 $(".3adres").show();
             }
         }
+        if (seinType == 'Lamp'){
+            $(".lampnbr").show();
+            $(".fade").hide();
+            $(".dark").hide();
+        }
+        else {
+            $(".lampnbr").hide();
+            $(".fade").show();
+            $(".dark").show();
+        }
         $(".instellingen").show();
     };
 
     function _processKeuze() {
+        var tmpFade;
+        var tmpDark;
         var selSignalType = getObjects(typeSig, 'sigType', seinType);
         if(seinType == 'Lamp') {
             selSignalType[0].sigDraden = parseInt($("#nbrlamp").val())
+            tmpFade = 0;
+            tmpDark = 0;
+        }
+        else {
+            tmpFade = $("#fade").val() * 10;
+            tmpDark = $("#dark").val() * 10;
         }
         if (dekoder.nbrofsig == 8) {
             alert('Het maximum aantal aan te sluiten seinen is bereikt!');
@@ -327,9 +345,10 @@ $(function () {
                 dekoder.sigConnected[dekoder.sigConnected.length - 1].sigChannel
         };
         if (nextChannel + selSignalType[0].sigDraden > 16) {
-            alert('te weinig aansluitingen voor dit sein op de decoder!');
+            alert('te weinig aansluitingen voor deze keuze op de decoder!');
             return;
         };
+
         var newSignal = {
             "sigId": nextId,
             "sigType": seinType,
@@ -337,8 +356,8 @@ $(function () {
             "sigChannel": nextChannel,
             "sigNbrAdr": selSignalType[0].sigNbrAdr,
             "sigAdressen": [parseInt($("#adres1").val())],
-            "sigFade": $("#fade").val() * 10,
-            "sigDark": $("#dark").val() * 10,
+            "sigFade": tmpFade,
+            "sigDark": tmpDark,
             "sigLamp": [200]
         };
 
@@ -388,6 +407,8 @@ $(function () {
         $.each(allAdr, function (index, item) {
             $(item).val("");
         });
+        var allLampen = $($sc).find('.draadInput');
+        $(allLampen).val(1);        
     };
 
     function makeHeader() {
@@ -474,14 +495,22 @@ $(function () {
             htmlAdres[index] = Mustache.render(adresHTML, waardes);
         });
 
-        // Build fade HTML
-        var fadeWaardes = {
-            cSfade10: signalToChange.sigFade / 10,
-            cSdark10: signalToChange.sigDark / 10,
-            cSfade: signalToChange.sigFade,
-            cSdark: signalToChange.sigDark
+        if (signalToChange.sigType == 'Lamp') {
+            $(".fade").hide();
+            $(".dark").hide();
         }
-        var htmlFade = Mustache.render(fadeHTML, fadeWaardes);
+        else {
+            $(".fade").show();
+            $(".dark").show();
+            // Build fade HTML
+            var fadeWaardes = {
+                cSfade10: signalToChange.sigFade / 10,
+                cSdark10: signalToChange.sigDark / 10,
+                cSfade: signalToChange.sigFade,
+                cSdark: signalToChange.sigDark
+            }
+            var htmlFade = Mustache.render(fadeHTML, fadeWaardes);
+        }
 
         // Build Lamp HTML
         var htmlLamp = [];
@@ -531,6 +560,7 @@ $(function () {
         $(".Mainbuttoncontainer").hide();
         $("#signalNew").show();
         $(".NewButtoncontainer").show();
+        $(".instellingen").hide();
 
     };
 });

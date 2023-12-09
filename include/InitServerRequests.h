@@ -96,6 +96,9 @@ void init_Servers()
     server.on("/Zwerg", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(SPIFFS, "/Zwerg.gif", "image/gif"); });
 
+    server.on("/Lamp", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(SPIFFS, "/Lamp.png", "image/png"); });
+
     server.on("/GetDecVal", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(200, "application/json", getDecoderValues()); });
 
