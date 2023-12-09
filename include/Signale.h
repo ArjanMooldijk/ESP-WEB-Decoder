@@ -23,6 +23,7 @@ enum SignalTypes {
      SIMH,
      HbB,
      Fsm,
+     Lmp,
 
 //      VorAdr1       , // Vorsignal addr 1,  Fade    Voorsignaal, eerste adres  beelden Warnung & Fb1
 //      Vor1Adr       , // Vorsignal 1 addr,  Fade    Voorsignaal, één adres (2 pins)  beelden Warnung & Fb1
@@ -47,5 +48,7 @@ enum SignalTypes {
 //      SIMVor         , // SIM Vor,           SIM voorsein
 //      HbB            , // HbB addr 1,        Halt bei Bedarf sein
 //      FSM            , // FSM addr 1,        Fahrtstellungsmelder 
+//
+//      Lamp            , // Lmp addr 1,        Een of meer lampen op een adres
 };
 #endif

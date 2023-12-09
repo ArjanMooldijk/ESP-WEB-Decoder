@@ -27,4 +27,27 @@ void setHilfsignal(uint8_t signr, uint8_t Fb)
    }
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// verlichting
+//    aantal draden is aantal pins
+///////////////////////////////////////
+void setVerlichting(uint8_t signr, uint8_t Fb)
+{
+   switch (Fb)
+   {
+   case 0: // zet verlichting uit
+         for (uint8_t index = 0; index < signale[signr].sigDraden; index++){
+            xQueueSend(queueCh[signale[signr].sigChannel + index], &uit, portMAX_DELAY);
+         }
+      break;
+   case 1: // zet verlichting aan
+         for (uint8_t index = 0; index < signale[signr].sigDraden; index++){
+            xQueueSend(queueCh[signale[signr].sigChannel + index], &aan, portMAX_DELAY);
+         }
+         break;
+   default:
+      break;
+   }
+}
+
 #endif

@@ -93,6 +93,17 @@ void HandleCommand(uint8_t signr, uint8_t index, uint8_t OutputAddr)
             }
 
             break;
+        case Lmp:
+            if (OutputAddr & 0x1)
+            {
+                setVerlichting(signr, 1);
+            }
+            else
+            {
+                setVerlichting(signr, 0);
+            }
+
+            break;
         case HbB:
             if (OutputAddr & 0x1)
             {

@@ -2,18 +2,15 @@
 // Version 2 (with web interface, 16-03-22)  Arjan Mooldijk
 
 #include <Arduino.h>
-#include <FS.h>
 #include <SPIFFS.h>
 #include <string>
 using namespace std;
 #include <WiFi.h>
 #include <WiFiManager.h>
-
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <WebSocketsServer.h>
 #include "ArduinoJson.h"
-#include <AsyncElegantOTA.h>
 #include <NmraDcc.h>
 #include <Settings.h>
 #include <GetFromFlash.h>
@@ -116,9 +113,6 @@ void setup()
   getDekoderJson();
 
   init_Servers();
-  // Start servers
-  AsyncElegantOTA.begin(&server);
-  server.begin();
   webSock.begin();
   webSock.onEvent(sockEventHandler);
 
@@ -131,12 +125,11 @@ void setup()
 void loop()
 {
   Dcc.process(); // Hier werden die empfangenen Telegramme analysiert
-  AsyncElegantOTA.loop();
   webSock.loop();
   // delay(1);
   handle_blink();
+  
   /*
-
 // hoofd rood, Voor donker
   HandleCommand(1, 0, 0);
   HandleCommand(0, 2, 0);

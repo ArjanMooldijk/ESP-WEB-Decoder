@@ -160,6 +160,10 @@ void setSignalType()
     {
       typeArray[signr] = Fsm;
     };
+    if (signale[signr].sigType[0] == 'L') // Lamp
+    {
+      typeArray[signr] = Lmp;
+    };
   };
 }
 
@@ -268,6 +272,17 @@ void Initialiseer_decoder()
         Serial.print(signale[signr].sigAdressen[0]);
         Serial.println(" Fahrtstellungsmelder");
         setHilfsignal(signr, 0); // Hetzelfde als SIM Vorsignal; gebruik dezelfde routines voor aansturing
+        break;
+
+      case Lmp:
+        Serial.print("Verlichting");
+        Serial.print(" Channel: ");
+        Serial.print(signale[signr].sigChannel);
+        Serial.print(" Adres: ");
+        Serial.print(signale[signr].sigAdressen[0]);
+        Serial.print(" Aantal lampen: ");
+        Serial.print(signale[signr].sigDraden);
+        //setVerlichting(signr,0);
         break;
 
       default:
