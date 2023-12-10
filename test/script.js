@@ -85,6 +85,8 @@ $(function () {
         $('.ChangeButtoncontainer').delegate('#BCancelC', 'click', _cancelKeuzeC);
         $('.ChangeButtoncontainer').delegate('#BDel', 'click', _deleteSignal);
         $('.ChangeButtoncontainer').delegate('#BApply', 'click', _processChange.bind(this));
+        // $('.ChangeButtoncontainer').delegate('#BTestEnd', 'click', _endTestLights);
+
         $('#allTypeSeinen').delegate('input:radio[name=sigGekozen]', 'click', _showAdresInput);
         $('#signal-config').delegate('input.slider', 'input', showSliderVal);
         $('.NewButtoncontainer').delegate('#BKeuze', 'click', _processKeuze);
@@ -367,7 +369,6 @@ $(function () {
             h1: dekoder.dekName,
             h2: dekoder.sigConnected.length
         };
-        console.log(data);
         var $el = $('.header-container');
         if (data.h2 == 0) {
             $($el).html(cleanHeader0);
@@ -375,6 +376,7 @@ $(function () {
             if (data.h2 == 1) {
                 $($el).html(cleanHeader1);
             } else {
+
                 $($el).html(cleanHeader2);
             }
         }

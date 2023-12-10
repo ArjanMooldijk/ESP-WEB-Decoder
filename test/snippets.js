@@ -1,5 +1,5 @@
 const plaatjeHTML = '' +
-    '<img src="{{sigImage}}" height="80">';
+    '<img src="{{sigType}}" height="80">';
 
 const lampHTML = '' +
     '<div class="item2">' +
@@ -61,7 +61,10 @@ const fadeHTML = '' +
     '</div>';
 
 const cleanChangeSignal = '' +
+    '<div id="plaatContainer">'+
+    '<div id="plaatFiller"></div>'+
     '<div id="imageC" class="plaatjeC">' +
+    '</div>' +
     '</div>' +
     '<div class="s-display">' +
     '<form class=changeForm>' +
@@ -82,6 +85,14 @@ const cleanHeader1 = '' +
     '<script id="header-template" type="text/template">' +
     '{{#h1}}{{#h2}}' +
     '<h1>Seindecoder {{h1}}</h1>' +
+    '<h2> {{h2}} sein aangesloten</h2>' +
+    '{{/h2}}{{/h1}}' +
+    '</script>';
+
+const cleanHeader2 = '' +
+    '<script id="header-template" type="text/template">' +
+    '{{#h1}}{{#h2}}' +
+    '<h1>Seindecoder {{h1}}</h1>' +
     '<h2> {{h2}} seinen aangesloten</h2>' +
     '{{/h2}}{{/h1}}' +
     '</script>';
@@ -91,7 +102,7 @@ const cleanAllConnected = '' +
     '{{#connSignal}}' +
     '<div class="signal-container">' +
     '<div id="image" class="plaatje">' +
-    '<img src="{{sigImage}}" width="auto" height="80px">' +
+    '<img src="{{sigType}}" width="auto" height="80px">' +
     '</div>' +
     '<div class="s-display">' +
     '<div class="s-data">' +
@@ -137,12 +148,12 @@ const cleanNewSignal = '' +
     '<label for="{{sigType}}">{{sigComment}}</label><br> {{/allOverig}}' +
     '<br>' +
     '</div>' +
+    '<h4 class="toggle-lijst">Verlichting</h4>' +
+    '<div id="sigKeuze">' +
+    '{{#allLicht}}' +
+    '<input class="radio" type="radio" id="{{sigType}}" name="sigGekozen" value={{sigNbrAdr}}>' +
+    '<label for="{{sigType}}">{{sigComment}}</label><br> {{/allLicht}}' +
+    '<br>' +
+    '</div>' +
     '</form>' +
-    '<div class="buttoncontainer">' +
-    '<div class="keuzebut">' +
-    '<button id="BKeuze" class="sb-display">Voeg nieuw sein toe</button>' +
-    '</div>' +
-    '<div class="cancelbut">' +
-    '<button id="BCancel" class="sb-display">cancel</button>' +
-    '</div>' +
     '</script>';

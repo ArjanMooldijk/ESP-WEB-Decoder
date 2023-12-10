@@ -18,13 +18,13 @@ using namespace std;
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// const char *ssid = "CazMool";
-// const char *password = "stMlleseak74;";
-// IPAddress staticIP(192, 168, 178, 30); // fixed IP of booster monitor
+// const char *ssid = "MoolCaz";
+// const char *password = "steak74;Mlles";
+// IPAddress staticIP(192, 168, 2, 23); // fixed IP of
 // IPAddress gateway(192, 168, 178, 1);
 // IPAddress subnet(255, 255, 255, 0);
 // IPAddress DNS(8, 8, 8, 8);
-// const char *deviceName = "Stadel";
+// const char *deviceName = "Lalden 1";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 // Create AsyncWebSocketServer object on port 81
