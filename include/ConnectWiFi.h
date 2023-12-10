@@ -28,6 +28,7 @@ void configModeCallback(WiFiManager *myWiFiManager)
 void MakeWiFiConnection()
 {
     WiFiManager wm;
+    // wm.setSTAStaticIPConfig(IPAddress(192,168,2,24),IPAddress(192,168,2,1), IPAddress(255,255,255,0));
     bool forceConfig = false;
     bool hostNameFileExist = loadHostNameFile();
     if (!hostNameFileExist)
@@ -75,7 +76,7 @@ void MakeWiFiConnection()
     }
     else
     {
-            Serial.println("tweede");
+            // Serial.println("tweede");
         if (!wm.autoConnect("NeueDekoder"))
         {
             Serial.println("failed to connect and hit timeout");

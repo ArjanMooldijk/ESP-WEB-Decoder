@@ -81,12 +81,12 @@ void setup()
   {
     Serial.println("An Error has occurred while mounting FS");
     return;
-  }/* 
+  }
   else
   {
     // SPIFFS.format();
     // Serial.println("Spiffs formatted");
-    Serial.println("FS connect big success");
+    Serial.println("FS connect big success");/* 
 
     File root = SPIFFS.open("/");
 
@@ -99,8 +99,8 @@ void setup()
       Serial.println(file.name());
 
       file = root.openNextFile();
-    }
-  } */
+    } */
+  }
 
   // connect to WiFi
   MakeWiFiConnection();
