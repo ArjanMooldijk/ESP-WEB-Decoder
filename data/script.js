@@ -5,7 +5,7 @@ $(function () {
     // Get base dekoder data
     //----- weg voor prod
     getDatafromServer(); // comment voor test
-   
+
     var saveOldVal = {
         fade: null,
         dark: null,
@@ -17,7 +17,7 @@ $(function () {
     var dekoder;
     var deKoder; // comment voor test
     var typeSig;
-     //================================
+    //================================
     // Voor testen:
     // console.log(deKoder);
     // dekoder = JSON.parse(deKoder);
@@ -180,7 +180,7 @@ $(function () {
     };
 
     function showSliderVal() {
-        var $el = ('#changeForm');
+        var $el = ('#sigKeuze');
         var subject = {
             sigId: signalToChange.sigId,
             sigFade: 0,
@@ -257,7 +257,7 @@ $(function () {
                 $(".3adres").show();
             }
         }
-        if (seinType == 'Lamp'){
+        if (seinType == 'Lamp') {
             $(".lampnbr").show();
             $(".fade").hide();
             $(".dark").hide();
@@ -274,7 +274,7 @@ $(function () {
         var tmpFade;
         var tmpDark;
         var selSignalType = getObjects(typeSig, 'sigType', seinType);
-        if(seinType == 'Lamp') {
+        if (seinType == 'Lamp') {
             selSignalType[0].sigDraden = parseInt($("#nbrlamp").val())
             tmpFade = 0;
             tmpDark = 0;
@@ -359,7 +359,7 @@ $(function () {
             $(item).val("");
         });
         var allLampen = $($sc).find('.draadInput');
-        $(allLampen).val(1);        
+        $(allLampen).val(1);
     };
 
     function makeHeader() {
