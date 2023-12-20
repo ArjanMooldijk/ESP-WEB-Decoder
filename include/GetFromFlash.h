@@ -213,7 +213,7 @@ void processJsonFromClient(String clientJson)
     Initialiseer_decoder();
     putDecoderValuesToFile(clientJson);
 };
-/* 
+
 String getDecoderValues()
 {
     // Serial.println("getDecoderValues");
@@ -231,7 +231,7 @@ String getDecoderValues()
         }
     }
     return decDataS;
-} */
+}
 
 void getDekoderJson()
 {
