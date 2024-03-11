@@ -18,8 +18,8 @@ using namespace std;
 //--------    DO NOT MAKE ANY CHANGES BELOW, UNLESS YOU WANT TO ALTER THE PROGRAM ;-)    ---------------------------///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const char *ssid = "MoolCaz";
-const char *password = "steak74;Mlles";
+const char *ssid = "***";
+const char *password = "***";
 IPAddress staticIP(192, 168, 2, 23); // fixed IP of
 IPAddress gateway(192, 168, 178, 1);
 IPAddress subnet(255, 255, 255, 0);
