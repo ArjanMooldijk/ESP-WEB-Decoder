@@ -317,7 +317,7 @@ $(function () {
             if (parseInt($(item).val()) > 0) { newSignal.sigAdressen[index] = parseInt($(item).val()); }
         });
 
-        for (var i = 0; i < newSignal.sigDraden; i++) {
+        for (var i = 0; i < selSignalType[0].sigDraden; i++) {
             newSignal.sigLamp[i] = 200;
         };
         console.log(newSignal);
